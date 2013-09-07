@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="ASCII"?>
+<metamodel:Application
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:metamodel="http://metamodel/1.0"
+    xsi:schemaLocation="http://metamodel/1.0 ../metamodel/metamodel.ecore"
+    name="Promemoria"
+    companyIdentifier="it.polimi">
+  <viewControllers
+      name="Home"
+      launcher="true">
+    <imageViews
+        id="homeImageView"
+        sourceType="localFile"/>
+    <asyncTasks
+        name="notesDownloader"/>
+    <progressDialogs
+        id="homeProgressDialog"
+        title="Promemoria"
+        message="Aggiornamento in corso&#x2026;"/>
+  </viewControllers>
+  <viewControllers
+      name="NotesList">
+    <buttons
+        id="addButton"
+        title="Aggiungi">
+      <clickListener>
+        <navigation
+            destination="NoteDetail"/>
+      </clickListener>
+    </buttons>
+    <listViews
+        id="notesListView">
+      <clickListener>
+        <navigation
+            destination="NoteDetail"/>
+      </clickListener>
+    </listViews>
+  </viewControllers>
+  <viewControllers
+      name="NoteDetail">
+    <buttons
+        id="saveButton"
+        title="Salva">
+      <clickListener/>
+    </buttons>
+    <buttons
+        id="deleteButton"
+        title="Elimina">
+      <clickListener/>
+    </buttons>
+    <buttons
+        id="cancelButton"
+        title="Annulla">
+      <clickListener>
+        <navigation
+            destination="NotesList"/>
+      </clickListener>
+    </buttons>
+    <editTexts
+        id="noteEditText"/>
+    <asyncTasks
+        name="noteCanceller"/>
+    <asyncTasks
+        name="noteSaver"/>
+    <progressDialogs
+        id="noteDetailProgressDialog"
+        title="Promemoria"
+        message="Aggiornamento in corso&#x2026;"/>
+    <alertDialogs
+        id="deleteAlertDialog"
+        title="Eliminazione Nota"
+        message="Vuoi eliminare la nota?"/>
+  </viewControllers>
+</metamodel:Application>

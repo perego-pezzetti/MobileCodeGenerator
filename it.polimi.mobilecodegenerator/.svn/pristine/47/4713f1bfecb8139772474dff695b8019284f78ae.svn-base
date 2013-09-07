@@ -1,0 +1,80 @@
+«IMPORT metamodel»
+
+«DEFINE propertiesDeclarations FOR ViewController-»
+«FOREACH listViews AS lv-»
+@property (weak, nonatomic) IBOutlet UITableView *«lv.id»;
+@property (strong, nonatomic) NSArray *«lv.id»Contents;
+«ENDFOREACH-»
+«ENDDEFINE-»
+
+«DEFINE lazyInstantiations FOR ViewController-»
+«FOREACH listViews AS lv-»
+-(NSArray *)«lv.id»Contents {
+    if(!_«lv.id»Contents){
+    	_«lv.id»Contents = [[NSArray alloc] init];
+    	«IF lv.listViewCells.size!=0-»
+		_«lv.id»Contents = @[
+			«FOREACH lv.listViewCells AS lvc-»
+			@"«lvc.title»",
+			«ENDFOREACH-»
+		];
+    	«ENDIF-»
+    }
+    return _«lv.id»Contents;
+}
+«ENDFOREACH-»
+«ENDDEFINE-»
+
+«DEFINE listViews FOR ViewController-»
+«IF listViews.size!=0-»
+#pragma mark - Table view data source
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    // Return the number of sections.
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    // Return the number of rows in the section.
+    «FOREACH listViews AS lv-»
+    if (tableView == self.«lv.id») {
+        return self.«lv.id»Contents.count;
+    }
+    «ENDFOREACH-»
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *CellIdentifier = @"CellIdentifier";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+
+	«FOREACH listViews AS lv-»
+    if (tableView == self.«lv.id») {
+        cell.textLabel.text = [self.«lv.id»Contents objectAtIndex:indexPath.row];
+    }
+    «ENDFOREACH-»
+	return cell;
+}
+
+#pragma mark - Table view delegate
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    «FOREACH listViews AS lv-»
+	«IF lv.clickListener!=null-»
+    if (tableView == self.«lv.id») {
+        NSString *clickedItem = [self.«lv.id»Contents objectAtIndex:indexPath.row];
+        «IF lv.clickListener.navigation!=null-»
+       	«lv.clickListener.navigation.destination»ViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"«lv.clickListener.navigation.destination»ViewController"];
+       	// Navigation logic may go here: configure properties of «lv.clickListener.navigation.destination»ViewController
+       	[[self navigationController] pushViewController:vc animated:YES];
+        «ELSE-»
+		//TODO implement the action
+		«ENDIF-»
+    }
+    «ENDIF-»
+    «ENDFOREACH-»
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+«ENDIF-»
+«ENDDEFINE-»

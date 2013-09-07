@@ -1,0 +1,25 @@
+«IMPORT metamodel»
+
+«DEFINE propertiesDeclarations FOR ViewController-»
+«FOREACH webViews AS wv-»
+@property (weak, nonatomic) IBOutlet UIWebView *«wv.id»;
+«ENDFOREACH-»
+«ENDDEFINE-»
+
+«DEFINE viewDidLoad FOR ViewController-»
+	«FOREACH webViews AS wv-»
+	«IF !wv.HTMLFileName.matches("")-»
+	NSString *«wv.id»FileName = @"«wv.HTMLFileName.split("\\.").get(0)»";
+	NSString *«wv.id»FilePath = [[NSBundle mainBundle] pathForResource:«wv.id»FileName ofType:@"html"];
+	NSString *«wv.id»DataString = [NSString stringWithContentsOfFile:«wv.id»FilePath encoding:NSUTF8StringEncoding error:nil];
+	[self.«wv.id» loadHTMLString:«wv.id»DataString baseURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]]];
+	«ELSE-»
+	/*
+	NSString *«wv.id»FileName = @"filename..."; //TODO insert local html file name
+	NSString *«wv.id»FilePath = [[NSBundle mainBundle] pathForResource:«wv.id»FileName ofType:@"html"];
+	NSString *«wv.id»DataString = [NSString stringWithContentsOfFile:«wv.id»FilePath encoding:NSUTF8StringEncoding error:nil];
+	[self.«wv.id» loadHTMLString:«wv.id»DataString baseURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]]];
+	*/
+	«ENDIF-»
+	«ENDFOREACH-»
+«ENDDEFINE-»

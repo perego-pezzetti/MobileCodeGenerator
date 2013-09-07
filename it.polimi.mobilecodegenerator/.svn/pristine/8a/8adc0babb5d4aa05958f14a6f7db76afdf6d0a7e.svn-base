@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="net.polimi.senddata"
+    android:versionCode="1"
+    android:versionName="1.0" >
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="17" />
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="senddata"
+        android:theme="@style/AppTheme" >
+		<activity
+            android:name="net.polimi.senddata.SendTextActivity"
+            android:label="SendData" >
+			<intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+		<activity
+            android:name="net.polimi.senddata.ReadTextActivity"
+            android:label="SendData" >
+        </activity>
+    </application>
+</manifest>

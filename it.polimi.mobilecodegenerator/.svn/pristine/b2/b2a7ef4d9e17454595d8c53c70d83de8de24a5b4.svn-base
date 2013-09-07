@@ -1,0 +1,8 @@
+«IMPORT metamodel»
+
+«DEFINE implements FOR ViewController-»
+«IF (listViews.size!=0 || gridViews.size!=0) && locationManager==null-»implements OnItemClickListener
+«ELSEIF (listViews.size!=0 || gridViews.size!=0) && locationManager!=null-»implements OnItemClickListener, LocationListener
+«ELSEIF (listViews.size==0 && gridViews.size==0) && locationManager!=null-»implements LocationListener
+«ENDIF-»
+«ENDDEFINE-»

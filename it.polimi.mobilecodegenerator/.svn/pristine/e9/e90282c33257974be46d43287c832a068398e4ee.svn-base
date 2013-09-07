@@ -1,0 +1,7 @@
+import metamodel;
+extension app_extensions::Java;
+
+//App methods
+Void userFilesNamesToLowerCase():JAVA app_extensions.AppJavaUtil.userFilesNamesToLowerCase();
+Void saveApplicationName(String applicationName):JAVA app_extensions.AppJavaUtil.saveApplicationName(java.lang.String);
+List[String] userFilesNames():JAVA app_extensions.AppJavaUtil.userFilesNames();

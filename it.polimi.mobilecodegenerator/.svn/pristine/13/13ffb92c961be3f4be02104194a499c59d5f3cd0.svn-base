@@ -1,0 +1,27 @@
+«IMPORT metamodel»
+
+«DEFINE attributesDeclarations FOR ViewController»
+«FOREACH imageViews AS iv-»
+«IF !iv.sourceType.toString().matches("localFile")»
+private ImageView «iv.id»;
+«ENDIF-»
+«ENDFOREACH-»
+«ENDDEFINE»
+
+«DEFINE onCreate FOR ViewController»
+«FOREACH imageViews AS iv-»
+«IF !iv.sourceType.toString().matches("localFile")-»
+«iv.id» = (ImageView) findViewById(R.id.«iv.id»);
+«ENDIF-»
+«IF iv.sourceType.toString().matches("remoteFile")-»
+«IF !iv.fileUri.matches("")-»
+«iv.id».setTag("«iv.fileUri»");
+new ImageDownloadingTask().execute(«iv.id»); //download the bitmap and set the ImageView
+«ELSE-»
+«iv.id».setTag("http://..."); //TODO insert the remote file uri
+new ImageDownloadingTask().execute(«iv.id»); //download the bitmap and set the ImageView
+«ENDIF-»
+«ENDIF-»
+«ENDFOREACH-»
+«ENDDEFINE»
+

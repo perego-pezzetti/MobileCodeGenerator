@@ -1,0 +1,39 @@
+«IMPORT metamodel»
+
+«DEFINE propertiesDeclarations FOR ViewController»
+«IF videoView!=null-»
+@property(weak, nonatomic) IBOutlet UIView *«videoView.id»;
+@property(strong, nonatomic) MPMoviePlayerController *moviePlayer;
+«IF videoView.sourceType.toString().matches("hardwareFile")-»
+@property (strong, nonatomic) NSURL *recordedVideoUrl;
+«ENDIF-»
+«ENDIF-»
+«ENDDEFINE»
+
+«DEFINE viewDidAppear FOR ViewController»
+«IF videoView!=null-»
+«IF !videoView.sourceType.toString().matches("hardwareFile")-»
+«IF videoView.sourceType.toString().matches("localFile")-»
+«IF !videoView.fileUri.matches("")-»
+NSURL *«videoView.id»VideoFileUri = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"«videoView.fileUri.split("\\.").get(0)»" ofType:@"«videoView.fileUri.split("\\.").get(1)»"]];
+«ELSE-»
+NSURL *«videoView.id»VideoFileUri = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"filename..." ofType:@"extension..."]]; //TODO insert local file name and extension
+«ENDIF-»
+«ELSEIF videoView.sourceType.toString().matches("remoteFile")-»
+«IF !videoView.fileUri.matches("")-»
+NSURL *«videoView.id»VideoFileUri=[NSURL URLWithString:@"«videoView.fileUri»"];
+«ELSE-»
+NSURL *«videoView.id»VideoFileUri=[NSURL URLWithString:@"http://..."]; //TODO insert the remote file uri
+«ENDIF-»
+«ENDIF-»
+self.moviePlayer = [[MPMoviePlayerController alloc] initWithContentURL:«videoView.id»VideoFileUri];
+[self.moviePlayer prepareToPlay];
+[self.moviePlayer.view setFrame: self.«videoView.id».bounds];
+[self.«videoView.id» addSubview:self.moviePlayer.view];
+[self.moviePlayer play];
+«ENDIF-»
+
+«EXPAND ios_viewcontrollers_templates::Camera::viewDidAppear»
+«ENDIF-»
+«ENDDEFINE»
+

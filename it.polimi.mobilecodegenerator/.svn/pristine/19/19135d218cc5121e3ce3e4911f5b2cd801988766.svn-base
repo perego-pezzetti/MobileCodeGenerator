@@ -1,0 +1,5 @@
+package app_extensions;
+
+public class AppConstants {
+	public static String applicationName;
+}

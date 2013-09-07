@@ -1,0 +1,59 @@
+«REM»
+Copyright 2013 Gregorio Perego, Stefania Pezzetti
+This file is part of it.polimi.mobilecodegenerator.
+
+it.polimi.mobilecodegenerator is free software: 
+you can redistribute it and/or modify it under the terms of the 
+GNU General Public License as published by the Free Software Foundation, 
+either version 3 of the License, or (at your option) any later version.
+
+it.polimi.mobilecodegenerator is distributed in the hope that it will be useful, 
+but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+See the GNU General Public License for more details.You should have received a copy of the GNU General Public License
+along with it.polimi.mobilecodegenerator. If not, see <http://www.gnu.org/licenses/>
+«ENDREM»
+
+«IMPORT metamodel»
+
+«DEFINE attributesDeclarations FOR ViewController-»
+«FOREACH gridViews AS gv-»
+private GridView «gv.id»;
+private ArrayAdapter<String> «gv.id»Adapter;
+private String[] «gv.id»Contents;
+«ENDFOREACH-»
+«ENDDEFINE-»
+
+«DEFINE onCreate FOR ViewController-»
+«FOREACH gridViews AS gv-»
+«gv.id»Contents = new String[]{
+	«FOREACH gv.gridViewCells AS gvc-»
+		"«gvc.title»",
+	«ENDFOREACH-»
+};
+«gv.id»Adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, «gv.id»Contents);
+«gv.id» = (GridView) findViewById(R.id.«gv.id»);
+«gv.id».setAdapter(«gv.id»Adapter);
+«IF gv.clickListener!=null-»
+«gv.id».setOnItemClickListener(this);
+«ENDIF-»
+«ENDFOREACH-»
+«ENDDEFINE-»
+
+
+«DEFINE onItemClick FOR ViewController-»
+«FOREACH gridViews AS gv-»
+«IF gv.clickListener!=null-»
+if(l.getId() == R.id.«gv.id»){
+	String clickedItem = «gv.id»Contents[position];
+	«IF gv.clickListener.navigation!=null-»
+	Intent intent = new Intent(«this.name»Activity.this, «gv.clickListener.navigation.destination»Activity.class);
+	//use putExtra method of Intent here for passing additional information to «gv.clickListener.navigation.destination»Activity
+	startActivity(intent);
+	«ELSE-»
+	//TODO implement the action
+	«ENDIF-»
+}
+«ENDIF-»
+«ENDFOREACH-»
+«ENDDEFINE-»
+

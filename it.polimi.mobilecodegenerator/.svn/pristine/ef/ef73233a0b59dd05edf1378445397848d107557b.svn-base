@@ -1,0 +1,25 @@
+package ios_extensions;
+import app_extensions.AppConstants;
+
+public class IOSConstants {
+	private static String sourceFilesFolder = "utils/ios_default_files";
+	public static String[] sourceFilesPaths = {
+		sourceFilesFolder+"/en.lproj/InfoPlist.strings",
+		sourceFilesFolder+"/AppDelegate.h",
+		sourceFilesFolder+"/AppDelegate.m",
+		sourceFilesFolder+"/Default.png",
+		sourceFilesFolder+"/Default@2x.png",
+		sourceFilesFolder+"/Default-568h@2x.png",
+		sourceFilesFolder+"/main.m"
+	};
+	public static String destinationFilesFolder = "src-gen/ios/"+AppConstants.applicationName;
+	public static String[] destinationFilesPaths = {
+		destinationFilesFolder+"/"+AppConstants.applicationName+"/en.lproj/InfoPlist.strings",
+		destinationFilesFolder+"/"+AppConstants.applicationName+"/AppDelegate.h",
+		destinationFilesFolder+"/"+AppConstants.applicationName+"/AppDelegate.m",
+		destinationFilesFolder+"/"+AppConstants.applicationName+"/Default.png",
+		destinationFilesFolder+"/"+AppConstants.applicationName+"/Default@2x.png",
+		destinationFilesFolder+"/"+AppConstants.applicationName+"/Default-568h@2x.png",
+		destinationFilesFolder+"/"+AppConstants.applicationName+"/main.m"
+	};
+}

@@ -1,0 +1,58 @@
+package ios_extensions;
+
+import java.io.File;
+import java.util.HashMap;
+
+import app_extensions.AppConstants;
+import app_extensions.AppJavaUtil;
+
+public class IOSJavaUtil {
+	
+	private static HashMap<String, String[]> hexadecimalIdsMap = new HashMap<String, String[]>();
+	private static int count = 1000000;
+	public static String getFirstHexadecimalId(String key){
+		if(hexadecimalIdsMap.containsKey(key)){
+			return hexadecimalIdsMap.get(key)[0];		
+		}
+		else{
+			return generateNewHexadecimalIds(key)[0];
+		}
+	}
+	public static String getSecondHexadecimalId(String key){
+		return hexadecimalIdsMap.get(key)[1];
+	}
+	private static String[] generateNewHexadecimalIds(String key) {
+		String firstId = "7F918D"+(++count)+"EF10055FE15";
+		String secondId = "7F918D"+(++count)+"EF10055FE15";
+		String[] array = {firstId,secondId};
+		hexadecimalIdsMap.put(key,array);
+		return array;
+	}
+	
+	//delete application code folder and its content (if already exists)
+	public static void deleteApplicationFolder(){
+		File iosAppFolder = new File(IOSConstants.destinationFilesFolder);
+		AppJavaUtil.deleteFolder(iosAppFolder);
+	}
+	
+	public static void copyUserFiles(){
+		File folder = new File("utils/user_files");
+		for(File source : folder.listFiles()){
+			String sourceFileExtension = source.getName().substring(source.getName().lastIndexOf('.')+1);
+			if(!sourceFileExtension.equals("svn") && !sourceFileExtension.equals("DS_Store")){ //TODO toglierlo poi!!
+				File destination = new File(IOSConstants.destinationFilesFolder+"/"+AppConstants.applicationName+"/"+source.getName());
+				AppJavaUtil.copyFile(source, destination);
+			}
+		}
+	}
+	
+	public static void copyDefaultIOSFiles(){
+		new File(IOSConstants.destinationFilesFolder+"/"+AppConstants.applicationName+"/en.lproj").mkdirs();
+		
+		for(int i=0; i<IOSConstants.sourceFilesPaths.length; i++){
+			File source = new File(IOSConstants.sourceFilesPaths[i]);
+			File destination = new File(IOSConstants.destinationFilesPaths[i]);
+			AppJavaUtil.copyFile(source, destination);
+		}
+	}
+}

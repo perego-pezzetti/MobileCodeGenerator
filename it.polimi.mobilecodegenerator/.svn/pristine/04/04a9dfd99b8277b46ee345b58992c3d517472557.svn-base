@@ -1,0 +1,7 @@
+import metamodel;
+extension android_extensions::Java;
+
+//Android methods
+Void deleteApplicationFolder():JAVA android_extensions.AndroidJavaUtil.deleteApplicationFolder();
+Void copyDefaultAndroidFiles():JAVA android_extensions.AndroidJavaUtil.copyDefaultAndroidFiles();
+Void copyUserFiles():JAVA android_extensions.AndroidJavaUtil.copyUserFiles();

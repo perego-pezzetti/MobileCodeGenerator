@@ -1,0 +1,27 @@
+«IMPORT metamodel»
+
+«DEFINE attributesDeclarations FOR ViewController»
+«FOREACH buttons AS b-»
+private Button «b.id»;
+«ENDFOREACH-»
+«ENDDEFINE»
+
+«DEFINE onCreate FOR ViewController»
+«FOREACH buttons AS b-»
+«b.id» = (Button)this.findViewById(R.id.«b.id»);
+«IF b.clickListener!=null-»
+«b.id».setOnClickListener(new View.OnClickListener() {	
+	public void onClick(View v) {
+		«IF b.clickListener.navigation!=null-»
+		Intent intent = new Intent(«this.name»Activity.this, «b.clickListener.navigation.destination»Activity.class);
+		//use putExtra method of Intent here for passing additional information to «b.clickListener.navigation.destination»Activity
+		startActivity(intent);
+		«ELSE-»
+		//TODO implement the action
+		«ENDIF-»
+	}
+});
+«ENDIF-»
+«ENDFOREACH-»
+«ENDDEFINE»
+

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="ASCII"?>
+<metamodel:Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:metamodel="http://metamodel/1.0" xsi:schemaLocation="http://metamodel/1.0 ../metamodel/metamodel.ecore" name="Test" companyIdentifier="it.polimi" companyName="Politecnico di Milano">
+  <viewControllers name="FirstVC" launcher="true">
+    <buttons title="ToSecondVC" id="ToSecondVC">
+      <clickListener>
+        <navigation destination="SecondVC"/>
+      </clickListener>
+    </buttons>
+    <audioPlayer fileUri="http://dl.dropboxusercontent.com/u/48195901/musica.mp3" sourceType="remoteFile"/>
+  </viewControllers>
+  <viewControllers name="SecondVC">
+    <audioPlayer fileUri="musica.mp3" sourceType="localFile"/>
+  </viewControllers>
+</metamodel:Application>

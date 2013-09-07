@@ -1,0 +1,82 @@
+«IMPORT metamodel»
+«DEFINE main FOR Application»
+«EXPAND viewController FOREACH viewControllers»
+«ENDDEFINE»
+
+«DEFINE viewController FOR ViewController»
+«FILE this.application.name+"/res/layout/"+"activity_"+name.toLowerCase()+".xml"-»
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+	
+	«FOREACH buttons AS b-»
+	<Button
+        android:id="@+id/«b.id»"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="«b.title»" />
+	«ENDFOREACH-»
+	
+	«FOREACH textViews AS tv-»
+	<TextView
+        android:id="@+id/«tv.id»"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="«tv.content»" />
+	«ENDFOREACH-»
+	«FOREACH editTexts AS et-»
+	<EditText
+        android:id="@+id/«et.id»"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textMultiLine" >
+    </EditText>
+    «ENDFOREACH-»
+	
+	«FOREACH webViews AS wv-»
+	<WebView
+        android:id="@+id/«wv.id»"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+	«ENDFOREACH-»
+	
+	«FOREACH imageViews AS iv-»
+	<ImageView
+	    android:id="@+id/«iv.id»"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    «IF iv.localFile-»
+	    android:src="@drawable/«iv.fileUri.toLowerCase().split("\\.").get(0)»" 
+	    «ENDIF-»
+	/>
+    «ENDFOREACH-»
+    
+    «FOREACH videoViews AS vv-»
+	<VideoView
+	    android:id="@+id/«vv.id»"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"/>
+    «ENDFOREACH-»
+    
+    «FOREACH listViews AS lv-»
+    <ListView
+        android:id="@+id/«lv.id»"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </ListView>
+    «ENDFOREACH-»
+    
+    «FOREACH gridViews AS gv-»
+    <GridView
+        android:id="@+id/«gv.id»"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:numColumns="3">
+    </GridView>
+    «ENDFOREACH-»
+</LinearLayout>
+«ENDFILE-»
+«ENDDEFINE»

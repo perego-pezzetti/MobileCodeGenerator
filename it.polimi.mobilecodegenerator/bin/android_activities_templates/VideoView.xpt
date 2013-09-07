@@ -1,0 +1,48 @@
+«REM»
+Copyright 2013 Gregorio Perego, Stefania Pezzetti
+This file is part of it.polimi.mobilecodegenerator.
+
+it.polimi.mobilecodegenerator is free software: 
+you can redistribute it and/or modify it under the terms of the 
+GNU General Public License as published by the Free Software Foundation, 
+either version 3 of the License, or (at your option) any later version.
+
+it.polimi.mobilecodegenerator is distributed in the hope that it will be useful, 
+but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+See the GNU General Public License for more details.You should have received a copy of the GNU General Public License
+along with it.polimi.mobilecodegenerator. If not, see <http://www.gnu.org/licenses/>
+«ENDREM»
+
+«IMPORT metamodel»
+
+«DEFINE attributesDeclarations FOR ViewController-»
+«IF videoView!=null-»
+private VideoView «videoView.id»;
+«ENDIF-»
+«ENDDEFINE-»
+
+«DEFINE onCreate FOR ViewController-»
+«IF videoView!=null-»
+«videoView.id» = (VideoView)this.findViewById(R.id.«videoView.id»);
+«IF !videoView.sourceType.toString().matches("hardwareFile")-»
+«IF videoView.sourceType.toString().matches("localFile")-»
+«IF !videoView.fileUri.matches("")-»
+Uri «videoView.id»VideoFileUri = Uri.parse("android.resource://"+getPackageName()+"/"+R.raw.«videoView.fileUri.split("\\.").get(0)»);
+«ELSE-»
+Uri «videoView.id»VideoFileUri = Uri.parse("android.resource://"+getPackageName()+"/" /*+R.raw.filename...*/ ); //TODO insert local file name
+«ENDIF-»
+«ELSEIF videoView.sourceType.toString().matches("remoteFile")-»
+«IF !videoView.fileUri.matches("")-»
+Uri «videoView.id»VideoFileUri = Uri.parse("«videoView.fileUri»");
+«ELSE-»
+Uri «videoView.id»VideoFileUri = Uri.parse("http://..."); //TODO insert the remote file uri
+«ENDIF-»
+«ENDIF-»
+«videoView.id».setVideoURI(«videoView.id»VideoFileUri);
+«videoView.id».setMediaController(new MediaController(this));
+«videoView.id».requestFocus();
+«videoView.id».start();
+«ENDIF-»
+«ENDIF-»
+«ENDDEFINE-»
+

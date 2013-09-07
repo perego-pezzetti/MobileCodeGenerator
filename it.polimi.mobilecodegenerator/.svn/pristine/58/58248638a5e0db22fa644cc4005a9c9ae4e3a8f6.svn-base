@@ -1,0 +1,19 @@
+«IMPORT metamodel»
+
+«DEFINE attributesDeclarations FOR ViewController»
+«FOREACH webViews AS wv-»
+private WebView «wv.id»;
+«ENDFOREACH-»
+«ENDDEFINE»
+
+«DEFINE onCreate FOR ViewController»
+«FOREACH webViews AS wv-»
+InputStream is = this.getResources().openRawResource(R.raw.«wv.HTMLFileName.toLowerCase().split("\\.").get(0)»);
+String HTMLContent = Utils.fromInputStreamToString(is);
+«wv.id» = (WebView)this.findViewById(R.id.«wv.id»);
+WebSettings settings = «wv.id».getSettings();
+settings.setDefaultTextEncodingName("utf-8");
+«wv.id».loadDataWithBaseURL("file:///android_asset/", HTMLContent, "text/html", "utf-8", null);
+«ENDFOREACH-»
+«ENDDEFINE»
+

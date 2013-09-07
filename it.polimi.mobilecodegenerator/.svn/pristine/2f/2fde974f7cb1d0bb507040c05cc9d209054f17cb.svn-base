@@ -1,0 +1,35 @@
+«IMPORT metamodel»
+
+«DEFINE publicProtocols FOR ViewController-»
+«IF listViews.size!=0 && gridViews.size!=0 && locationManager!=null && (photocameraController!=null || videocameraController!=null)-»
+	<UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, CLLocationManagerDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
+	«ELSEIF listViews.size!=0 && gridViews.size!=0 && locationManager!=null && !(photocameraController!=null || videocameraController!=null)-»
+	<UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, CLLocationManagerDelegate>
+	«ELSEIF listViews.size!=0 && gridViews.size!=0 && locationManager==null && (photocameraController!=null || videocameraController!=null)-»
+	<UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
+	«ELSEIF listViews.size!=0 && gridViews.size!=0 && locationManager==null && !(photocameraController!=null || videocameraController!=null)-»
+	<UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource>
+	«ELSEIF listViews.size!=0 && gridViews.size==0 && locationManager==null && (photocameraController!=null || videocameraController!=null)-»
+	<UITableViewDelegate, UITableViewDataSource, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
+	«ELSEIF listViews.size!=0 && gridViews.size==0 && locationManager==null && !(photocameraController!=null || videocameraController!=null)-»
+	<UITableViewDelegate, UITableViewDataSource>
+	«ELSEIF listViews.size==0 && gridViews.size!=0 && locationManager==null && (photocameraController!=null || videocameraController!=null)-»
+	<UICollectionViewDelegate, UICollectionViewDataSource, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
+	«ELSEIF listViews.size==0 && gridViews.size!=0 && locationManager==null && !(photocameraController!=null || videocameraController!=null)-»
+	<UICollectionViewDelegate, UICollectionViewDataSource>
+	«ELSEIF listViews.size!=0 && gridViews.size==0 && locationManager!=null  && (photocameraController!=null || videocameraController!=null)-»
+	<UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
+	«ELSEIF listViews.size!=0 && gridViews.size==0 && locationManager!=null  && !(photocameraController!=null || videocameraController!=null)-»
+	<UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate>
+	«ELSEIF listViews.size==0 && gridViews.size!=0 && locationManager!=null && (photocameraController!=null || videocameraController!=null)-»
+	<UICollectionViewDelegate, UICollectionViewDataSource, CLLocationManagerDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
+	«ELSEIF listViews.size==0 && gridViews.size!=0 && locationManager!=null && !(photocameraController!=null || videocameraController!=null)-»
+	<UICollectionViewDelegate, UICollectionViewDataSource, CLLocationManagerDelegate>
+	«ELSEIF locationManager!=null && (photocameraController!=null || videocameraController!=null)-»
+	<CLLocationManagerDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
+	«ELSEIF locationManager!=null && !(photocameraController!=null || videocameraController!=null)-»
+	<CLLocationManagerDelegate>
+	«ELSEIF (photocameraController!=null || videocameraController!=null)-»
+	<UINavigationControllerDelegate, UIImagePickerControllerDelegate>
+	«ENDIF-»
+«ENDDEFINE-»

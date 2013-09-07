@@ -1,0 +1,74 @@
+package ios_extensions;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.HashMap;
+
+import app_extensions.AppConstants;
+import app_extensions.AppJavaUtil;
+
+public class IOSJavaUtil {
+	
+	private static HashMap<String, String[]> hexadecimalMap = new HashMap<String, String[]>();
+	private static int count = 1000000;
+	public static String getFirstHexadecimalId(String viewControllerName){
+		if(hexadecimalMap.containsKey(viewControllerName)){
+			return hexadecimalMap.get(viewControllerName)[0];		
+		}
+		else{
+			return generateNewHexadecimalIds(viewControllerName)[0];
+		}
+	}
+	public static String getSecondHexadecimalId(String viewControllerName){
+		return hexadecimalMap.get(viewControllerName)[1];
+	}
+	private static String[] generateNewHexadecimalIds(String viewControllerName) {
+		String firstId = "7F918D"+(++count)+"EF10055FE15";
+		String secondId = "7F918D"+(++count)+"EF10055FE15";
+		String[] array = {firstId,secondId};
+		hexadecimalMap.put(viewControllerName,array);
+		return array;
+	}
+	
+	//delete application code folder and its content (if already exists)
+	public static void deleteApplicationFolder(){
+		File iosAppFolder = new File(IOSConstants.destinationFilesFolder);
+		AppJavaUtil.deleteFolder(iosAppFolder);
+	}
+	
+	public static void copyDefaultIOSFiles(){
+		try{
+			new File(IOSConstants.destinationFilesFolder+"/"+AppConstants.applicationName+"/en.lproj").mkdirs();
+			
+			for(int i=0; i<IOSConstants.sourceFilesPaths.length; i++){
+				System.out.println(IOSConstants.sourceFilesPaths[i]);
+				System.out.println(IOSConstants.destinationFilesPaths[i]);
+				File source = new File(IOSConstants.sourceFilesPaths[i]);
+				File destination = new File(IOSConstants.destinationFilesPaths[i]);
+				if(!destination.exists()){
+					destination.createNewFile();
+				}
+				InputStream in = new FileInputStream(source);
+				OutputStream out = new FileOutputStream(destination);
+				byte[] buffer = new byte[1024];
+				int length;
+				while((length=in.read(buffer))>0){
+					out.write(buffer, 0, length);
+				}
+				in.close();
+				out.close();
+			}
+		}
+		catch(FileNotFoundException e){
+			e.printStackTrace();
+		} 
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+}

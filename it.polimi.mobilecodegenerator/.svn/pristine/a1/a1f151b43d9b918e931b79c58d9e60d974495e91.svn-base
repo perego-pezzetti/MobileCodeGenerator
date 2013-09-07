@@ -1,0 +1,22 @@
+«IMPORT metamodel»
+
+«DEFINE propertiesDeclarations FOR ViewController»
+«FOREACH imageViews AS iv-»
+«IF !iv.sourceType.toString().matches("localFile")-»
+@property(weak, nonatomic) IBOutlet UIImageView *«iv.id»;
+«ENDIF-»
+«ENDFOREACH-»
+«ENDDEFINE»
+
+«DEFINE viewDidLoad FOR ViewController»
+«FOREACH imageViews AS iv-»
+«IF iv.sourceType.toString().matches("remoteFile")-»
+//download the image and set the ImageView
+«IF !iv.fileUri.matches("")-»
+[[[ImageDownloadingTask alloc] init] downloadImageFromUrl:@"«iv.fileUri»" forImageView:self.«iv.id»];
+«ELSE-»
+[[[ImageDownloadingTask alloc] init] downloadImageFromUrl:@"http://..." forImageView:self.«iv.id»]; //TODO insert the remote file uri
+«ENDIF-»
+«ENDIF-»
+«ENDFOREACH-»
+«ENDDEFINE»

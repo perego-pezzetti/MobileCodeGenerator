@@ -1,0 +1,43 @@
+«IMPORT metamodel»
+«DEFINE main FOR Application»
+
+«FILE name+"/AndroidManifest.xml"-»
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="«this.companyIdentifier».«this.name.toLowerCase()»"
+    android:versionCode="1"
+    android:versionName="1.0" >
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="17" />
+    
+    «IF viewControllers.locationManager!=null-»
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    «ENDIF-»
+ 
+    «IF viewControllers.videoView.sourceType.toString().contains("remoteFile") || viewControllers.imageViews.sourceType.toString().contains("remoteFile")-»
+    <uses-permission android:name="android.permission.INTERNET"/>
+    «ENDIF-»
+    
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="«this.name.toLowerCase()»"
+        android:theme="@style/AppTheme" >
+        «FOREACH viewControllers AS vc-»
+		<activity
+            android:name="«vc.application.companyIdentifier».«this.name.toLowerCase()».«vc.name»Activity"
+            android:label="«this.name»" >
+            «IF vc.launcher-» 
+			<intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+			«ENDIF-»
+        </activity>
+		«ENDFOREACH-»
+    </application>
+</manifest>
+«ENDFILE-»
+
+«ENDDEFINE»

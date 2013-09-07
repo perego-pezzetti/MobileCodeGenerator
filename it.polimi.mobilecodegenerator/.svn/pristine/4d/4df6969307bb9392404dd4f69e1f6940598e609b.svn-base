@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="ASCII"?>
+<metamodel:Application
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:metamodel="http://metamodel/1.0"
+    xsi:schemaLocation="http://metamodel/1.0 ../metamodel/metamodel.ecore"
+    name="GenericTest"
+    companyIdentifier="it.polimi">
+  <viewControllers
+      name="FirstVC"
+      launcher="true">
+    <textViews
+        id="textView1"
+        content="In this VC there is a LocationManager and AsyncTask"/>
+    <asyncTasks
+        name="FirstVC"/>
+    <locationManager/>
+  </viewControllers>
+  <viewControllers
+      name="SecondVC">
+    <imageViews
+        id="imageView1"
+        sourceType="localFile"
+        fileUri="homer.gif"/>
+    <editTexts
+        id="editText1"
+        initialContent="edit Text content"/>
+  </viewControllers>
+  <viewControllers
+      name="ThirdVC">
+    <imageViews
+        id="imageViewFromHW"/>
+    <progressDialogs
+        id="progressDialog1"
+        title="ProgressDialog1"
+        message="ProgressDialog1 message"/>
+    <fotocameraController
+        imageViewId="imageViewFromHW"/>
+    <videocameraController/>
+    <audioPlayer
+        id="audioPlayer3VC"
+        sourceType="localFile"
+        fileUri="musica.mp3"/>
+  </viewControllers>
+  <viewControllers
+      name="FourthVC">
+    <listViews
+        id="listView1"/>
+    <gridViews
+        id="gridView1"/>
+  </viewControllers>
+  <menu>
+    <menuItems
+        id="FirstVCItem"
+        title="FirstVC">
+      <navigation
+          destination="FirstVC"/>
+    </menuItems>
+    <menuItems
+        id="SecondVCItem"
+        title="SecondVC">
+      <navigation
+          destination="SecondVC"/>
+    </menuItems>
+    <menuItems
+        id="ThirdVCItem"
+        title="ThirdVC">
+      <navigation
+          destination="ThirdVC"/>
+    </menuItems>
+    <menuItems
+        id="FourthVCItem"
+        title="FourtVC">
+      <navigation
+          destination="FourthVC"/>
+    </menuItems>
+  </menu>
+</metamodel:Application>

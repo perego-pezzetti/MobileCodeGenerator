@@ -1,0 +1,15 @@
+//
+//  AppDelegate.h
+//  MyFirstApp
+//
+//  Created by Gregorio Perego on 12/04/13.
+//  Copyright (c) 2013 Gregorio Perego. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+@interface AppDelegate : UIResponder <UIApplicationDelegate>
+
+@property (strong, nonatomic) UIWindow *window;
+
+@end

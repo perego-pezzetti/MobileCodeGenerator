@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="ASCII"?>
+<metamodel:Application
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:metamodel="http://metamodel/1.0"
+    xsi:schemaLocation="http://metamodel/1.0 ../metamodel/metamodel.ecore"
+    name="SendData"
+    companyIdentifier="net.polimi"
+    companyName="Politecnico di Milano">
+  <viewControllers
+      name="SendText"
+      launcher="true">
+    <buttons
+        title="Ok"
+        id="OkButton">
+      <to destination="ReadText"/>
+    </buttons>
+    <buttons
+        title="Cancel"
+        id="cancelButton"/>
+    <textViews
+        content="Ciao Ste!"
+        id="SendMessageTextView"/>
+    <imageViews
+        id="polimiImageView"
+        ImageFileName="logo_polimi.jpg"/>
+  </viewControllers>
+  <viewControllers
+      name="ReadText">
+    <textViews
+        content="Ciao Ste!"
+        id="ReceivedMessageTextView"/>
+    <webViews
+        HTMLFileName="il_franciacorta_it.html"
+        id="IlFranciacortaWebView"
+        CSSFileName="style.css"/>
+  </viewControllers>
+</metamodel:Application>

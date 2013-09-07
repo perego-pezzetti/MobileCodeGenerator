@@ -1,0 +1,7 @@
+eclipse.preferences.version=1
+gmf_dashboard/domainGenerationModel=platform\:/resource/it.polimi.mobilecodegenerator/src/metamodel/metamodel.genmodel
+gmf_dashboard/domainModel=platform\:/resource/it.polimi.mobilecodegenerator/src/metamodel/metamodel.ecore
+gmf_dashboard/generationModel=platform\:/resource/it.polimi.mobilecodegenerator/src/metamodel/metamodel.gmfgen
+gmf_dashboard/graphicalDefinitionModel=platform\:/resource/it.polimi.mobilecodegenerator/src/metamodel/metamodel.gmfgraph
+gmf_dashboard/mappingModel=platform\:/resource/it.polimi.mobilecodegenerator/src/metamodel/metamodel.gmfmap
+gmf_dashboard/toolingDefinitionModel=platform\:/resource/it.polimi.mobilecodegenerator/src/metamodel/metamodel.gmftool

@@ -1,0 +1,113 @@
+«IMPORT metamodel»
+«DEFINE main FOR Application»
+«EXPAND viewController FOREACH viewControllers»
+«ENDDEFINE»
+
+«DEFINE viewController FOR ViewController»
+«FILE this.application.name+"/src/"+ this.application.companyIdentifier.replaceAll("\\.","/") +"/"+ this.application.name.toLowerCase() +"/"+ name + "Activity.java"-»
+	package «this.application.companyIdentifier».«this.application.name.toLowerCase()»;
+	
+	import android.os.Bundle;
+	import android.app.Activity;
+	import android.content.Intent;
+	import android.view.*;
+	import android.widget.*;
+	import android.widget.AdapterView.*;
+	import android.webkit.*;
+	import java.io.*;
+	
+	public class «this.name»Activity extends Activity «IF this.listViews.size!=0-»implements OnItemClickListener«ENDIF-» {
+		«FOREACH buttons AS b-»
+		private Button «b.id»;
+		«ENDFOREACH-»
+		«FOREACH webViews AS wv-»
+		private WebView «wv.id»;
+		«ENDFOREACH-»
+		
+		«FOREACH listViews AS lv-»
+		private ListView «lv.id»;
+		private ArrayAdapter «lv.id»Adapter;
+		«ENDFOREACH-»
+		
+		@Override
+		protected void onCreate(Bundle savedInstanceState) {
+			super.onCreate(savedInstanceState);
+			setContentView(R.layout.activity_«name.toLowerCase()»);
+			
+			«FOREACH buttons AS b-»
+			«b.id» = (Button)this.findViewById(R.id.«b.id»);
+			«IF b.to!=null-»
+			«b.id».setOnClickListener(new View.OnClickListener() {	
+				public void onClick(View v) {
+					Intent intent = new Intent(«this.name»Activity.this, «b.to.destination»Activity.class);
+					startActivity(intent);
+				}
+			});
+			«ENDIF-»
+			«ENDFOREACH-»
+			
+			«FOREACH webViews AS wv-»
+			InputStream is = this.getResources().openRawResource(R.raw.«wv.HTMLFileName.split("\\.").get(0)»);
+			String HTMLContent = Utils.fromInputStreamToString(is);
+			«wv.id» = (WebView)this.findViewById(R.id.«wv.id»);
+			
+			WebSettings settings = «wv.id».getSettings();
+			settings.setDefaultTextEncodingName("utf-8");
+			«wv.id».loadDataWithBaseURL("file:///android_asset/", HTMLContent, "text/html", "utf-8", null);
+			«ENDFOREACH-»
+			
+			«FOREACH listViews AS lv-»
+			String[] «lv.id»Contents = {
+				«FOREACH lv.listViewCells AS lvc-»
+					"«lvc.title»",
+				«ENDFOREACH-»
+			};
+			«lv.id»Adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, «lv.id»Contents);
+			«lv.id» = (ListView) findViewById(R.id.«lv.id»);
+			«lv.id».setAdapter(«lv.id»Adapter);
+			«lv.id».setOnItemClickListener(this);
+			«ENDFOREACH-»
+		}
+		
+		«IF listViews.size!=0-»
+		@Override
+		public void onItemClick(AdapterView<?> l, View v, int position, long id) {
+			if(l.getId() == R.id.«listViews.get(0).id»){
+				String clickedItemText = (String) «listViews.get(0).id»Adapter.getItem(position);
+				System.out.println("Clicked item with text: "+ clickedItemText); «REM»Rimuovere la stampa a video!«ENDREM»
+			}
+			«FOREACH listViews AS lv-»
+			«IF lv!=listViews.get(0)-»
+			else if(l.getId() == R.id.«lv.id»){
+				String clickedItemText = (String) «lv.id»Adapter.getItem(position);
+				System.out.println("Clicked item with text: "+ clickedItemText); «REM»Rimuovere la stampa a video!«ENDREM»
+			}
+			«ENDIF-»
+			«ENDFOREACH-»
+		}
+		«ENDIF-»
+		
+		
+		@Override
+		protected void onStart() {
+			//TODO Auto-generated method stub
+			super.onStart();
+		}
+		@Override
+		protected void onResume() {
+			//TODO Auto-generated method stub
+			super.onResume();
+		}
+		@Override
+		protected void onPause() {
+			//TODO Auto-generated method stub
+			super.onPause();
+		}
+		@Override
+		protected void onStop() {
+			//TODO Auto-generated method stub
+			super.onStop();
+		}
+	}
+«ENDFILE-»
+«ENDDEFINE»

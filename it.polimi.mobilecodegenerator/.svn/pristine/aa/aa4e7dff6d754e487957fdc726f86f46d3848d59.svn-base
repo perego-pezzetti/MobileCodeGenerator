@@ -1,0 +1,57 @@
+«REM»
+Copyright 2013 Gregorio Perego, Stefania Pezzetti
+This file is part of it.polimi.mobilecodegenerator.
+
+it.polimi.mobilecodegenerator is free software: 
+you can redistribute it and/or modify it under the terms of the 
+GNU General Public License as published by the Free Software Foundation, 
+either version 3 of the License, or (at your option) any later version.
+
+it.polimi.mobilecodegenerator is distributed in the hope that it will be useful, 
+but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+See the GNU General Public License for more details.You should have received a copy of the GNU General Public License
+along with it.polimi.mobilecodegenerator. If not, see <http://www.gnu.org/licenses/>
+«ENDREM»
+
+«IMPORT metamodel»
+
+«DEFINE propertiesDeclarations FOR ViewController-»
+«FOREACH alertDialogs AS ad-»
+@property (strong, nonatomic) UIAlertView *«ad.id»;
+«ENDFOREACH-»
+«ENDDEFINE-»
+
+«DEFINE viewDidLoad FOR ViewController-»
+	«FOREACH alertDialogs AS ad-»
+	[self.«ad.id» show];
+	«ENDFOREACH-»
+«ENDDEFINE-»
+
+«DEFINE lazyInstantiations FOR ViewController-»
+«FOREACH alertDialogs AS ad-»
+-(UIAlertView *)«ad.id»{
+    if(!_«ad.id»){
+    	_«ad.id» = [[UIAlertView alloc] initWithTitle:@"«ad.title»" message:@"«ad.message»" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Ok",nil];
+    }
+    return _«ad.id»;
+}
+«ENDFOREACH-»
+«ENDDEFINE-»
+
+«DEFINE alertDialogs FOR ViewController-»
+«IF alertDialogs.size!=0-»
+-(void) alertView: (UIAlertView *) alertView
+    clickedButtonAtIndex: (NSInteger) buttonIndex {
+    «FOREACH alertDialogs AS ad-»
+    if (alertView == self.«ad.id») {
+	    if (buttonIndex == 0) { //0 is the index of the cancel button
+	    	//TODO implement the negative action
+	    }   
+	    if (buttonIndex == 1) { //1 is the index of the ok button
+	    	//TODO implement the positive action
+	    }
+    }
+    «ENDFOREACH-»   
+}
+«ENDIF-»
+«ENDDEFINE-»

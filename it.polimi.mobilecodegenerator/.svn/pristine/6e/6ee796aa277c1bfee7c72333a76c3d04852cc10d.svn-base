@@ -1,0 +1,266 @@
+«IMPORT metamodel»
+«DEFINE main FOR Application»
+«EXPAND viewController FOREACH viewControllers»
+«ENDDEFINE»
+
+«DEFINE viewController FOR ViewController»
+«FILE this.application.name+"/src/"+ this.application.companyIdentifier.replaceAll("\\.","/") +"/"+ this.application.name.toLowerCase() +"/"+ name + "Activity.java"-»
+	package «this.application.companyIdentifier».«this.application.name.toLowerCase()»;
+	
+	import android.os.*;
+	import android.app.*;
+	import android.content.*;
+	import android.view.*;
+	import android.widget.*;
+	import android.widget.AdapterView.*;
+	import android.webkit.*;
+	import java.io.*;
+	import android.location.*;
+	
+	public class «this.name»Activity extends Activity 
+		«IF (listViews.size!=0 || gridViews.size!=0) && locationManager==null-»implements OnItemClickListener
+		«ELSEIF (listViews.size!=0 || gridViews.size!=0) && locationManager!=null-»implements OnItemClickListener, LocationListener
+		«ELSEIF (listViews.size==0 && gridViews.size==0) && locationManager!=null-»implements LocationListener
+		«ENDIF-» {
+		
+		«FOREACH buttons AS b-»
+		private Button «b.id»;
+		«ENDFOREACH-»
+		
+		«FOREACH editTexts AS et-»
+		private EditText «et.id»;
+		«ENDFOREACH-»
+		
+		«FOREACH webViews AS wv-»
+		private WebView «wv.id»;
+		«ENDFOREACH-»
+		
+		«FOREACH listViews AS lv-»
+		private ListView «lv.id»;
+		private ArrayAdapter<String> «lv.id»Adapter;
+		private String[] «lv.id»Contents;
+		«ENDFOREACH-»
+		
+		«FOREACH gridViews AS gv-»
+		private GridView «gv.id»;
+		private ArrayAdapter<String> «gv.id»Adapter;
+		private String[] «gv.id»Contents;
+		«ENDFOREACH-»
+		
+		«IF locationManager!=null-»
+		private LocationManager locationManager;
+		«ENDIF-»
+		
+		@Override
+		protected void onCreate(Bundle savedInstanceState) {
+			super.onCreate(savedInstanceState);
+			setContentView(R.layout.activity_«name.toLowerCase()»);
+			
+			«FOREACH buttons AS b-»
+			«b.id» = (Button)this.findViewById(R.id.«b.id»);
+			«IF b.clickListener!=null-»
+			«b.id».setOnClickListener(new View.OnClickListener() {	
+				public void onClick(View v) {
+					«IF b.clickListener.navigation!=null-»
+					Intent intent = new Intent(«this.name»Activity.this, «b.clickListener.navigation.destination»Activity.class);
+					//use putExtra method of Intent here for passing additional information to «b.clickListener.navigation.destination»Activity
+					startActivity(intent);
+					«ELSE-»
+					//TODO implement the action
+					«ENDIF-»
+				}
+			});
+			«ENDIF-»
+			«ENDFOREACH-»
+			
+			«FOREACH editTexts AS et-»
+			«et.id» = (EditText)this.findViewById(R.id.«et.id»);
+			«et.id».setText("«et.initialContent»");
+			«ENDFOREACH-»
+			
+			«FOREACH webViews AS wv-»
+			InputStream is = this.getResources().openRawResource(R.raw.«wv.HTMLFileName.split("\\.").get(0)»);
+			String HTMLContent = Utils.fromInputStreamToString(is);
+			«wv.id» = (WebView)this.findViewById(R.id.«wv.id»);
+			
+			WebSettings settings = «wv.id».getSettings();
+			settings.setDefaultTextEncodingName("utf-8");
+			«wv.id».loadDataWithBaseURL("file:///android_asset/", HTMLContent, "text/html", "utf-8", null);
+			«ENDFOREACH-»
+			
+			«FOREACH listViews AS lv-»
+			«lv.id»Contents = new String[]{
+				«FOREACH lv.listViewCells AS lvc-»
+					"«lvc.title»",
+				«ENDFOREACH-»
+			};
+			«lv.id»Adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, «lv.id»Contents);
+			«lv.id» = (ListView) findViewById(R.id.«lv.id»);
+			«lv.id».setAdapter(«lv.id»Adapter);
+			«IF lv.clickListener!=null-»
+			«lv.id».setOnItemClickListener(this);
+			«ENDIF-»
+			«ENDFOREACH-»
+			
+			«FOREACH gridViews AS gv-»
+			«gv.id»Contents = new String[]{
+				«FOREACH gv.gridViewCells AS gvc-»
+					"«gvc.title»",
+				«ENDFOREACH-»
+			};
+			«gv.id»Adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, «gv.id»Contents);
+			«gv.id» = (GridView) findViewById(R.id.«gv.id»);
+			«gv.id».setAdapter(«gv.id»Adapter);
+			«IF gv.clickListener!=null-»
+			«gv.id».setOnItemClickListener(this);
+			«ENDIF-»
+			«ENDFOREACH-»
+			
+			«FOREACH asyncTasks AS at-»
+			new «at.name»AsyncTask().execute();
+			«ENDFOREACH-»
+			
+			«FOREACH progressDialogs AS pd-»
+			ProgressDialog «pd.id» = new ProgressDialog(«name»Activity.this);
+			«pd.id».setTitle("«pd.title»");
+			«pd.id».setMessage("«pd.message»");
+			«IF pd.spinner-»
+			«pd.id».setProgressStyle(ProgressDialog.STYLE_SPINNER);
+			«pd.id».show();
+			//TODO do something before dismissing it.
+			«ELSE-»
+			«pd.id».setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+			«pd.id».show();
+			«pd.id».setProgress(0);
+			//TODO do something before dismissing it: use "setProgress" method of the Progress Dialog for updating the progress bar status.
+			«ENDIF-»
+			//«pd.id».dismiss();
+			«ENDFOREACH-»
+			
+			«FOREACH alertDialogs AS ad-»
+			AlertDialog.Builder «ad.id»Builder = new AlertDialog.Builder(this);
+			«ad.id»Builder.setTitle("«ad.title»");
+			«ad.id»Builder.setMessage("«ad.message»");
+			«ad.id»Builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					//TODO implement the positive action
+				}
+			});
+			«ad.id»Builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					//TODO implement the negative action
+				}
+			});
+			AlertDialog «ad.id» = «ad.id»Builder.create();
+			«ad.id».show();
+			«ENDFOREACH-»
+			
+			«IF locationManager!=null-»
+			locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+			Criteria criteria = new Criteria();
+			criteria.setAccuracy(Criteria.ACCURACY_FINE);
+			String provider = locationManager.getBestProvider(criteria,true);
+			if(provider!=null){
+				locationManager.requestLocationUpdates(provider, 1000, 10, this);
+				Location lastKnownLocation = locationManager.getLastKnownLocation(provider);
+				if(lastKnownLocation!=null){
+					//TODO use lastKnownLocation
+				}
+			}
+			«ENDIF-»
+		}
+		
+		«IF listViews.size!=0 || gridViews.size!=0-»
+		@Override
+		public void onItemClick(AdapterView<?> l, View v, int position, long id) {
+			«FOREACH listViews AS lv-»
+			«IF lv.clickListener!=null-»
+			if(l.getId() == R.id.«lv.id»){
+				String clickedItem = «lv.id»Contents[position];
+				«IF lv.clickListener.navigation!=null-»
+				Intent intent = new Intent(«this.name»Activity.this, «lv.clickListener.navigation.destination»Activity.class);
+				//use putExtra method of Intent here for passing additional information to «lv.clickListener.navigation.destination»Activity
+				startActivity(intent);
+				«ELSE-»
+				//TODO implement the action
+				«ENDIF-»
+			}
+			«ENDIF-»
+			«ENDFOREACH-»
+			
+			«FOREACH gridViews AS gv-»
+			«IF gv.clickListener!=null-»
+			if(l.getId() == R.id.«gv.id»){
+				String clickedItem = «gv.id»Contents[position];
+				«IF gv.clickListener.navigation!=null-»
+				Intent intent = new Intent(«this.name»Activity.this, «gv.clickListener.navigation.destination»Activity.class);
+				//use putExtra method of Intent here for passing additional information to «gv.clickListener.navigation.destination»Activity
+				startActivity(intent);
+				«ELSE-»
+				//TODO implement the action
+				«ENDIF-»
+			}
+			«ENDIF-»
+			«ENDFOREACH-»
+		}
+		«ENDIF-»
+		
+		«FOREACH asyncTasks AS at-»
+		private class «at.name»AsyncTask extends AsyncTask<Void /*Params*/,Void /*Progress*/,Void /*Result*/> {
+			@Override
+			protected Void /*Result*/ doInBackground(Void... params) {
+				// TODO code to executed in the background task
+				return null;
+			}
+			@Override
+			protected void onPostExecute(Void result) {
+				// TODO code to be executed on the main thread when background task is finished
+				super.onPostExecute(result);
+			}
+		}
+		«ENDFOREACH-»
+		
+		«IF locationManager!=null-»
+		@Override
+		public void onLocationChanged(Location location) {
+			// TODO Auto-generated method stub
+		}
+		@Override
+		public void onProviderDisabled(String provider) {
+			// TODO Auto-generated method stub
+		}
+		@Override
+		public void onProviderEnabled(String provider) {
+			// TODO Auto-generated method stub
+		}
+		@Override
+		public void onStatusChanged(String provider, int status, Bundle extras) {
+			// TODO Auto-generated method stub
+		}
+		«ENDIF-»
+		
+		@Override
+		protected void onStart() {
+			//TODO Auto-generated method stub
+			super.onStart();
+		}
+		@Override
+		protected void onResume() {
+			//TODO Auto-generated method stub
+			super.onResume();
+		}
+		@Override
+		protected void onPause() {
+			//TODO Auto-generated method stub
+			super.onPause();
+		}
+		@Override
+		protected void onStop() {
+			//TODO Auto-generated method stub
+			super.onStop();
+		}
+	}
+«ENDFILE-»
+«ENDDEFINE»

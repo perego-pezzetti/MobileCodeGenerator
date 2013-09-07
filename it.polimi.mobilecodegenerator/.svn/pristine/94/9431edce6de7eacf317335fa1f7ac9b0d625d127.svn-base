@@ -1,0 +1,5 @@
+«IMPORT metamodel»
+
+«DEFINE viewDidDisappear FOR ViewController-»
+	«EXPAND ios_viewcontrollers_templates::Audio::viewDidDisappear-»
+«ENDDEFINE-»

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ASCII"?>
+<metamodel:Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:metamodel="http://metamodel/1.0" xsi:schemaLocation="http://metamodel/1.0 ../metamodel/metamodel.ecore" name="Test" companyIdentifier="it.polimi" companyName="Politecnico di Milano">
+  <viewControllers name="FirstVC" launcher="true">
+    <buttons id="ToSecondVC" title="ToSecondVC">
+      <clickListener>
+        <navigation destination="SecondVC"/>
+      </clickListener>
+    </buttons>
+    <audioPlayer id="audioPlayerForLocalFile" sourceType="localFile" fileUri="musica.mp3"/>
+  </viewControllers>
+  <viewControllers name="SecondVC">
+    <fotocameraController/>
+    <audioPlayer id="audioPlayer2" sourceType="localFile" fileUri="musica.mp3"/>
+  </viewControllers>
+</metamodel:Application>

@@ -1,0 +1,24 @@
+«IMPORT metamodel»
+
+«DEFINE viewDidLoad FOR ViewController-»
+	«FOREACH progressDialogs AS pd-»
+	UIAlertView *«pd.id»AlertView = [[UIAlertView alloc] initWithTitle:@"«pd.title»" message:@"«pd.message»" delegate:self cancelButtonTitle:nil otherButtonTitles:nil];
+	«IF pd.spinner-»
+	UIActivityIndicatorView *«pd.id» = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+	[«pd.id»AlertView show];
+	«pd.id».frame = CGRectMake(«pd.id»AlertView.frame.origin.x+«pd.id»AlertView.frame.size.width/2-«pd.id».frame.size.width/2, «pd.id»AlertView.frame.size.height-«pd.id».frame.size.height-20, 0.0, 0.0);
+	[«pd.id»AlertView addSubview:«pd.id»];
+	[«pd.id» startAnimating];
+	//TODO do something before dismissing it.
+	«ELSE-»
+	UIProgressView *«pd.id» = [[UIProgressView alloc] initWithProgressViewStyle: UIProgressViewStyleBar];
+	[«pd.id»AlertView show];
+	«pd.id».frame = CGRectMake(30, «pd.id»AlertView.frame.size.height-«pd.id».frame.size.height-50, 225, 90);
+	[«pd.id»AlertView addSubview:«pd.id»];
+	[«pd.id» setProgress:0 animated:NO];
+	//TODO do something before dismissing it: use "setProgress" method of the Progress Dialog for updating the progress bar status.
+	«ENDIF-»
+	[«pd.id»AlertView dismissWithClickedButtonIndex:[«pd.id»AlertView cancelButtonIndex] animated:YES];
+	[«pd.id»AlertView removeFromSuperview];
+	«ENDFOREACH-»
+«ENDDEFINE-»

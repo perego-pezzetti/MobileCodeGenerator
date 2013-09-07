@@ -1,0 +1,25 @@
+«IMPORT metamodel»
+
+«DEFINE onCreate FOR ViewController-»
+«FOREACH asyncTasks AS at-»
+new «at.name»AsyncTask().execute();
+«ENDFOREACH-»
+«ENDDEFINE-»
+
+«DEFINE asyncTasks FOR ViewController-»
+«FOREACH asyncTasks AS at-»
+private class «at.name»AsyncTask extends AsyncTask<Void /*Params*/,Void /*Progress*/,Void /*Result*/> {
+	@Override
+	protected Void /*Result*/ doInBackground(Void... params) {
+		// TODO code to executed in the background task
+		return null;
+	}
+	@Override
+	protected void onPostExecute(Void result) {
+		// TODO code to be executed on the main thread when background task is finished
+		super.onPostExecute(result);
+	}
+}
+«ENDFOREACH-»
+«ENDDEFINE-»
+

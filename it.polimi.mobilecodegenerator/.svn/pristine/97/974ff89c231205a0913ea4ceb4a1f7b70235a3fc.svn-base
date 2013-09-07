@@ -1,0 +1,62 @@
+«IMPORT metamodel»
+«DEFINE main FOR Application»
+«EXPAND viewController FOREACH viewControllers»
+«ENDDEFINE»
+
+«DEFINE viewController FOR ViewController»
+«FILE this.application.name+"/src/"+ this.application.companyIdentifier.replaceAll("\\.","/") +"/"+ this.application.name.toLowerCase() +"/"+ name + "Activity.java"-»
+	package «this.application.companyIdentifier».«this.application.name.toLowerCase()»;
+	
+	«EXPAND android_activities_templates::Imports::imports»
+	
+	public class «this.name»Activity extends Activity «EXPAND android_activities_templates::Implements::implements» {
+		«EXPAND android_activities_templates::AttributesDeclarations::attributesDeclarations»
+		
+		@Override
+		protected void onCreate(Bundle savedInstanceState) {
+			super.onCreate(savedInstanceState);
+			«EXPAND android_activities_templates::OnCreate::onCreate»
+		}
+		
+		«IF listViews.size!=0 || gridViews.size!=0-»
+		@Override
+		public void onItemClick(AdapterView<?> l, View v, int position, long id) {
+			«EXPAND android_activities_templates::ListViews::onItemClick»
+			«EXPAND android_activities_templates::GridViews::onItemClick»
+		}
+		«ENDIF-»
+		
+		«EXPAND android_activities_templates::Camera::camera»
+		
+		«EXPAND android_activities_templates::LocationManager::locationManager»
+		
+		«EXPAND android_activities_templates::AsyncTasks::asyncTasks»
+
+		@Override
+		protected void onStart() {
+			//TODO Auto-generated method stub
+			super.onStart();
+		}
+		
+		@Override
+		protected void onResume() {
+			//TODO Auto-generated method stub
+			super.onResume();
+			«EXPAND android_activities_templates::OnResume::onResume»
+		}
+		
+		@Override
+		protected void onPause() {
+			//TODO Auto-generated method stub
+			super.onPause();
+			«EXPAND android_activities_templates::OnPause::onPause»
+		}
+		
+		@Override
+		protected void onStop() {
+			//TODO Auto-generated method stub
+			super.onStop();
+		}
+	}
+«ENDFILE-»
+«ENDDEFINE»

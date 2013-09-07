@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="ASCII"?>
+<metamodel:Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:metamodel="http://metamodel/1.0" xsi:schemaLocation="http://metamodel/1.0 ../metamodel/metamodel.ecore" name="Test" companyIdentifier="it.polimi" companyName="Politecnico di Milano">
+  <viewControllers name="FirstVC" launcher="true">
+    <buttons id="ToSecondVC" title="ToSecondVC">
+      <clickListener>
+        <navigation destination="SecondVC"/>
+      </clickListener>
+    </buttons>
+    <buttons id="button1" title="ToFourthVC">
+      <clickListener>
+        <navigation destination="FourthVC"/>
+      </clickListener>
+    </buttons>
+    <buttons id="button2" title="button2"/>
+    <webViews id="webView1" HTMLFileName="html.html" CSSFileName="style.css"/>
+    <imageViews id="imageView1" sourceType="localFile" fileUri="homer.gif"/>
+    <audioPlayer id="audioPlayerForLocalFile" sourceType="localFile" fileUri="musica.mp3"/>
+    <audioRecorder/>
+  </viewControllers>
+  <viewControllers name="SecondVC">
+    <buttons id="toThirdVC" title="toThirdVC">
+      <clickListener>
+        <navigation destination="ThirdVC"/>
+      </clickListener>
+    </buttons>
+    <imageViews id="imageViewFromHardware"/>
+    <asyncTasks name="task1"/>
+    <asyncTasks name="task2"/>
+    <videoView id="videoFranciacortaView" sourceType="localFile" fileUri="videofranciacortaoriginale.mp4"/>
+    <fotocameraController imageViewId="imageViewFromHardware"/>
+    <audioPlayer id="audioPlayer2" fileUri=""/>
+    <audioRecorder audioPlayerId="audioPlayer2"/>
+  </viewControllers>
+  <viewControllers name="ThirdVC">
+    <videoView id="videoViewFromHardware"/>
+    <videocameraController videoViewId="videoViewFromHardware"/>
+    <audioPlayer id="audioFromHardware"/>
+    <audioRecorder audioPlayerId="audioFromHardware"/>
+  </viewControllers>
+  <viewControllers name="FourthVC">
+    <listViews id="listView1">
+      <listViewCells title="ciao1"/>
+      <listViewCells title="ciao2"/>
+      <listViewCells title="ciao3"/>
+    </listViews>
+    <gridViews id="gridView1">
+      <gridViewCells title="hola1"/>
+      <gridViewCells title="hola2"/>
+      <gridViewCells title="hola3"/>
+    </gridViews>
+  </viewControllers>
+  <menu>
+    <menuItems title="Primo" id="Primo">
+      <navigation destination="FirstVC"/>
+    </menuItems>
+    <menuItems title="Secondo" id="Secondo">
+      <navigation destination="SecondVC"/>
+    </menuItems>
+    <menuItems title="Terzo" id="Terzo">
+      <navigation destination="ThirdVC"/>
+    </menuItems>
+    <menuItems title="Quarto" id="Quarto">
+      <navigation destination="FourthVC"/>
+    </menuItems>
+  </menu>
+</metamodel:Application>

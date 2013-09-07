@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="ASCII"?>
+<metamodel:Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:metamodel="http://metamodel/1.0" xsi:schemaLocation="http://metamodel/1.0 ../metamodel/metamodel.ecore" name="Test" companyIdentifier="it.polimi" companyName="Politecnico di Milano">
+  <viewControllers name="prova" launcher="true">
+    <webViews id="webView" HTMLFileName="html.html" CSSFileName="style.css"/>
+    <imageViews id="imageView2" sourceType="localFile" fileUri="homer.gIf"/>
+    <videoView id="videoView" sourceType="localFile" fileUri="videofranciacorta.MP4"/>
+    <audioPlayer id="audioPlayer1" sourceType="localFile" fileUri="musica.Mp3"/>
+  </viewControllers>
+</metamodel:Application>

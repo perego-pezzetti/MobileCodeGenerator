@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="it.polimi.multimedia"
+    android:versionCode="1"
+    android:versionName="1.0" >
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="17" />
+    
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="multimedia"
+        android:theme="@style/AppTheme" >
+		<activity
+            android:name="it.polimi.multimedia.VideocameraActivity"
+            android:label="Multimedia" >
+        </activity>
+		<activity
+            android:name="it.polimi.multimedia.PhotocameraActivity"
+            android:label="Multimedia" >
+        </activity>
+		<activity
+            android:name="it.polimi.multimedia.AudioRecorderActivity"
+            android:label="Multimedia" >
+        </activity>
+		<activity
+            android:name="it.polimi.multimedia.GalleryActivity"
+            android:label="Multimedia" >
+			<intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+		<activity
+            android:name="it.polimi.multimedia.PhotoGridActivity"
+            android:label="Multimedia" >
+        </activity>
+		<activity
+            android:name="it.polimi.multimedia.VideoListActivity"
+            android:label="Multimedia" >
+        </activity>
+		<activity
+            android:name="it.polimi.multimedia.AudioListActivity"
+            android:label="Multimedia" >
+        </activity>
+		<activity
+            android:name="it.polimi.multimedia.PhotoViewerActivity"
+            android:label="Multimedia" >
+        </activity>
+		<activity
+            android:name="it.polimi.multimedia.VideoViewerActivity"
+            android:label="Multimedia" >
+        </activity>
+		<activity
+            android:name="it.polimi.multimedia.AudioPlayerActivity"
+            android:label="Multimedia" >
+        </activity>
+    </application>
+</manifest>

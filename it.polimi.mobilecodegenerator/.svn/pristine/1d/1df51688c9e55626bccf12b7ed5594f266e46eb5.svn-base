@@ -1,0 +1,14 @@
+«IMPORT metamodel»
+
+«DEFINE attributesDeclarations FOR ViewController-»
+«EXPAND android_activities_templates::Buttons::attributesDeclarations-»
+«EXPAND android_activities_templates::EditTexts::attributesDeclarations-»
+«EXPAND android_activities_templates::WebViews::attributesDeclarations-»
+«EXPAND android_activities_templates::ImageViews::attributesDeclarations-»
+«EXPAND android_activities_templates::VideoView::attributesDeclarations-»
+«EXPAND android_activities_templates::Camera::attributesDeclarations-»
+«EXPAND android_activities_templates::Audio::attributesDeclarations-»
+«EXPAND android_activities_templates::ListViews::attributesDeclarations-»
+«EXPAND android_activities_templates::GridViews::attributesDeclarations-»
+«EXPAND android_activities_templates::LocationManager::attributesDeclarations-»
+«ENDDEFINE-»

@@ -1,0 +1,311 @@
+«IMPORT metamodel»
+«DEFINE main FOR Application»
+«EXPAND viewController FOREACH viewControllers»
+«ENDDEFINE»
+
+«DEFINE viewController FOR ViewController»
+
+«FILE application.name +"/"+application.name +"/"+ name+"ViewController.h"-»
+#import <UIKit/UIKit.h>
+@interface «name»ViewController : UIViewController 
+	«IF listViews.size!=0 && gridViews.size!=0-»
+	<UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource>
+	«ELSEIF listViews.size!=0 && gridViews.size==0-»
+	<UITableViewDelegate, UITableViewDataSource>
+	«ELSEIF listViews.size==0 && gridViews.size!=0-»
+	<UICollectionViewDelegate, UICollectionViewDataSource>
+	«ENDIF-»
+@end
+«ENDFILE-»
+
+«FILE application.name +"/"+application.name +"/"+ name+"ViewController.m"-»
+#import "«name»ViewController.h"
+«IF gridViews.size!=0-»
+#import "CustomCollectionViewCell.h"
+«ENDIF-»
+«FOREACH listViews AS lv-»
+«IF lv.clickListener.navigation!=null-»
+#import "«lv.clickListener.navigation.destination»ViewController.h"
+«ENDIF-»
+«ENDFOREACH-»
+«FOREACH gridViews AS gv-»
+«IF gv.clickListener.navigation!=null-»
+#import "«gv.clickListener.navigation.destination»ViewController.h"
+«ENDIF-»
+«ENDFOREACH-»
+
+@interface «name»ViewController ()
+	«FOREACH editTexts AS et-»
+		@property(weak, nonatomic) IBOutlet UITextView *«et.id»;
+	«ENDFOREACH-»
+	«FOREACH webViews AS wv-»
+		@property(weak, nonatomic) IBOutlet UIWebView *«wv.id»;
+	«ENDFOREACH-»
+	«FOREACH listViews AS lv-»
+		@property(weak, nonatomic) IBOutlet UITableView *«lv.id»;
+		@property(strong, nonatomic) NSArray *«lv.id»Contents;
+	«ENDFOREACH-»
+	«FOREACH gridViews AS gv-»
+		@property(weak, nonatomic) IBOutlet UICollectionView *«gv.id»;
+		@property(strong, nonatomic) NSArray *«gv.id»Contents;
+	«ENDFOREACH-»
+	«FOREACH alertDialogs AS ad-»
+		@property(strong, nonatomic) UIAlertView *«ad.id»;
+	«ENDFOREACH-»
+@end
+
+@implementation «name»ViewController
+«FOREACH listViews AS lv-»
+-(NSArray *)«lv.id»Contents {
+    if(!_«lv.id»Contents){
+    	_«lv.id»Contents = [[NSArray alloc] init];
+    	«IF lv.listViewCells.size!=0-»
+		_«lv.id»Contents = @[
+			«FOREACH lv.listViewCells AS lvc-»
+			@"«lvc.title»",
+			«ENDFOREACH-»
+		];
+    	«ENDIF-»
+    }
+    return _«lv.id»Contents;
+}
+«ENDFOREACH-»
+«FOREACH gridViews AS gv-»
+-(NSArray *)«gv.id»Contents {
+    if(!_«gv.id»Contents){
+    	_«gv.id»Contents = [[NSArray alloc] init];
+    	«IF gv.gridViewCells.size!=0-»
+		_«gv.id»Contents = @[
+			«FOREACH gv.gridViewCells AS gvc-»
+			@"«gvc.title»",
+			«ENDFOREACH-»
+		];
+    	«ENDIF-»
+    }
+    return _«gv.id»Contents;
+}
+«ENDFOREACH-»
+
+«FOREACH alertDialogs AS ad-»
+-(UIAlertView *)«ad.id»{
+    if(!_«ad.id»){
+    	_«ad.id» = [[UIAlertView alloc] initWithTitle:@"«ad.title»" message:@"«ad.message»" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Ok",nil];
+    }
+    return _«ad.id»;
+}
+«ENDFOREACH-»
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
+    }
+    return self;
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+	// Do any additional setup after loading the view.
+	
+	«FOREACH webViews AS wv-»
+	NSString *«wv.id»FileName = @"«wv.HTMLFileName.split("\\.").get(0)»";
+	NSString *«wv.id»FilePath = [[NSBundle mainBundle] pathForResource:«wv.id»FileName ofType:@"html"];
+	NSString *«wv.id»DataString = [NSString stringWithContentsOfFile:«wv.id»FilePath encoding:NSUTF8StringEncoding error:nil];
+	[self.«wv.id» loadHTMLString:«wv.id»DataString baseURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]]];
+	«ENDFOREACH-»
+	
+	«FOREACH asyncTasks AS at-»
+	[self performSelectorInBackground:@selector(«at.name») withObject:nil];
+	«ENDFOREACH-»
+	
+	«FOREACH progressDialogs AS pd-»
+	UIAlertView *«pd.id»AlertView = [[UIAlertView alloc] initWithTitle:@"«pd.title»" message:@"«pd.message»" delegate:self cancelButtonTitle:nil otherButtonTitles:nil];
+	«IF pd.spinner-»
+	UIActivityIndicatorView *«pd.id» = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    [«pd.id»AlertView show];
+    «pd.id».frame = CGRectMake(«pd.id»AlertView.frame.origin.x+«pd.id»AlertView.frame.size.width/2-«pd.id».frame.size.width/2, «pd.id»AlertView.frame.size.height-«pd.id».frame.size.height-20, 0.0, 0.0);
+    [«pd.id»AlertView addSubview:«pd.id»];
+    [«pd.id» startAnimating];
+    //TODO do something before dismissing it.
+    «ELSE-»
+    UIProgressView *«pd.id» = [[UIProgressView alloc] initWithProgressViewStyle: UIProgressViewStyleBar];
+    [«pd.id»AlertView show];
+    «pd.id».frame = CGRectMake(30, «pd.id»AlertView.frame.size.height-«pd.id».frame.size.height-50, 225, 90);
+    [«pd.id»AlertView addSubview:«pd.id»];
+    [«pd.id» setProgress:0 animated:NO];
+    //TODO do something before dismissing it: use "setProgress" method of the Progress Dialog for updating the progress bar status.
+	«ENDIF-»
+	//[«pd.id»AlertView dismissWithClickedButtonIndex:[«pd.id»AlertView cancelButtonIndex] animated:YES];
+	«ENDFOREACH-»
+	
+	«FOREACH alertDialogs AS ad-»
+    [self.«ad.id» show];
+	«ENDFOREACH-»
+}
+
+«FOREACH buttons AS b-»
+«IF b.clickListener!=null && b.clickListener.navigation==null-»
+-(IBAction)«b.id»ClickAction:(UIButton *)sender {
+	// Implement the action
+}
+«ENDIF»
+«ENDFOREACH-»
+
+«IF alertDialogs.size!=0-»
+-(void) alertView: (UIAlertView *) alertView
+    clickedButtonAtIndex: (NSInteger) buttonIndex {
+    «FOREACH alertDialogs AS ad-»
+    if (alertView == self.«ad.id») {
+	    if (buttonIndex == 0) { //0 is the index of the cancel button
+	    	//TODO implement the negative action
+	    }   
+	    if (buttonIndex == 1) { //1 is the index of the ok button
+	    	//TODO implement the positive action
+	    }
+    }
+    «ENDFOREACH-»   
+}
+«ENDIF-»
+
+«IF listViews.size!=0-»
+#pragma mark - Table view data source
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    // Return the number of sections.
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    // Return the number of rows in the section.
+    «FOREACH listViews AS lv-»
+    if (tableView == self.«lv.id») {
+        return self.«lv.id»Contents.count;
+    }
+    «ENDFOREACH»
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *CellIdentifier = @"CellIdentifier";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+
+	«FOREACH listViews AS lv-»
+    if (tableView == self.«lv.id») {
+        cell.textLabel.text = [self.«lv.id»Contents objectAtIndex:indexPath.row];
+    }
+    «ENDFOREACH»
+	return cell;
+}
+
+#pragma mark - Table view delegate
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    «FOREACH listViews AS lv-»
+	«IF lv.clickListener!=null-»
+    if (tableView == self.«lv.id») {
+        NSString *clickedItem = [self.«lv.id»Contents objectAtIndex:indexPath.row];
+        «IF lv.clickListener.navigation!=null-»
+       	«lv.clickListener.navigation.destination»ViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"«lv.clickListener.navigation.destination»ViewController"];
+       	// Navigation logic may go here: configure properties of «lv.clickListener.navigation.destination»ViewController
+       	[[self navigationController] pushViewController:vc animated:YES];
+        «ELSE-»
+		//TODO implement the action
+		«ENDIF-»
+    }
+    «ENDIF-»
+    «ENDFOREACH-»
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+«ENDIF-»
+
+«IF gridViews.size!=0-»
+#pragma mark - Collection view DataSource 
+-(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
+{
+	// Return the number of sections.
+    return 1;
+}
+
+-(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+	// Return the number of items in the section.
+    «FOREACH gridViews AS gv-»
+    if (collectionView == self.«gv.id») {
+        return self.«gv.id»Contents.count;
+    }
+    «ENDFOREACH»
+}
+
+-(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+	static NSString *CellIdentifier = @"CellIdentifier";
+    CustomCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
+
+	«FOREACH gridViews AS gv-»
+    if (collectionView == self.«gv.id») {
+        cell.label.text = [self.«gv.id»Contents objectAtIndex:indexPath.item];
+    }
+    «ENDFOREACH»
+	return cell;
+}
+
+#pragma mark - Collection view Delegate
+
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+	«FOREACH gridViews AS gv-»
+	«IF gv.clickListener!=null-»
+    if (collectionView == self.«gv.id») {
+        NSString *clickedItem = [self.«gv.id»Contents objectAtIndex:indexPath.item];
+        «IF gv.clickListener.navigation!=null-»
+       	«gv.clickListener.navigation.destination»ViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"«gv.clickListener.navigation.destination»ViewController"];
+       	// Navigation logic may go here: configure properties of «gv.clickListener.navigation.destination»ViewController
+       	[[self navigationController] pushViewController:vc animated:YES];
+        «ELSE-»
+		//TODO implement the action
+		«ENDIF-»
+    }
+    «ENDIF-»
+    «ENDFOREACH-»
+    [collectionView deselectItemAtIndexPath:indexPath animated:YES];
+}
+«ENDIF-»
+
+«FOREACH asyncTasks AS at-»
+-(void)«at.name»{
+	//TODO code to be executed in the background task
+	//[self performSelectorOnMainThread:@selector(executeOnMainThread) withObject:nil waitUntilDone:NO];
+}
+«ENDFOREACH-»
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+	[super viewWillAppear:animated];
+	// Auto-generated method stub
+}
+- (void)viewWillDisappear:(BOOL)animated
+{
+	[super viewWillDisappear:animated];
+	// Auto-generated method stub
+}
+- (void)viewDidDisappear:(BOOL)animated
+{
+	[super viewDidDisappear:animated];
+	// Auto-generated method stub
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{}
+
+@end
+«ENDFILE-»
+
+«ENDDEFINE»

@@ -1,0 +1,44 @@
+import metamodel;
+
+List[String] invalidFilesNames():JAVA model_checks.JavaChecks.invalidFilesNames();
+List[String] invalidFilesExtensions():JAVA model_checks.JavaChecks.invalidFilesExtensions();
+
+Boolean validAppName(String name):JAVA model_checks.JavaChecks.validAppName(java.lang.String);
+Boolean validCompanyIdentifier(String id):JAVA model_checks.JavaChecks.validCompanyIdentifier(java.lang.String);
+List[String] invalidIds(List[String] ids):JAVA model_checks.JavaChecks.invalidIds(java.util.List);
+
+List[String] duplicatedFilesNames():JAVA model_checks.JavaChecks.duplicatedFilesNames();
+List[String] duplicatedIds(List[String] ids):JAVA model_checks.JavaChecks.duplicatedIds(java.util.List);
+
+
+List[String] ids(Application this) : 
+
+	if(menu!=null) then {
+		viewControllers.buttons.id
+			.addAll(viewControllers.imageViews.id)
+			.addAll(viewControllers.textViews.id)
+			.addAll(viewControllers.webViews.id)
+			.addAll(viewControllers.listViews.id)
+			.addAll(viewControllers.gridViews.id)
+			.addAll(viewControllers.editTexts.id)
+			.addAll(viewControllers.progressDialogs.id)
+			.addAll(viewControllers.alertDialogs.id)
+			.addAll(viewControllers.videoView.reject(vv|vv==null).id)
+			.addAll(viewControllers.audioPlayer.reject(ap|ap==null).id)
+			.addAll(menu.menuItems.id)
+		
+	}.first()
+	else { 
+		viewControllers.buttons.id
+			.addAll(viewControllers.imageViews.id)
+			.addAll(viewControllers.textViews.id)
+			.addAll(viewControllers.webViews.id)
+			.addAll(viewControllers.listViews.id)
+			.addAll(viewControllers.gridViews.id)
+			.addAll(viewControllers.editTexts.id)
+			.addAll(viewControllers.progressDialogs.id)
+			.addAll(viewControllers.alertDialogs.id)
+			.addAll(viewControllers.videoView.reject(vv|vv==null).id)
+			.addAll(viewControllers.audioPlayer.reject(ap|ap==null).id)
+	}.first();
+	

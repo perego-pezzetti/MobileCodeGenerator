@@ -1,0 +1,24 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+	
+	<Button
+        android:id="@+id/OkButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ok" />
+	<Button
+        android:id="@+id/cancelButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cancel" />
+	
+	<TextView
+        android:id="@+id/SendMessageTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ciao Ste!" />
+	
+</LinearLayout>

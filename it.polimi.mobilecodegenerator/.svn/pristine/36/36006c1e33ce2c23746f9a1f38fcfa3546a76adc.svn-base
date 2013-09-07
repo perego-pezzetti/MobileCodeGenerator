@@ -1,0 +1,39 @@
+«REM»
+Copyright 2013 Gregorio Perego, Stefania Pezzetti
+This file is part of it.polimi.mobilecodegenerator.
+
+it.polimi.mobilecodegenerator is free software: 
+you can redistribute it and/or modify it under the terms of the 
+GNU General Public License as published by the Free Software Foundation, 
+either version 3 of the License, or (at your option) any later version.
+
+it.polimi.mobilecodegenerator is distributed in the hope that it will be useful, 
+but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+See the GNU General Public License for more details.You should have received a copy of the GNU General Public License
+along with it.polimi.mobilecodegenerator. If not, see <http://www.gnu.org/licenses/>
+«ENDREM»
+
+«IMPORT metamodel»
+
+«DEFINE attributesDeclarations FOR ViewController-»
+«FOREACH webViews AS wv-»
+private WebView «wv.id»;
+«ENDFOREACH-»
+«ENDDEFINE-»
+
+«DEFINE onCreate FOR ViewController-»
+«FOREACH webViews AS wv-»
+«wv.id» = (WebView)this.findViewById(R.id.«wv.id»);
+WebSettings «wv.id»Settings = «wv.id».getSettings();
+«wv.id»Settings.setDefaultTextEncodingName("utf-8");
+«IF !wv.HTMLFileName.matches("") -»
+String «wv.id»HTMLContent = Utils.fromInputStreamToString(this.getResources().openRawResource(R.raw.«wv.HTMLFileName.split("\\.").get(0)»));
+«wv.id».loadDataWithBaseURL("file:///android_asset/", «wv.id»HTMLContent, "text/html", "utf-8", null);
+«ELSE-»
+/*
+String «wv.id»HTMLContent = Utils.fromInputStreamToString(this.getResources().openRawResource(R.raw.filename...)); //TODO insert local html file name
+«wv.id».loadDataWithBaseURL("file:///android_asset/", «wv.id»HTMLContent, "text/html", "utf-8", null);
+*/
+«ENDIF-»
+«ENDFOREACH-»
+«ENDDEFINE-»

@@ -1,0 +1,181 @@
+«IMPORT metamodel»
+
+«DEFINE attributesDeclarations FOR ViewController-»
+«IF audioPlayer!=null-»
+private Button playButton;
+private Button pauseButton;
+private Button stopButton;
+private MediaPlayer «audioPlayer.id»;
+«ENDIF-»
+«IF audioRecorder!=null-»
+private Button recordButton;
+private MediaRecorder audioRecorder;
+private String recordedAudioPath;
+private boolean isRecording = false;
+«ENDIF-»
+«ENDDEFINE-»
+
+«DEFINE onResume FOR ViewController-»
+«IF audioPlayer!=null && !audioPlayer.sourceType.toString().matches("hardwareFile")-»
+try {
+«audioPlayer.id» = new MediaPlayer();
+«audioPlayer.id».setAudioStreamType(AudioManager.STREAM_MUSIC);
+«IF audioPlayer.sourceType.toString().matches("localFile")-»
+«IF !audioPlayer.fileUri.matches("")-»
+«audioPlayer.id».setDataSource(getAssets().openFd("«audioPlayer.fileUri»").getFileDescriptor());
+«ELSE-»
+«audioPlayer.id».setDataSource(getAssets().openFd("filename...").getFileDescriptor()); //TODO insert file name with extension
+«ENDIF-»
+«ELSEIF audioPlayer.sourceType.toString().matches("remoteFile")-»
+«IF !audioPlayer.fileUri.matches("")-»
+«audioPlayer.id».setDataSource("«audioPlayer.fileUri»");
+«ELSE-»
+«audioPlayer.id».setDataSource("http://..."); //TODO insert remote file uri
+«ENDIF-»
+«ENDIF-»
+«audioPlayer.id».prepare();
+}
+catch (Exception e) {
+	// TODO Auto-generated catch block
+	e.printStackTrace();
+}
+
+this.playButton = (Button) this.findViewById(R.id.«audioPlayer.id»PlayButton);
+this.playButton.setOnClickListener(new OnClickListener() {
+    public void onClick(View v) {
+    	«audioPlayer.id».start();
+    }
+});
+
+this.pauseButton = (Button) this.findViewById(R.id.«audioPlayer.id»PauseButton);
+this.pauseButton.setOnClickListener(new OnClickListener() {
+    public void onClick(View v) {
+    	«audioPlayer.id».pause();
+    }
+});
+
+this.stopButton = (Button) this.findViewById(R.id.«audioPlayer.id»StopButton);
+this.stopButton.setOnClickListener(new OnClickListener() {
+    public void onClick(View v) {
+    	«audioPlayer.id».pause();
+    	«audioPlayer.id».seekTo(0);
+    }
+});
+«ENDIF-»
+«IF audioRecorder!=null-»
+recordButton = (Button) this.findViewById(R.id.audioRecorderRecordButton);
+recordButton.setText("Rec");
+recordButton.setOnClickListener(new OnClickListener() {
+    public void onClick(View v) {
+        if (!isRecording) {	//start recording
+        	String audiosPath = getFilesDir().getAbsolutePath() + "/audios";
+		    File audiosDirectory = new File(audiosPath);
+		    audiosDirectory.mkdir();
+		    String filename = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(new Date())+".mp3";
+		    String localAudioPath = audiosPath+"/"+filename;
+			recordedAudioPath = localAudioPath;
+        
+        	audioRecorder = new MediaRecorder();
+            audioRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+            audioRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+            audioRecorder.setOutputFile(recordedAudioPath);
+            audioRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+            try {
+                audioRecorder.prepare();
+                audioRecorder.start();
+            }
+            catch (IOException e) {
+            	// TODO Auto-generated catch block
+            	e.printStackTrace();
+            }
+        	recordButton.setText("Stop");
+        }
+        else {	//stop recording
+        	audioRecorder.stop();
+            audioRecorder.release();
+            audioRecorder = null;
+            «IF !audioRecorder.audioPlayerId.matches("")-»
+    		try {
+    			«audioRecorder.audioPlayerId» = new MediaPlayer();
+    			«audioRecorder.audioPlayerId».setDataSource(new FileInputStream(recordedAudioPath).getFD());
+    			«audioRecorder.audioPlayerId».prepare();
+    		}
+    		catch (Exception e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+    		«ENDIF-»
+        	recordButton.setText("Rec");
+        }
+        isRecording = !isRecording;
+    }
+});
+«IF !audioRecorder.audioPlayerId.matches("")-»
+this.playButton = (Button) this.findViewById(R.id.«audioRecorder.audioPlayerId»PlayButton);
+this.playButton.setOnClickListener(new OnClickListener() {
+    public void onClick(View v) {
+    	if (audioRecorder != null && isRecording){ 
+			audioRecorder.stop();
+			audioRecorder.release();
+			audioRecorder = null;
+			try {
+				«audioRecorder.audioPlayerId» = new MediaPlayer();
+				«audioRecorder.audioPlayerId».setDataSource(new FileInputStream(recordedAudioPath).getFD());
+				«audioRecorder.audioPlayerId».prepare();
+				«audioRecorder.audioPlayerId».start();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			recordButton.setText("Rec");
+			isRecording = false;
+		}
+		else if(«audioRecorder.audioPlayerId»!=null){
+    		«audioRecorder.audioPlayerId».start();
+    	}
+    }
+});
+
+this.pauseButton = (Button) this.findViewById(R.id.«audioRecorder.audioPlayerId»PauseButton);
+this.pauseButton.setOnClickListener(new OnClickListener() {
+    public void onClick(View v) {
+    	if(«audioRecorder.audioPlayerId»!=null){
+    		«audioRecorder.audioPlayerId».pause();
+    	}
+    }
+});
+
+this.stopButton = (Button) this.findViewById(R.id.«audioRecorder.audioPlayerId»StopButton);
+this.stopButton.setOnClickListener(new OnClickListener() {
+    public void onClick(View v) {
+    	if(«audioRecorder.audioPlayerId»!=null){
+	    	«audioRecorder.audioPlayerId».pause();
+	    	«audioRecorder.audioPlayerId».seekTo(0);
+	    }
+	}
+});
+«ENDIF-»
+«ENDIF-»
+«ENDDEFINE-»
+
+«DEFINE onPause FOR ViewController-»
+«IF audioRecorder!=null-»
+if(audioRecorder!=null) {
+    audioRecorder.release();
+    audioRecorder=null;
+}
+«IF !audioRecorder.audioPlayerId.matches("")-»
+if(«audioRecorder.audioPlayerId»!=null) {
+	«audioRecorder.audioPlayerId».release();
+	«audioRecorder.audioPlayerId»=null;
+}
+«ENDIF-»
+«ENDIF-»
+«IF audioPlayer!=null && !audioPlayer.sourceType.toString().matches("hardwareFile")-»
+if(«audioPlayer.id»!=null) {
+	«audioPlayer.id».release();
+	«audioPlayer.id»=null;
+}
+«ENDIF-»
+«ENDDEFINE-»
+

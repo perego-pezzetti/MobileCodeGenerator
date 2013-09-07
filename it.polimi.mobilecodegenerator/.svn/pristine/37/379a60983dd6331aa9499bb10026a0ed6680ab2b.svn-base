@@ -1,0 +1,131 @@
+«IMPORT metamodel»
+«DEFINE main FOR Application»
+
+«IF menu!=null-»
+«FILE name+"/res/menu/"+"main.xml"-»
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    «FOREACH menu.menuItems AS i-»
+    <item
+        android:id="@+id/«i.id»"
+        android:title="«i.title»"/>
+    «ENDFOREACH-»
+</menu>
+«ENDFILE-»
+«ENDIF-»
+
+«EXPAND viewController FOREACH viewControllers»
+«ENDDEFINE»
+
+«DEFINE viewController FOR ViewController»
+«FILE this.application.name+"/res/layout/"+"activity_"+name.toLowerCase()+".xml"-»
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+	
+	«FOREACH buttons AS b-»
+	<Button
+        android:id="@+id/«b.id»"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="«b.title»" />
+	«ENDFOREACH-»
+	«IF fotocameraController!=null-»
+	<Button
+        android:id="@+id/fotocameraButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fotocamera" />
+	«ENDIF-»
+	«IF videocameraController!=null-»
+	<Button
+        android:id="@+id/videocameraButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Videocamera" />
+	«ENDIF-»
+	«IF audioRecorder!=null-»
+	<Button
+	        android:id="@+id/audioRecorderRecordButton"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="Rec" />
+	«ENDIF-»
+	«IF audioPlayer!=null-»
+	<LinearLayout
+	    android:layout_width="match_parent"
+    	android:layout_height="wrap_content">
+		<Button
+	        android:id="@+id/«audioPlayer.id»PlayButton"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="Play" />
+	    <Button
+	        android:id="@+id/«audioPlayer.id»PauseButton"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="Pause" />
+	    <Button
+	        android:id="@+id/«audioPlayer.id»StopButton"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="Stop" />
+     </LinearLayout>
+	«ENDIF-»
+	«FOREACH textViews AS tv-»
+	<TextView
+        android:id="@+id/«tv.id»"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="«tv.content»" />
+	«ENDFOREACH-»
+	«FOREACH editTexts AS et-»
+	<EditText
+        android:id="@+id/«et.id»"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textMultiLine" >
+    </EditText>
+    «ENDFOREACH-»
+	«FOREACH imageViews AS iv-»
+	<ImageView
+	    android:id="@+id/«iv.id»"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    «IF iv.sourceType.toString().matches("localFile") && !iv.fileUri.matches("")-»
+	    android:src="@drawable/«iv.fileUri.split("\\.").get(0)»"
+	    «ENDIF-»
+	/>
+    «ENDFOREACH-»
+    «IF videoView!=null-»
+	<VideoView
+	    android:id="@+id/«videoView.id»"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"/>
+    «ENDIF-»
+	«FOREACH webViews AS wv-»
+	<WebView
+        android:id="@+id/«wv.id»"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+	«ENDFOREACH-» 
+    «FOREACH listViews AS lv-»
+    <ListView
+        android:id="@+id/«lv.id»"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </ListView>
+    «ENDFOREACH-»   
+    «FOREACH gridViews AS gv-»
+    <GridView
+        android:id="@+id/«gv.id»"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:numColumns="3">
+    </GridView>
+    «ENDFOREACH-»
+</LinearLayout>
+«ENDFILE-»
+«ENDDEFINE»

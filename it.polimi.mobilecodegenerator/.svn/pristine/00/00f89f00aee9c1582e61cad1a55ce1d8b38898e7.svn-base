@@ -1,0 +1,52 @@
+«REM»
+Copyright 2013 Gregorio Perego, Stefania Pezzetti
+This file is part of it.polimi.mobilecodegenerator.
+
+it.polimi.mobilecodegenerator is free software: 
+you can redistribute it and/or modify it under the terms of the 
+GNU General Public License as published by the Free Software Foundation, 
+either version 3 of the License, or (at your option) any later version.
+
+it.polimi.mobilecodegenerator is distributed in the hope that it will be useful, 
+but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+See the GNU General Public License for more details.You should have received a copy of the GNU General Public License
+along with it.polimi.mobilecodegenerator. If not, see <http://www.gnu.org/licenses/>
+«ENDREM»
+
+«IMPORT metamodel»
+
+«DEFINE publicImports FOR ViewController-»
+#import <UIKit/UIKit.h>
+«IF locationManager!=null-»
+#import <CoreLocation/CoreLocation.h>
+«ENDIF-»
+«IF videoView!=null-»
+#import <MediaPlayer/MediaPlayer.h>
+«ENDIF-»
+«IF photocameraController!=null || videocameraController!=null-»
+#import <MobileCoreServices/MobileCoreServices.h>
+«ENDIF-»
+«IF audioPlayer!=null || audioRecorder!=null-»
+#import <AVFoundation/AVFoundation.h>
+«ENDIF-»
+«ENDDEFINE-»
+
+«DEFINE privateImports FOR ViewController-»
+#import "«name»ViewController.h"
+«IF imageViews.sourceType.toString().contains("remoteFile")-»
+#import "ImageDownloadingTask.h"
+«ENDIF-»
+«IF gridViews.size!=0-»
+#import "CustomCollectionViewCell.h"
+«ENDIF-»
+«FOREACH listViews AS lv-»
+«IF lv.clickListener.navigation!=null-»
+#import "«lv.clickListener.navigation.destination»ViewController.h"
+«ENDIF-»
+«ENDFOREACH-»
+«FOREACH gridViews AS gv-»
+«IF gv.clickListener.navigation!=null-»
+#import "«gv.clickListener.navigation.destination»ViewController.h"
+«ENDIF-»
+«ENDFOREACH-»
+«ENDDEFINE-»

@@ -1,0 +1,144 @@
+«IMPORT metamodel»
+«DEFINE main FOR Application»
+«EXPAND viewController FOREACH viewControllers»
+«ENDDEFINE»
+
+«DEFINE viewController FOR ViewController»
+«FILE this.application.name+"/res/layout/"+"activity_"+name.toLowerCase()+".xml"-»
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+	
+	«FOREACH buttons AS b-»
+	<Button
+        android:id="@+id/«b.id»"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="«b.title»" />
+	«ENDFOREACH-»
+	«IF fotocameraController!=null-»
+	<Button
+        android:id="@+id/fotocameraButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fotocamera" />
+	«ENDIF-»
+	«IF videocameraController!=null-»
+	<Button
+        android:id="@+id/videocameraButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Videocamera" />
+	«ENDIF-»
+	«IF audioPlayer!=null && !audioPlayer.sourceType.toString().matches("hardwareFile")-»
+	<LinearLayout
+	    android:layout_width="match_parent"
+    	android:layout_height="match_parent">
+		<Button
+	        android:id="@+id/«audioPlayer.id»Play"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="Play" />
+	    <Button
+	        android:id="@+id/«audioPlayer.id»Pause"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="Pause" />
+	    <Button
+	        android:id="@+id/«audioPlayer.id»Stop"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="Stop" />
+     </LinearLayout>
+	«ENDIF-»
+	«IF audioRecorderController!=null-»
+	<LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+	    <Button
+	        android:id="@+id/recordButton"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="Rec" />
+	«IF !audioRecorderController.audioPlayerId.matches("")-»
+	    <Button
+	        android:id="@+id/play"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="Play" />
+	    <Button
+	        android:id="@+id/pause"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="Pause" />
+	    <Button
+	        android:id="@+id/stop"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="Stop" />
+	«ENDIF-»
+	</LinearLayout>
+	«ENDIF-»
+	«FOREACH textViews AS tv-»
+	<TextView
+        android:id="@+id/«tv.id»"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="«tv.content»" />
+	«ENDFOREACH-»
+	«FOREACH editTexts AS et-»
+	<EditText
+        android:id="@+id/«et.id»"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textMultiLine" >
+    </EditText>
+    «ENDFOREACH-»
+	
+	«FOREACH webViews AS wv-»
+	<WebView
+        android:id="@+id/«wv.id»"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+	«ENDFOREACH-»
+	
+	«FOREACH imageViews AS iv-»
+	<ImageView
+	    android:id="@+id/«iv.id»"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    «IF iv.sourceType.toString().matches("localFile")-»
+	    android:src="@drawable/«iv.fileUri.toLowerCase().split("\\.").get(0)»" 
+	    «ENDIF-»
+	/>
+    «ENDFOREACH-»
+    
+    «IF videoView!=null-»
+	<VideoView
+	    android:id="@+id/«videoView.id»"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"/>
+    «ENDIF-»
+    
+    «FOREACH listViews AS lv-»
+    <ListView
+        android:id="@+id/«lv.id»"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </ListView>
+    «ENDFOREACH-»
+    
+    «FOREACH gridViews AS gv-»
+    <GridView
+        android:id="@+id/«gv.id»"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:numColumns="3">
+    </GridView>
+    «ENDFOREACH-»
+</LinearLayout>
+«ENDFILE-»
+«ENDDEFINE»

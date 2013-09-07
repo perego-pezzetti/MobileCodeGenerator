@@ -1,0 +1,88 @@
+«IMPORT metamodel»
+
+«DEFINE propertiesDeclarations FOR ViewController-»
+«IF videocameraController!=null && !videoView.sourceType.toString().matches("hardwareFile")-»
+@property (strong, nonatomic) NSURL *recordedVideoUrl;
+«ENDIF-»
+«ENDDEFINE-»
+
+«DEFINE viewDidAppear FOR ViewController-»
+	«IF videoView.sourceType.toString().matches("hardwareFile")-»
+	self.moviePlayer = [[MPMoviePlayerController alloc] initWithContentURL: self.recordedVideoUrl];
+	«IF videocameraController!=null && !videocameraController.videoViewId.matches("")-»
+	[self.moviePlayer.view setFrame: self.«videocameraController.videoViewId».bounds];
+	[self.«videocameraController.videoViewId» addSubview:self.moviePlayer.view];
+	[self.moviePlayer prepareToPlay];
+	[self.moviePlayer play];
+	«ENDIF-»
+	«ENDIF-»
+«ENDDEFINE-»
+
+«DEFINE camera FOR ViewController-»
+«IF fotocameraController!=null || videocameraController!=null-»
+- (BOOL)startCameraControllerFromViewController:(UIViewController*)controller
+                                  usingDelegate:(id <UIImagePickerControllerDelegate,UINavigationControllerDelegate>)delegate
+                                  withMediaType:(NSString *)mediaType
+{
+    if(([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]==NO)||(delegate==nil)||(controller==nil)){
+        return NO;
+    }
+    
+    UIImagePickerController *cameraUI = [[UIImagePickerController alloc] init];
+    cameraUI.sourceType = UIImagePickerControllerSourceTypeCamera;
+    cameraUI.allowsEditing = YES;
+    cameraUI.delegate = delegate;
+    
+    if([[UIImagePickerController availableMediaTypesForSourceType:cameraUI.sourceType] containsObject:mediaType]){
+        cameraUI.mediaTypes = [[NSArray alloc] initWithObjects:(NSString *)mediaType,nil];
+    }
+    
+    [controller presentViewController:cameraUI animated:YES completion:^{}];
+    return YES;
+}
+
+#pragma mark - Image Picker Controller Delegate
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
+    
+    «IF fotocameraController!=null-»
+    if([mediaType isEqualToString:@"public.image"]){
+        UIImage *photo = [info objectForKey:UIImagePickerControllerOriginalImage];
+        //TODO use the photo
+        «IF !fotocameraController.imageViewId.matches("")-»
+        self.«fotocameraController.imageViewId».image = photo;
+        «ENDIF-»
+    }
+    «ENDIF-»
+    «IF videocameraController!=null-»
+    if([mediaType isEqualToString:@"public.movie"]){
+        self.recordedVideoUrl = info[UIImagePickerControllerMediaURL];
+        //TODO use the video
+    }
+    «ENDIF-»
+    
+    [self dismissViewControllerAnimated:YES completion:^{}];
+}
+
+- (void) imagePickerControllerDidCancel: (UIImagePickerController *) picker
+{
+    [self dismissViewControllerAnimated:YES completion:^{}];
+    //User cancelled the media capture
+    //TODO implement the action
+}
+«ENDIF-»
+
+«IF fotocameraController!=null-»
+- (IBAction)showFotocameraUI:(UIButton *)sender
+{
+    [self startCameraControllerFromViewController: self usingDelegate: self withMediaType:(NSString *)kUTTypeImage];
+}
+«ENDIF-»
+«IF videocameraController!=null-»
+- (IBAction)showVideocameraUI:(UIButton *)sender
+{
+    [self startCameraControllerFromViewController: self usingDelegate: self withMediaType:(NSString *)kUTTypeMovie];
+}
+«ENDIF-»
+«ENDDEFINE-»

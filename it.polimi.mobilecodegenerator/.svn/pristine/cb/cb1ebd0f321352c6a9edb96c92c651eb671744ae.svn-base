@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="ASCII"?>
+<metamodel:Application
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:metamodel="http://metamodel/1.0"
+    xsi:schemaLocation="http://metamodel/1.0 ../metamodel/metamodel.ecore"
+    name="Test"
+    companyIdentifier="it.polimi"
+    companyName="Politecnico di Milano">
+  <viewControllers
+      name="FirstVC"
+      launcher="true">
+    <buttons
+        title="ToSecondVC"
+        id="ToSecondVC">
+      <clickListener>
+        <navigation
+            destination="SecondVC"/>
+      </clickListener>
+    </buttons>
+    <videoView
+        id="videoView1"
+        fileUri="http://5630b7e7d9067365084d-c0c9ba06eb3edc1266b332ab9a022e72.r98.cf3.rackcdn.com/franciacorta_app_110422_videoistituzionaleITA_1.mp4"
+        sourceType="remoteFile"/>
+  </viewControllers>
+  <viewControllers
+      name="SecondVC"/>
+</metamodel:Application>

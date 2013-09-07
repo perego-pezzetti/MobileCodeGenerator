@@ -1,0 +1,95 @@
+«IMPORT metamodel»
+«DEFINE main FOR Application»
+
+«IF menu!=null-»
+«FILE name+"/src/"+ companyIdentifier.replaceAll("\\.","/") +"/"+ name.toLowerCase() +"/"+ "MenuActivity.java"-»
+package «companyIdentifier».«name.toLowerCase()»;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.view.Menu;
+import android.view.MenuItem;
+
+public class MenuActivity extends Activity {
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
+
+	@Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()){
+        	«FOREACH menu.menuItems AS i-»
+            case R.id.«i.id»:
+            	startActivity(new Intent(this, «i.navigation.destination»Activity.class));
+                break;
+            «ENDFOREACH-»
+        }
+        return true;
+    }
+}
+«ENDFILE-»
+«ENDIF-»
+
+«EXPAND viewController FOREACH viewControllers»
+«ENDDEFINE»
+
+«DEFINE viewController FOR ViewController»
+«FILE this.application.name+"/src/"+ this.application.companyIdentifier.replaceAll("\\.","/") +"/"+ this.application.name.toLowerCase() +"/"+ name + "Activity.java"-»
+	package «this.application.companyIdentifier».«this.application.name.toLowerCase()»;
+	
+	«EXPAND android_activities_templates::Imports::imports»
+	
+	public class «this.name»Activity extends «IF this.application.menu!=null-»Menu«ENDIF-»Activity «EXPAND android_activities_templates::Implements::implements» {
+		«EXPAND android_activities_templates::AttributesDeclarations::attributesDeclarations»
+		
+		@Override
+		protected void onCreate(Bundle savedInstanceState) {
+			super.onCreate(savedInstanceState);
+			«EXPAND android_activities_templates::OnCreate::onCreate»
+		}
+		
+		«IF listViews.size!=0 || gridViews.size!=0-»
+		@Override
+		public void onItemClick(AdapterView<?> l, View v, int position, long id) {
+			«EXPAND android_activities_templates::ListViews::onItemClick»
+			«EXPAND android_activities_templates::GridViews::onItemClick»
+		}
+		«ENDIF-»
+		
+		«EXPAND android_activities_templates::Camera::camera»
+		
+		«EXPAND android_activities_templates::LocationManager::locationManager»
+		
+		«EXPAND android_activities_templates::AsyncTasks::asyncTasks»
+
+		@Override
+		protected void onStart() {
+			//TODO Auto-generated method stub
+			super.onStart();
+		}
+		
+		@Override
+		protected void onResume() {
+			//TODO Auto-generated method stub
+			super.onResume();
+			«EXPAND android_activities_templates::OnResume::onResume»
+		}
+		
+		@Override
+		protected void onPause() {
+			//TODO Auto-generated method stub
+			super.onPause();
+			«EXPAND android_activities_templates::OnPause::onPause»
+		}
+		
+		@Override
+		protected void onStop() {
+			//TODO Auto-generated method stub
+			super.onStop();
+		}
+	}
+«ENDFILE-»
+«ENDDEFINE»

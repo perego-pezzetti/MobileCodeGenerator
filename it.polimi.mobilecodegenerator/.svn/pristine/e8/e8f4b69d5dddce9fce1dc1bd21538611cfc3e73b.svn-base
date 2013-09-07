@@ -1,0 +1,90 @@
+«IMPORT metamodel»
+«DEFINE main FOR Application»
+«EXPAND viewController FOREACH viewControllers»
+«ENDDEFINE»
+
+«DEFINE viewController FOR ViewController»
+
+«FILE application.name +"/"+application.name +"/"+ name+"ViewController.h"-»
+«EXPAND ios_viewcontrollers_templates::Imports::publicImports»
+
+@interface «name»ViewController : UIViewController «EXPAND ios_viewcontrollers_templates::Protocols::publicProtocols»
+@end
+«ENDFILE-»
+
+«FILE application.name +"/"+application.name +"/"+ name+"ViewController.m"-»
+«EXPAND ios_viewcontrollers_templates::Imports::privateImports»
+
+@interface «name»ViewController ()
+«EXPAND ios_viewcontrollers_templates::PropertiesDeclarations::propertiesDeclarations»
+@end
+
+@implementation «name»ViewController
+«EXPAND ios_viewcontrollers_templates::LazyInstantiations::lazyInstantiations»
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
+    }
+    return self;
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+	// Do any additional setup after loading the view.
+	«EXPAND ios_viewcontrollers_templates::ViewDidLoad::viewDidLoad»
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    «EXPAND ios_viewcontrollers_templates::ViewDidAppear::viewDidAppear»
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+«EXPAND ios_viewcontrollers_templates::Buttons::buttons»
+
+«EXPAND ios_viewcontrollers_templates::AlertDialogs::alertDialogs»
+
+«EXPAND ios_viewcontrollers_templates::Audio::audio»
+
+«EXPAND ios_viewcontrollers_templates::ListViews::listViews»
+
+«EXPAND ios_viewcontrollers_templates::GridViews::gridViews»
+
+«EXPAND ios_viewcontrollers_templates::Camera::camera»
+
+«EXPAND ios_viewcontrollers_templates::LocationManager::locationManager»
+
+«EXPAND ios_viewcontrollers_templates::AsyncTasks::asyncTasks»
+
+
+- (void)viewWillAppear:(BOOL)animated
+{
+	[super viewWillAppear:animated];
+	// Auto-generated method stub
+}
+- (void)viewWillDisappear:(BOOL)animated
+{
+	[super viewWillDisappear:animated];
+	// Auto-generated method stub
+}
+- (void)viewDidDisappear:(BOOL)animated
+{
+	[super viewDidDisappear:animated];
+	// Auto-generated method stub
+	«EXPAND ios_viewcontrollers_templates::ViewDidDisappear::viewDidDisappear»
+}
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{}
+
+@end
+«ENDFILE-»
+
+«ENDDEFINE»

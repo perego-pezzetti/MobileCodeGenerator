@@ -1,0 +1,9 @@
+import metamodel;
+extension ios_extensions::Java;
+
+//iOS methods
+String getFirstHexadecimalId(String viewControllerName):JAVA ios_extensions.IOSJavaUtil.getFirstHexadecimalId(java.lang.String);
+String getSecondHexadecimalId(String viewControllerName):JAVA ios_extensions.IOSJavaUtil.getSecondHexadecimalId(java.lang.String);
+
+Void deleteApplicationFolder():JAVA ios_extensions.IOSJavaUtil.deleteApplicationFolder();
+Void copyDefaultIOSFiles():JAVA ios_extensions.IOSJavaUtil.copyDefaultIOSFiles();

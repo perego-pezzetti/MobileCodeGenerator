@@ -1,0 +1,20 @@
+«IMPORT metamodel»
+
+«DEFINE onCreate FOR ViewController»
+«FOREACH progressDialogs AS pd-»
+ProgressDialog «pd.id» = new ProgressDialog(«name»Activity.this);
+«pd.id».setTitle("«pd.title»");
+«pd.id».setMessage("«pd.message»");
+«IF pd.spinner-»
+«pd.id».setProgressStyle(ProgressDialog.STYLE_SPINNER);
+«pd.id».show();
+//TODO do something before dismissing it.
+«ELSE-»
+«pd.id».setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+«pd.id».show();
+«pd.id».setProgress(0);
+//TODO do something before dismissing it: use "setProgress" method of the Progress Dialog for updating the progress bar status.
+«ENDIF-»
+//«pd.id».dismiss();
+«ENDFOREACH-»
+«ENDDEFINE»

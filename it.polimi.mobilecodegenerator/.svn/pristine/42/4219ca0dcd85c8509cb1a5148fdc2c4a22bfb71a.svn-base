@@ -1,0 +1,95 @@
+«REM»
+Copyright 2013 Gregorio Perego, Stefania Pezzetti
+This file is part of it.polimi.mobilecodegenerator.
+
+it.polimi.mobilecodegenerator is free software: 
+you can redistribute it and/or modify it under the terms of the 
+GNU General Public License as published by the Free Software Foundation, 
+either version 3 of the License, or (at your option) any later version.
+
+it.polimi.mobilecodegenerator is distributed in the hope that it will be useful, 
+but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+See the GNU General Public License for more details.You should have received a copy of the GNU General Public License
+along with it.polimi.mobilecodegenerator. If not, see <http://www.gnu.org/licenses/>
+«ENDREM»
+
+«IMPORT metamodel»
+«DEFINE main FOR Application-»
+
+«IF viewControllers.imageViews.sourceType.toString().contains("remoteFile")-»
+«FILE this.name+"/src/"+ this.companyIdentifier.replaceAll("\\.","/") +"/"+ this.name.toLowerCase() +"/ImageDownloadingTask.java"-»
+package «this.companyIdentifier».«this.name.toLowerCase()»;
+
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
+import android.widget.ImageView;
+
+public class ImageDownloadingTask extends AsyncTask<ImageView, Void, Bitmap>{
+	private ImageView imageView;
+    private String imageUri;
+
+    /**
+     * This task attempts to download an image from the Network:
+	 * in case of success, it sets the proper ImageView,
+	 * in case of failure, it does nothing (ImageView remains without image).
+     */
+    public ImageDownloadingTask(){};
+    
+    /***
+     * Attempts to download the image from the Network.
+	 * @params params[0] = ImageView where to put the image to be downloaded. The url must be attached in a tag on the ImageView.
+     */
+    @Override
+    protected Bitmap doInBackground(ImageView... params) {
+        imageView = (ImageView) params[0];
+        Bitmap bitmap = null;
+        if(imageView!=null){
+        	imageUri = imageView.getTag().toString();
+			try {  
+				bitmap = downloadImage(imageUri);
+			}
+			catch (MalformedURLException e) {
+				e.printStackTrace();
+			} 
+			catch (IOException e) { //failure in downloading the image
+				e.printStackTrace();
+			} 
+        }
+        return bitmap;
+    }
+    
+    /**
+     * Attempts to download the image at the url passed as parameter: it returns the bitmap in case of success, null otherwise.
+     * @param imageUrl
+     */
+    protected Bitmap downloadImage(String imageUrl) throws MalformedURLException, IOException{
+    	HttpURLConnection connection = (HttpURLConnection) new URL(imageUrl).openConnection();
+		connection.connect();
+		Bitmap downloadedBitmap = BitmapFactory.decodeStream(connection.getInputStream()); //Convert to bitmap
+		connection.disconnect();
+		return downloadedBitmap;
+    }
+    
+    /***
+     * If the image has been downloaded properly it sets the ImageView.
+     */
+    @Override
+    protected void onPostExecute(Bitmap bitmap) {
+    	super.onPostExecute(bitmap);
+        if(bitmap!=null){
+        	String imageUri = imageView.getTag().toString();
+        	if(this.imageUri.equals(imageUri)){ //needed for synchronization reasons
+        		this.imageView.setImageBitmap(bitmap);
+        	}
+        }
+    } 
+}
+«ENDFILE-»
+«ENDIF-»
+«ENDDEFINE-»

@@ -1,0 +1,21 @@
+«IMPORT metamodel»
+
+«DEFINE imports FOR ViewController-»
+import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import android.os.*;
+import android.app.*;
+import android.content.*;
+import android.graphics.Bitmap;
+import android.view.*;
+import android.view.View.*;
+import android.widget.*;
+import android.widget.AdapterView.*;
+import android.webkit.*;
+import android.location.*;
+import android.net.Uri;
+import android.provider.MediaStore;
+import android.media.*;
+«ENDDEFINE-»

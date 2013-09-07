@@ -1,0 +1,29 @@
+html,body {
+	font: 17px "HelveticaNeue", sans-serif;
+	padding: 0;
+	margin: 0;
+	
+}
+body{ 
+	padding: 10px 10px 10px 10px;
+    text-align: left;
+    background-color: transparent;
+}
+h2 {
+    font: 18px "Helvetica", sans-serif;
+    color: #980015;
+    text-align: left;
+    font-weight: bold;
+}
+img#news-image {
+    width: 100%;
+    max-width: 300px;
+}
+
+em{
+    font-style: italic;
+}
+
+#target,#tempo,#lunghezza,#dislivello,#fondo {
+    font-size: 13px;
+}

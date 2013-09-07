@@ -1,0 +1,15 @@
+«IMPORT metamodel»
+
+«DEFINE viewDidLoad FOR ViewController»
+«EXPAND ios_viewcontrollers_templates::WebViews::viewDidLoad»
+
+«EXPAND ios_viewcontrollers_templates::ImageViews::viewDidLoad»
+
+«EXPAND ios_viewcontrollers_templates::ProgressDialogs::viewDidLoad»
+
+«EXPAND ios_viewcontrollers_templates::AlertDialogs::viewDidLoad»
+
+«EXPAND ios_viewcontrollers_templates::LocationManager::viewDidLoad»
+
+«EXPAND ios_viewcontrollers_templates::AsyncTasks::viewDidLoad»
+«ENDDEFINE»

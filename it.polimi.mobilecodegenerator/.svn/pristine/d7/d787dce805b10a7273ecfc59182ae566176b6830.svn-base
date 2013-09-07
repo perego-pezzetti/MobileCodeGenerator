@@ -1,0 +1,155 @@
+«IMPORT metamodel»
+
+«DEFINE propertiesDeclarations FOR ViewController-»
+«IF audioRecorder!=null-»
+@property (strong, nonatomic) IBOutlet UIButton *recordButton;
+@property (strong, nonatomic) AVAudioRecorder *audioRecorder;
+@property (strong, nonatomic) NSURL *recordedAudioUrl;
+«ENDIF-»
+«IF audioPlayer!=null-»
+@property (strong, nonatomic) AVAudioPlayer *«audioPlayer.id»;
+«ENDIF-»
+«ENDDEFINE-»
+
+«DEFINE viewDidAppear FOR ViewController-»
+	«IF audioPlayer!=null && !audioPlayer.sourceType.toString().matches("hardwareFile")-»
+	«IF audioPlayer.sourceType.toString().matches("localFile")-»
+	«IF !audioPlayer.fileUri.matches("")-»
+	NSURL* musicFile = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"«audioPlayer.fileUri.split("\\.").get(0)»" ofType:@"«audioPlayer.fileUri.split("\\.").get(1)»"]];
+	self.«audioPlayer.id» = [[AVAudioPlayer alloc] initWithContentsOfURL:musicFile error:nil];
+	«ELSE-»
+	//TODO decomment the next lines and insert file name and extension
+	//NSURL* musicFile = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"filename..." ofType:@"extension..."]];
+	//self.«audioPlayer.id» = [[AVAudioPlayer alloc] initWithContentsOfURL:musicFile error:nil];
+	«ENDIF-»
+	«ELSEIF audioPlayer.sourceType.toString().matches("remoteFile")-»
+	«IF !audioPlayer.fileUri.matches("")-»
+	[self performSelectorInBackground:@selector(downloadDataFromURL:) withObject:@"«audioPlayer.fileUri»"];
+	«ELSE-»
+	[self performSelectorInBackground:@selector(downloadDataFromURL:) withObject:@"http://..."]; //TODO insert remote file uri
+	«ENDIF-»
+	«ENDIF-»
+	«ENDIF-»
+«ENDDEFINE-»
+
+«DEFINE audio FOR ViewController-»
+«IF audioPlayer!=null-»
+#pragma mark - AudioPlayer Management
+«IF audioPlayer.sourceType.toString().matches("remoteFile")-»
+-(void)downloadDataFromURL:(NSString *)urlString 
+{
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSData *dataFromUrl = [NSData dataWithContentsOfURL:url];
+    [self performSelectorOnMainThread:@selector(startMusicFromURL:) withObject:dataFromUrl waitUntilDone:YES];
+}
+
+-(void)startMusicFromURL:(NSData*)data
+{
+    self.«audioPlayer.id» = [[AVAudioPlayer alloc] initWithData:data error:nil];
+    [self.«audioPlayer.id» play];
+}
+«ENDIF-»
+
+- (IBAction)play:(UIButton *)sender
+{
+	«IF !audioPlayer.sourceType.toString().matches("hardwareFile")-»
+    [self.«audioPlayer.id» play];
+    «ELSEIF audioRecorder!=null && !audioRecorder.audioPlayerId.matches("")-»
+    if(self.audioRecorder.recording){
+        [self.audioRecorder stop];
+        [self.recordButton setTitle:@"Rec" forState:UIControlStateNormal];
+        «IF !audioRecorder.audioPlayerId.matches("")-»
+		NSError *error = nil;
+		self.«audioRecorder.audioPlayerId» = [[AVAudioPlayer alloc] initWithContentsOfURL:self.recordedAudioUrl error:&error];
+		if(error){
+		    //TODO handle the audio player initialization error
+		}
+		«ENDIF-»
+    }
+    [self.«audioRecorder.audioPlayerId» play];
+    «ENDIF-»
+}
+- (IBAction)pause:(UIButton *)sender
+{
+	«IF !audioPlayer.sourceType.toString().matches("hardwareFile")-»
+    [self.«audioPlayer.id» pause];
+    «ELSEIF audioRecorder!=null && !audioRecorder.audioPlayerId.matches("")-»
+    [self.«audioRecorder.audioPlayerId» pause];
+    «ENDIF-»
+}
+- (IBAction)stop:(UIButton *)sender
+{
+	«IF !audioPlayer.sourceType.toString().matches("hardwareFile")-»
+    [self.«audioPlayer.id» pause];
+    [self.«audioPlayer.id» setCurrentTime:0];
+    «ELSEIF audioRecorder!=null && !audioRecorder.audioPlayerId.matches("")-»
+    [self.«audioRecorder.audioPlayerId» pause];
+    [self.«audioRecorder.audioPlayerId» setCurrentTime:0];
+    «ENDIF-»
+}
+«ENDIF-»
+«IF audioRecorder!=null-»
+- (IBAction)record:(UIButton *)sender
+{
+    if (!self.audioRecorder.recording){ //start recording
+    	«IF !audioRecorder.audioPlayerId.matches("")-»
+    	[self.«audioRecorder.audioPlayerId» pause];
+        [self.«audioRecorder.audioPlayerId» setCurrentTime:0];
+        «ENDIF-»
+        
+    	NSString* audiosPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingString:@"/audios"];
+        [[NSFileManager defaultManager] createDirectoryAtPath:audiosPath withIntermediateDirectories:YES attributes:nil error:nil];
+        NSDateFormatter *formatter=[[NSDateFormatter alloc]init];
+        [formatter setDateFormat:@"yyyy-MM-dd_HH-mm-ss"] ;
+        NSString* filename = [[formatter stringFromDate:[NSDate date]] stringByAppendingString:@".caf"];
+        self.recordedAudioUrl = [NSURL fileURLWithPath:[audiosPath stringByAppendingPathComponent:filename]];
+    	
+        AVAudioSession *audioSession = [AVAudioSession sharedInstance];
+        [audioSession setCategory :AVAudioSessionCategoryPlayAndRecord error:nil];
+        [audioSession setActive:YES error:nil];
+        NSDictionary *recordSettings = [NSDictionary dictionaryWithObjectsAndKeys:
+                                        [NSNumber numberWithInt:AVAudioQualityMin],AVEncoderAudioQualityKey,
+                                        [NSNumber numberWithInt:16],AVEncoderBitRateKey,
+                                        [NSNumber numberWithInt: 2],AVNumberOfChannelsKey,
+                                        [NSNumber numberWithFloat:44100.0],AVSampleRateKey,nil];
+        NSError *error = nil;
+        self.audioRecorder = [[AVAudioRecorder alloc] initWithURL:self.recordedAudioUrl settings:recordSettings error:&error];
+        [self.audioRecorder prepareToRecord];
+        [self.audioRecorder record];
+        [self.recordButton setTitle:@"Stop" forState:UIControlStateNormal];
+    }
+    else{  //stop recording
+        [self.audioRecorder stop];
+        [self.recordButton setTitle:@"Rec" forState:UIControlStateNormal];
+        «IF !audioRecorder.audioPlayerId.matches("")-»
+		NSError *error = nil;
+		self.«audioRecorder.audioPlayerId» = [[AVAudioPlayer alloc] initWithContentsOfURL:self.recordedAudioUrl error:&error];
+		if(error){
+		    //TODO handle the audio player initialization error
+		}
+		«ENDIF-»
+    }
+}
+«ENDIF-»
+«ENDDEFINE-»
+
+«DEFINE viewDidDisappear FOR ViewController-»
+	«IF audioRecorder!=null-»
+	if(self.audioRecorder!=nil && self.audioRecorder.isRecording){
+	    [self.audioRecorder stop];
+	    [self.recordButton setTitle:@"Rec" forState:UIControlStateNormal];
+	}
+	«IF !audioRecorder.audioPlayerId.matches("")-»
+	if(self.«audioRecorder.audioPlayerId»!=nil && self.«audioRecorder.audioPlayerId».isPlaying){
+	    [self.«audioRecorder.audioPlayerId» pause];
+	    [self.«audioRecorder.audioPlayerId» setCurrentTime:0];
+	}
+	«ENDIF-»
+	«ENDIF-»
+	«IF audioPlayer!=null && !audioPlayer.sourceType.toString().matches("hardwareFile")-»
+	if(self.«audioPlayer.id»!=nil && self.«audioPlayer.id».isPlaying){
+	    [self.«audioPlayer.id» pause];
+	    [self.«audioPlayer.id» setCurrentTime:0];
+	}
+	«ENDIF-»
+«ENDDEFINE-»

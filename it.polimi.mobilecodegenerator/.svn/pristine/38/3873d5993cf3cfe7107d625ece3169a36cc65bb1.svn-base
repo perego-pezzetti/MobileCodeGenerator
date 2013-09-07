@@ -1,0 +1,4 @@
+#import <UIKit/UIKit.h>
+@interface SendAlarmViewController : UIViewController
+//TODO
+@end

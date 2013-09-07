@@ -1,0 +1,79 @@
+import metamodel;
+extension model_checks::Extensions;
+
+context Application ERROR "Application name '"+ name +"' must match the regular expression ^[a-zA-Z]+" :
+	validAppName(name)==true;
+context Application ERROR "Company identifier '"+ companyIdentifier +"' must match the regular expression ^[a-z]+(\\.[a-z]+)*" : 
+	validCompanyIdentifier(companyIdentifier)==true;
+
+context Application ERROR "Names of ViewControllers must match the regular expression ^[a-zA-Z][a-zA-Z0-9_]*" :
+	invalidIds(viewControllers.name).size==0;
+context Application ERROR "Names of ViewControllers must be unique. Duplicates: " + duplicatedIds(viewControllers.name) :
+	duplicatedIds(viewControllers.name).size==0; //viewControllers.forAll(vc1 | viewControllers.select(vc2 | vc1.name==vc2.name).size==1);
+	
+context Application ERROR "Ids must match the regular expression ^[a-zA-Z][a-zA-Z0-9_]*" :
+	invalidIds(ids()).size==0;
+context Application ERROR "Ids must be unique. Duplicates: " + duplicatedIds(ids()) :
+	duplicatedIds(ids()).size==0;
+
+context Application if(viewControllers.size)>=1 ERROR "There must be one and only one launcher ViewController" : 
+	viewControllers.select(vc| vc.launcher==true).size==1;
+
+context Button if(clickListener!=null && clickListener.navigation!=null) ERROR "Navigation must have a destination [Button: '"+id+"']" :
+	!clickListener.navigation.destination.matches("");
+context Button if(clickListener.navigation!=null && clickListener.navigation.destination!=null) ERROR "Destination of Navigation must be the name of an existing ViewController [Button: '"+id+"']" :
+	viewController.application.viewControllers.exists(vc| vc.name==clickListener.navigation.destination);
+	
+context ListView if(clickListener.navigation!=null) ERROR "Navigation must have a destination [ListView: '"+id+"']" :
+	!clickListener.navigation.destination.matches("");
+context ListView if(clickListener.navigation!=null && clickListener.navigation.destination!=null) ERROR "Destination of Navigation must be the name of an existing ViewController [ListView: '"+id+"']" :
+	viewController.application.viewControllers.exists(vc| vc.name==clickListener.navigation.destination);
+
+context GridView if(clickListener!=null && clickListener.navigation!=null) ERROR "Navigation must have a destination [GridView: '"+id+"']" :
+	!clickListener.navigation.destination.matches("");
+context GridView if(clickListener.navigation!=null && clickListener.navigation.destination!=null) ERROR "Destination of Navigation must be the name of an existing ViewController [GridView: '"+id+"']" :
+	viewController.application.viewControllers.exists(vc| vc.name==clickListener.navigation.destination);
+
+context FotocameraController if(!imageViewId.matches("")) ERROR "ImageViewId of FotocameraController must be the id of an existing ImageView with sourceType = 'hardwareFile' in the same ViewController" :
+	viewController.imageViews.exists(iv| iv.id.matches(imageViewId) && iv.sourceType.toString().matches("hardwareFile"));		
+context VideocameraController if(!videoViewId.matches("")) ERROR "VideoViewId of VideocameraController must be the id of an existing VideoView with sourceType = 'hardwareFile' in the same ViewController" :
+	viewController.videoView!=null && viewController.videoView.id.matches(videoViewId) && viewController.videoView.sourceType.toString().matches("hardwareFile");
+context AudioRecorder if(!audioPlayerId.matches("")) ERROR "AudioPlayerId of AudioRecorder must be the id of an existing AudioPlayer with sourceType = 'hardwareFile' in the same ViewController" :
+	viewController.audioPlayer!=null && viewController.audioPlayer.id.matches(audioPlayerId) && viewController.audioPlayer.sourceType.toString().matches("hardwareFile");
+
+context ImageView if(sourceType.toString().matches("hardwareFile")) ERROR "FileUri of ImageView must be left empty if the sourceType='hardwareFile'" :
+	fileUri.matches("");
+context VideoView if(sourceType.toString().matches("hardwareFile")) ERROR "FileUri of VideoView must be left empty if the sourceType='hardwareFile'" :
+	fileUri.matches("");
+context AudioPlayer if(sourceType.toString().matches("hardwareFile")) ERROR "FileUri of AudioPlayer must be left empty if the sourceType='hardwareFile'" :
+	fileUri.matches("");
+	
+context ImageView if(sourceType.toString().matches("localFile") && !fileUri.matches("")) ERROR "FileUri of ImageView must end with png, jpg or gif extensions" :
+	fileUri.contains(".") && (fileUri.split("\\.").get(1).matches("png") || fileUri.split("\\.").get(1).matches("jpg") || fileUri.split("\\.").get(1).matches("gif"));
+context VideoView if(sourceType.toString().matches("localFile") && !fileUri.matches("")) ERROR "FileUri of VideoView must end with mp4 or 3gp extensions" :
+	fileUri.contains(".") && (fileUri.split("\\.").get(1).matches("mp4") || fileUri.split("\\.").get(1).matches("3gp"));
+context AudioPlayer if(sourceType.toString().matches("localFile") && !fileUri.matches("")) ERROR "FileUri of AudioPlayer must end with mp3 extension" :
+	fileUri.contains(".") && (fileUri.split("\\.").get(1).matches("mp3"));
+context WebView if(!HTMLFileName.matches("")) ERROR "HTMLFileName of WebView must end with html extension" :
+	HTMLFileName.contains(".") && (HTMLFileName.split("\\.").get(1).matches("html"));
+
+context ViewController ERROR "Names of AsyncTasks must be of minimum one character long." :
+	asyncTasks.forAll(at| at.name.length>0);
+context ViewController ERROR "Names of AsyncTasks must be unique in the same ViewController. " :
+	asyncTasks.forAll(at1 | asyncTasks.select(at2 | at1.name.matches(at2.name)).size==1);
+
+context Menu if (this!=null && menuItems.size>0) ERROR "Menu must contain the launcher ViewController as first menu item. ":
+	menuItems.get(0).navigation.destination.matches(application.viewControllers.select(vc|vc.launcher==true).first().name);
+context MenuItem ERROR "There must be a Navigation for every MenuItem [MenuItem: '"+id+"']" :
+	navigation!=null;
+context MenuItem if(navigation!=null) ERROR "Navigation must have a destination [MenuItem: '"+id+"']" :
+	!navigation.destination.matches("");
+context MenuItem if(navigation!=null && navigation.destination!=null) ERROR "Destination of Navigation must be the name of an existing ViewController [MenuItem: '"+id+"']" :
+	menu.application.viewControllers.exists(vc| vc.name.matches(navigation.destination));
+
+context Application ERROR "Files in user_files folder must not be directories and must have a name containing only [a-z0-9_] with specified extension: "+invalidFilesNames() :
+	invalidFilesNames().size==0;
+context Application if(invalidFilesNames().size==0) ERROR "Extensions of files in user_files folder must be html, txt, css, png, jpg, gif, mp4, 3gp or mp3: "+invalidFilesExtensions() :
+	invalidFilesExtensions().size==0;
+context Application if(invalidFilesNames().size==0 && invalidFilesExtensions().size==0) ERROR "Files in user_files folder must have different names: "+duplicatedFilesNames() :
+	duplicatedFilesNames().size==0;

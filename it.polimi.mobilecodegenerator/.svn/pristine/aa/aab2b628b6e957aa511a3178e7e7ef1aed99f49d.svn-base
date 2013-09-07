@@ -1,0 +1,23 @@
+«IMPORT metamodel»
+
+«DEFINE onCreate FOR ViewController»
+«FOREACH alertDialogs AS ad-»
+AlertDialog.Builder «ad.id»Builder = new AlertDialog.Builder(this);
+«ad.id»Builder.setTitle("«ad.title»");
+«ad.id»Builder.setMessage("«ad.message»");
+«ad.id»Builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+	@Override
+	public void onClick(DialogInterface dialog, int which) {
+		//TODO implement the positive action
+	}
+});
+«ad.id»Builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+	@Override
+	public void onClick(DialogInterface dialog, int which) {
+		//TODO implement the negative action
+	}
+});
+AlertDialog «ad.id» = «ad.id»Builder.create();
+«ad.id».show();
+«ENDFOREACH-»
+«ENDDEFINE»

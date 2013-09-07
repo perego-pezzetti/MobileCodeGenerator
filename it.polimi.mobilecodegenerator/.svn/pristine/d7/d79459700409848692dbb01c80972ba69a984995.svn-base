@@ -1,0 +1,117 @@
+<workflow>
+
+	<!--<property file="iOSGenerator.properties"/>-->
+	<property name="model" value="it.polimi.mobilecodegenerator/src/model/Application2.xmi" />
+	<property name="src-gen" value="src-gen/ios" />
+	
+	<bean class="org.eclipse.emf.mwe.utils.StandaloneSetup" >
+		<platformUri value=".."/>
+	</bean>
+	
+	<!--instantiate metamodel-->
+	<bean id="mm_emf" class="org.eclipse.xtend.typesystem.emf.EmfRegistryMetaModel"/>
+	
+	<!--load model and store it in slot 'model'-->
+	<component class="org.eclipse.emf.mwe.utils.Reader">
+		<uri value="platform:/resource/${model}" />
+		<modelSlot value="model" />
+	</component>
+	
+	<!--  GENERATE CODE -->
+		<!-- clear application code folder and generate DefaultFiles -->
+		<component class="org.eclipse.xpand2.Generator">
+			<metaModel idRef="mm_emf"/>
+			<expand
+				value="ios_templates::DefaultFiles::main FOR model" />
+			<outlet path="${src-gen}" >
+				<postprocessor class="org.eclipse.xpand2.output.JavaBeautifier" />
+			</outlet>
+			<resourceManager class ="org.eclipse.xtend.expression.ResourceManagerDefaultImpl">
+				<fileEncoding value="ISO-8859-1"/>
+			</resourceManager>
+		</component>
+		<!--  generate Xcodeproj -->
+		<component class="org.eclipse.xpand2.Generator">
+			<metaModel idRef="mm_emf"/>
+			<expand
+				value="ios_templates::Xcodeproj::main FOR model" />
+			<outlet path="${src-gen}" >
+				<postprocessor class="org.eclipse.xpand2.output.JavaBeautifier" />
+			</outlet>
+			<resourceManager class ="org.eclipse.xtend.expression.ResourceManagerDefaultImpl">
+				<fileEncoding value="ISO-8859-1"/>
+			</resourceManager>
+		</component>
+		<!--  generate InfoPlist -->
+		<component class="org.eclipse.xpand2.Generator">
+			<metaModel idRef="mm_emf"/>
+			<expand
+				value="ios_templates::InfoPlist::main FOR model" />
+			<outlet path="${src-gen}" >
+				<postprocessor class="org.eclipse.xpand2.output.JavaBeautifier" />
+			</outlet>
+			<resourceManager class ="org.eclipse.xtend.expression.ResourceManagerDefaultImpl">
+				<fileEncoding value="ISO-8859-1"/>
+			</resourceManager>
+		</component>
+		<!--  generate PrefixPch -->
+		<component class="org.eclipse.xpand2.Generator">
+			<metaModel idRef="mm_emf"/>
+			<expand
+				value="ios_templates::PrefixPch::main FOR model" />
+			<outlet path="${src-gen}" >
+				<postprocessor class="org.eclipse.xpand2.output.JavaBeautifier" />
+			</outlet>
+			<resourceManager class ="org.eclipse.xtend.expression.ResourceManagerDefaultImpl">
+				<fileEncoding value="ISO-8859-1"/>
+			</resourceManager>
+		</component>
+		<!--  generate MainStoryboard -->
+		<component class="org.eclipse.xpand2.Generator">
+			<metaModel idRef="mm_emf"/>
+			<expand
+				value="ios_templates::MainStoryboard::main FOR model" />
+			<outlet path="${src-gen}" >
+				<postprocessor class="org.eclipse.xpand2.output.JavaBeautifier" />
+			</outlet>
+			<resourceManager class ="org.eclipse.xtend.expression.ResourceManagerDefaultImpl">
+				<fileEncoding value="ISO-8859-1"/>
+			</resourceManager>
+		</component>
+		<!--  generate ViewControllers -->
+		<component class="org.eclipse.xpand2.Generator">
+			<metaModel idRef="mm_emf"/>
+			<expand
+				value="ios_templates::ViewControllers::main FOR model" />
+			<outlet path="${src-gen}" >
+				<postprocessor class="org.eclipse.xpand2.output.JavaBeautifier" />
+			</outlet>
+			<resourceManager class ="org.eclipse.xtend.expression.ResourceManagerDefaultImpl">
+				<fileEncoding value="ISO-8859-1"/>
+			</resourceManager>
+		</component>
+		<!--  generate Utils -->
+		<component class="org.eclipse.xpand2.Generator">
+			<metaModel idRef="mm_emf"/>
+			<expand
+				value="ios_templates::Utils::main FOR model" />
+			<outlet path="${src-gen}" >
+				<postprocessor class="org.eclipse.xpand2.output.JavaBeautifier" />
+			</outlet>
+			<resourceManager class ="org.eclipse.xtend.expression.ResourceManagerDefaultImpl">
+				<fileEncoding value="ISO-8859-1"/>
+			</resourceManager>
+		</component>
+		<!--  generate ImageDownloadingTask -->
+		<component class="org.eclipse.xpand2.Generator">
+			<metaModel idRef="mm_emf"/>
+			<expand
+				value="ios_templates::ImageDownloadingTask::main FOR model" />
+			<outlet path="${src-gen}" >
+				<postprocessor class="org.eclipse.xpand2.output.JavaBeautifier" />
+			</outlet>
+			<resourceManager class ="org.eclipse.xtend.expression.ResourceManagerDefaultImpl">
+				<fileEncoding value="ISO-8859-1"/>
+			</resourceManager>
+		</component>
+</workflow>

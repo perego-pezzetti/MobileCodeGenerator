@@ -1,0 +1,15 @@
+«IMPORT metamodel»
+
+«DEFINE attributesDeclarations FOR ViewController-»
+«FOREACH editTexts AS et-»
+private EditText «et.id»;
+«ENDFOREACH-»
+«ENDDEFINE-»
+
+«DEFINE onCreate FOR ViewController-»
+«FOREACH editTexts AS et-»
+«et.id» = (EditText)this.findViewById(R.id.«et.id»);
+«et.id».setText("«et.initialContent»");
+«ENDFOREACH-»
+«ENDDEFINE-»
+

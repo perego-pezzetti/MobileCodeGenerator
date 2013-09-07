@@ -1,0 +1,131 @@
+«REM»
+Copyright 2013 Gregorio Perego, Stefania Pezzetti
+This file is part of it.polimi.mobilecodegenerator.
+
+it.polimi.mobilecodegenerator is free software: 
+you can redistribute it and/or modify it under the terms of the 
+GNU General Public License as published by the Free Software Foundation, 
+either version 3 of the License, or (at your option) any later version.
+
+it.polimi.mobilecodegenerator is distributed in the hope that it will be useful, 
+but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+See the GNU General Public License for more details.You should have received a copy of the GNU General Public License
+along with it.polimi.mobilecodegenerator. If not, see <http://www.gnu.org/licenses/>
+«ENDREM»
+
+«IMPORT metamodel»
+
+«DEFINE propertiesDeclarations FOR ViewController-»
+«IF videocameraController!=null && !videoView.sourceType.toString().matches("hardwareFile")-»
+@property (strong, nonatomic) NSURL *recordedVideoUrl;
+«ENDIF-»
+«ENDDEFINE-»
+
+«DEFINE viewDidAppear FOR ViewController-»
+	«IF videoView.sourceType.toString().matches("hardwareFile")-»
+	self.moviePlayer = [[MPMoviePlayerController alloc] initWithContentURL: self.recordedVideoUrl];
+	«IF videocameraController!=null && !videocameraController.videoViewId.matches("")-»
+	[self.moviePlayer.view setFrame: self.«videocameraController.videoViewId».bounds];
+	[self.«videocameraController.videoViewId» addSubview:self.moviePlayer.view];
+	[self.moviePlayer prepareToPlay];
+	[self.moviePlayer play];
+	«ENDIF-»
+	«ENDIF-»
+«ENDDEFINE-»
+
+«DEFINE camera FOR ViewController-»
+«IF photocameraController!=null || videocameraController!=null-»
+- (BOOL)startCameraControllerFromViewController:(UIViewController*)controller
+                                  usingDelegate:(id <UIImagePickerControllerDelegate,UINavigationControllerDelegate>)delegate
+                                  withMediaType:(NSString *)mediaType
+{
+    if(([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]==NO)||(delegate==nil)||(controller==nil)){
+        return NO;
+    }
+    
+    UIImagePickerController *cameraUI = [[UIImagePickerController alloc] init];
+    cameraUI.sourceType = UIImagePickerControllerSourceTypeCamera;
+    cameraUI.allowsEditing = YES;
+    cameraUI.delegate = delegate;
+    
+    if([[UIImagePickerController availableMediaTypesForSourceType:cameraUI.sourceType] containsObject:mediaType]){
+        cameraUI.mediaTypes = [[NSArray alloc] initWithObjects:(NSString *)mediaType,nil];
+    }
+    
+    [controller presentViewController:cameraUI animated:YES completion:^{}];
+    return YES;
+}
+
+#pragma mark - Image Picker Controller Delegate
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
+    
+    «IF photocameraController!=null-»
+    if([mediaType isEqualToString:@"public.image"]){
+        UIImage *photo = [info objectForKey:UIImagePickerControllerOriginalImage];
+        NSString *localImageFileUri = [self copyImageInImagesFolder: photo];
+        //TODO use the photo
+        «IF !photocameraController.imageViewId.matches("")-»
+        self.«photocameraController.imageViewId».image = photo;
+        «ENDIF-»
+    }
+    «ENDIF-»
+    «IF videocameraController!=null-»
+    if([mediaType isEqualToString:@"public.movie"]){
+        NSURL *videoFileUri = info[UIImagePickerControllerMediaURL];
+        self.recordedVideoUrl = [NSURL fileURLWithPath:[self copyVideoInVideosFolder:videoFileUri]];
+        //TODO use the video
+    }
+    «ENDIF-»
+    
+    [self dismissViewControllerAnimated:YES completion:^{}];
+}
+
+- (void)imagePickerControllerDidCancel: (UIImagePickerController *) picker
+{
+    [self dismissViewControllerAnimated:YES completion:^{}];
+    //User cancelled the media capture
+    //TODO implement the action
+}
+«ENDIF-»
+
+«IF photocameraController!=null-»
+- (IBAction)showFotocameraUI:(UIButton *)sender
+{
+    [self startCameraControllerFromViewController: self usingDelegate: self withMediaType:(NSString *)kUTTypeImage];
+}
+
+- (NSString *)copyImageInImagesFolder:(UIImage *)photo
+{
+    NSData *imageData = UIImagePNGRepresentation(photo);
+    NSString *imagesPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingString:@"/images"];
+    [[NSFileManager defaultManager] createDirectoryAtPath:imagesPath withIntermediateDirectories:YES attributes:nil error:nil];
+    NSDateFormatter *formatter=[[NSDateFormatter alloc]init];
+    [formatter setDateFormat:@"yyyy-MM-dd_HH-mm-ss"] ;
+    NSString *filename = [[formatter stringFromDate:[NSDate date]] stringByAppendingString:@".png"];
+    NSString *localImagePath= [[NSString alloc] initWithString:[NSString stringWithFormat:@"%@/%@",imagesPath,filename]];
+    [imageData writeToFile:localImagePath atomically:YES];
+    return localImagePath;
+}
+«ENDIF-»
+«IF videocameraController!=null-»
+- (IBAction)showVideocameraUI:(UIButton *)sender
+{
+    [self startCameraControllerFromViewController: self usingDelegate: self withMediaType:(NSString *)kUTTypeMovie];
+}
+
+- (NSString *)copyVideoInVideosFolder:(NSURL *)sourceVideoFileUri
+{
+    NSData *videoData = [NSData dataWithContentsOfURL:sourceVideoFileUri];
+    NSString *videosPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingString:@"/videos"];
+    [[NSFileManager defaultManager] createDirectoryAtPath:videosPath withIntermediateDirectories:YES attributes:nil error:nil];
+    NSDateFormatter *formatter=[[NSDateFormatter alloc]init];
+    [formatter setDateFormat:@"yyyy-MM-dd_HH-mm-ss"] ;
+    NSString *filename = [[formatter stringFromDate:[NSDate date]] stringByAppendingString:@".mp4"];
+    NSString *localVideoPath= [[NSString alloc] initWithString:[NSString stringWithFormat:@"%@/%@",videosPath,filename]];
+    [videoData writeToFile:localVideoPath atomically:YES];
+    return localVideoPath;
+}
+«ENDIF-»
+«ENDDEFINE-»

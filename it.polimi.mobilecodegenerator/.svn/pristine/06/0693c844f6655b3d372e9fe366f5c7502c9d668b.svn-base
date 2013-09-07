@@ -1,0 +1,29 @@
+«IMPORT metamodel»
+
+«DEFINE onCreate FOR ViewController-»
+setContentView(R.layout.activity_«name.toLowerCase()»);
+
+«EXPAND android_activities_templates::Buttons::onCreate-»
+
+«EXPAND android_activities_templates::EditTexts::onCreate-»
+
+«EXPAND android_activities_templates::Camera::onCreate-»
+
+«EXPAND android_activities_templates::VideoView::onCreate-»
+
+«EXPAND android_activities_templates::ListViews::onCreate-»
+
+«EXPAND android_activities_templates::GridViews::onCreate-»
+
+«EXPAND android_activities_templates::WebViews::onCreate-»
+
+«EXPAND android_activities_templates::ImageViews::onCreate-»
+
+«EXPAND android_activities_templates::ProgressDialogs::onCreate-»
+
+«EXPAND android_activities_templates::AlertDialogs::onCreate-»
+
+«EXPAND android_activities_templates::LocationManager::onCreate-»
+
+«EXPAND android_activities_templates::AsyncTasks::onCreate-»
+«ENDDEFINE-»

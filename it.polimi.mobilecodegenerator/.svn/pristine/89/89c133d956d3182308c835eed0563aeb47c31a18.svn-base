@@ -1,0 +1,36 @@
+«IMPORT metamodel»
+«EXTENSION app_extensions::Java»
+«EXTENSION android_extensions::Java»
+«DEFINE main FOR Application»
+
+«saveApplicationName(name)»
+«deleteApplicationFolder()»
+«copyDefaultAndroidFiles()»
+«copyUserFiles()»
+
+«FILE name+"/src/"+ companyIdentifier.replaceAll("\\.","/") +"/"+ name.toLowerCase() +"/"+ "Utils.java"-»
+	package «companyIdentifier».«name.toLowerCase()»;
+	
+	import java.io.*;
+	
+	public final class Utils {
+		public static String fromInputStreamToString(InputStream inputStream) {
+			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+		    String readLine = "";
+		    StringBuilder stringBuilder = new StringBuilder();
+		    try {
+		        while ((readLine = bufferedReader.readLine()) != null) {
+		        	stringBuilder.append(readLine);
+			    }
+		        inputStream.close(); 
+			    bufferedReader.close();
+		    }
+		    catch (IOException e) {
+		        e.printStackTrace();
+		    }
+		    return stringBuilder.toString();
+		}
+	}
+«ENDFILE-»
+
+«ENDDEFINE»

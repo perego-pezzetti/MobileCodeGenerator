@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="it.polimi.promemoria"
+    android:versionCode="1"
+    android:versionName="1.0" >
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="17" />
+    
+    
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="promemoria"
+        android:theme="@style/AppTheme" >
+		<activity
+            android:name="it.polimi.promemoria.HomeActivity"
+            android:label="Promemoria" >
+			<intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+		<activity
+            android:name="it.polimi.promemoria.NotesListActivity"
+            android:label="Promemoria" >
+        </activity>
+		<activity
+            android:name="it.polimi.promemoria.NoteDetailActivity"
+            android:label="Promemoria" >
+        </activity>
+    </application>
+</manifest>

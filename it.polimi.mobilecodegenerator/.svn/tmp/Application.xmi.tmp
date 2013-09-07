@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="ASCII"?>
+<metamodel:Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:metamodel="http://metamodel/1.0" xsi:schemaLocation="http://metamodel/1.0 ../metamodel/metamodel.ecore" name="Test" companyIdentifier="it.polimi" companyName="Politecnico di Milano">
+<<<<<<< .mine
+  <viewControllers name="prova" launcher="true">
+    <webViews id="webView" HTMLFileName="html.html" CSSFileName="style.css"/>
+    <imageViews id="imageView2" sourceType="localFile" fileUri="homer.gIf"/>
+    <videoView id="videoView" sourceType="localFile" fileUri="videofranciacorta.MP4"/>
+    <audioPlayer id="audioPlayer1" sourceType="localFile" fileUri="musica.Mp3"/>
+=======
+  <viewControllers name="FirstVC" launcher="true">
+    <buttons id="ToSecondVC" title="ToSecondVC">
+      <clickListener>
+        <navigation destination="SecondVC"/>
+      </clickListener>
+    </buttons>
+    <buttons id="button1" title="ToFourthVC">
+      <clickListener>
+        <navigation destination="FourthVC"/>
+      </clickListener>
+    </buttons>
+    <buttons id="button2" title="button2"/>
+    <webViews id="webView1" HTMLFileName="html.html" CSSFileName="style.css"/>
+    <imageViews id="imageView1" sourceType="localFile" fileUri="homer.gif"/>
+    <audioPlayer id="audioPlayerForLocalFile" sourceType="localFile" fileUri="musica.mp3"/>
+    <audioRecorder/>
+  </viewControllers>
+  <viewControllers name="SecondVC">
+    <buttons id="toThirdVC" title="toThirdVC">
+      <clickListener>
+        <navigation destination="ThirdVC"/>
+      </clickListener>
+    </buttons>
+    <imageViews id="imageViewFromHardware"/>
+    <asyncTasks name="task1"/>
+    <asyncTasks name="task2"/>
+    <videoView id="videoFranciacortaView" sourceType="localFile" fileUri="videofranciacortaoriginale.mp4"/>
+    <fotocameraController imageViewId="imageViewFromHardware"/>
+    <audioPlayer id="audioPlayer2" fileUri=""/>
+    <audioRecorder audioPlayerId="audioPlayer2"/>
+>>>>>>> .r42
+  </viewControllers>
+</metamodel:Application>

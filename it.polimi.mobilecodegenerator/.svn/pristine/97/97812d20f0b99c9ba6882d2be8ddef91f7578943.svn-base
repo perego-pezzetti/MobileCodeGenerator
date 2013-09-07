@@ -1,0 +1,11 @@
+«IMPORT metamodel»
+
+«DEFINE buttons FOR ViewController»
+«FOREACH buttons AS b-»
+«IF b.clickListener!=null && b.clickListener.navigation==null-»
+-(IBAction)«b.id»ClickAction:(UIButton *)sender {
+	// Implement the action
+}
+«ENDIF»
+«ENDFOREACH-»
+«ENDDEFINE»

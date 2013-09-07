@@ -1,0 +1,45 @@
+«IMPORT metamodel»
+«DEFINE main FOR Application»
+«EXPAND viewController FOREACH viewControllers»
+«ENDDEFINE»
+
+«DEFINE viewController FOR ViewController»
+
+«FILE application.name +"/"+application.name +"/"+ name+"ViewController.h"-»
+#import <UIKit/UIKit.h>
+@interface «name»ViewController : UIViewController
+//TODO
+@end
+«ENDFILE-»
+
+«FILE application.name +"/"+application.name +"/"+ name+"ViewController.m"-»
+#import "«name»ViewController.h"
+@interface «name»ViewController ()
+//TODO
+@end
+
+@implementation «name»ViewController
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
+    }
+    return self;
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+	// Do any additional setup after loading the view.
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+@end
+«ENDFILE-»
+
+«ENDDEFINE»

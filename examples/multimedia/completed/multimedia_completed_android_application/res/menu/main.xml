@@ -1,0 +1,14 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/galleryItem"
+        android:title="Gallery"/>
+    <item
+        android:id="@+id/videocameraItem"
+        android:title="Videocamera"/>
+    <item
+        android:id="@+id/photocameraItem"
+        android:title="Fotocamera"/>
+    <item
+        android:id="@+id/audioRecorderItem"
+        android:title="Registratore"/>
+</menu>

@@ -1,0 +1,74 @@
+«IMPORT metamodel»
+
+«DEFINE attributesDeclarations FOR ViewController»
+«IF fotocameraController!=null-»
+private Button fotocameraButton;
+private static final int IMAGE_CAPTURE_ACTIVITY_REQUEST_CODE = 100;
+«ENDIF-»
+
+«IF videocameraController!=null-»
+private Button videocameraButton;
+private static final int VIDEO_CAPTURE_ACTIVITY_REQUEST_CODE = 200;
+«ENDIF-»
+«ENDDEFINE»
+
+«DEFINE onCreate FOR ViewController»
+«IF fotocameraController!=null-»
+fotocameraButton = (Button) this.findViewById(R.id.fotocameraButton);
+fotocameraButton.setOnClickListener(new OnClickListener() {
+	@Override
+	public void onClick(View v) {
+		Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+		startActivityForResult(takePictureIntent, IMAGE_CAPTURE_ACTIVITY_REQUEST_CODE);
+	}
+});
+«ENDIF-»
+
+«IF videocameraController!=null-»
+videocameraButton = (Button) this.findViewById(R.id.videocameraButton);
+videocameraButton.setOnClickListener(new OnClickListener() {
+	@Override
+	public void onClick(View v) {
+		Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+		startActivityForResult(takeVideoIntent, VIDEO_CAPTURE_ACTIVITY_REQUEST_CODE);
+	}
+});
+«ENDIF-»
+«ENDDEFINE»
+
+«DEFINE camera FOR ViewController»
+«IF fotocameraController!=null || videocameraController!=null-»
+@Override
+public void onActivityResult(int requestCode, int resultCode, Intent data) {        
+	if(resultCode == Activity.RESULT_OK) {
+		«IF fotocameraController!=null-»
+		if(requestCode == IMAGE_CAPTURE_ACTIVITY_REQUEST_CODE) {
+			Bitmap photo = (Bitmap) data.getExtras().get("data");
+            //TODO use the photo
+            «IF !fotocameraController.imageViewId.matches("")-»
+            «fotocameraController.imageViewId».setImageBitmap(photo);
+            «ENDIF-»
+		}
+		«ENDIF-»
+		«IF videocameraController!=null-»
+		if(requestCode == VIDEO_CAPTURE_ACTIVITY_REQUEST_CODE) {
+			Uri videoFileUri = data.getData();
+        	//TODO use the video
+        	«IF !videocameraController.videoViewId.matches("")-»
+        	«videocameraController.videoViewId».setVideoURI(videoFileUri);
+            «videocameraController.videoViewId».setMediaController(new MediaController(this));
+            «videocameraController.videoViewId».requestFocus();
+            «videocameraController.videoViewId».start();
+            «ENDIF-»
+		}
+		«ENDIF-»
+	}
+	else if(resultCode == Activity.RESULT_CANCELED) {
+    	//User cancelled the media capture
+    	//TODO implement the action
+    }
+}
+«ENDIF-»
+«ENDDEFINE»
+
+

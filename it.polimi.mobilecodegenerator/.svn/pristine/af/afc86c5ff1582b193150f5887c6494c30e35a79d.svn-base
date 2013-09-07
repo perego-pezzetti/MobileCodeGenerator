@@ -1,0 +1,29 @@
+package net.polimi.senddata;
+
+import android.os.Bundle;
+import android.app.Activity;
+import android.content.Intent;
+import android.view.*;
+import android.widget.*;
+import android.webkit.*;
+
+public class ReadTextActivity extends Activity {
+	private WebView IlFranciacortaWebView;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_readtext);
+
+		InputStream is = this.getResources().openRawResource(
+				R.raw.il_franciacorta_it);
+		String HTMLContent = Utils.fromInputStreamToString(is);
+		IlFranciacortaWebView = (WebView) this
+				.findViewById(R.id.IlFranciacortaWebView);
+
+		WebSettings settings = IlFranciacortaWebView.getSettings();
+		settings.setDefaultTextEncodingName("utf-8");
+		IlFranciacortaWebView.loadDataWithBaseURL("file:///android_asset/",
+				HTMLContent, "text/html", "utf-8", null);
+	}
+}

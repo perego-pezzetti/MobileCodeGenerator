@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="ASCII"?>
+<metamodel:Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:metamodel="http://metamodel/1.0" xsi:schemaLocation="http://metamodel/1.0 ../metamodel/metamodel.ecore" name="Test" companyIdentifier="it.polimi" companyName="Politecnico di Milano">
+  <viewControllers name="FirstVC" launcher="true">
+    <buttons id="ToSecondVC" title="ToSecondVC">
+      <clickListener>
+        <navigation destination="SecondVC"/>
+      </clickListener>
+    </buttons>
+    <buttons id="button1" title="button1"/>
+    <buttons id="button2" title="button2"/>
+    <webViews id="webView1" HTMLFileName="html.html" CSSFileName="style.css"/>
+    <imageViews id="imageView1" sourceType="localFile" fileUri="homer.gif"/>
+    <audioPlayer id="audioPlayerForLocalFile" sourceType="localFile" fileUri="musica.mp3"/>
+    <audioRecorder/>
+  </viewControllers>
+  <viewControllers name="SecondVC">
+    <buttons id="toThirdVC" title="toThirdVC">
+      <clickListener>
+        <navigation destination="ThirdVC"/>
+      </clickListener>
+    </buttons>
+    <videoView id="videoFranciacortaView" sourceType="localFile" fileUri="videofranciacortaoriginale.mp4"/>
+    <fotocameraController/>
+    <audioPlayer id="audioPlayer2" fileUri=""/>
+    <audioRecorder audioPlayerId="audioPlayer2"/>
+  </viewControllers>
+  <viewControllers name="ThirdVC">
+    <videoView id="videoViewFromHardware"/>
+    <videocameraController videoViewId="videoViewFromHardware"/>
+    <audioPlayer id="audioFromHardware"/>
+    <audioRecorder audioPlayerId="audioFromHardware"/>
+  </viewControllers>
+</metamodel:Application>

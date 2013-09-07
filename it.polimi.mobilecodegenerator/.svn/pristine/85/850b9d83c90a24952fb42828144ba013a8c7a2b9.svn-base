@@ -1,0 +1,21 @@
+import metamodel;
+extension model_checks::Extensions;
+
+List[String] invalidFilesNames():JAVA model_checks.JavaChecks.invalidFilesNames();
+List[String] invalidFilesExtensions():JAVA model_checks.JavaChecks.invalidFilesExtensions();
+List[String] duplicatedFilesNames():JAVA model_checks.JavaChecks.duplicatedFilesNames();
+List[String] duplicatedIds(List[String] ids):JAVA model_checks.JavaChecks.duplicatedIds(java.util.List);
+
+List[String] ids(Application this) : 
+	viewControllers.buttons.id
+		.addAll(viewControllers.imageViews.id)
+		.addAll(viewControllers.textViews.id)
+		.addAll(viewControllers.webViews.id)
+		.addAll(viewControllers.listViews.id)
+		.addAll(viewControllers.gridViews.id)
+		.addAll(viewControllers.editTexts.id)
+		.addAll(viewControllers.progressDialogs.id)
+		.addAll(viewControllers.alertDialogs.id)
+		.addAll(viewControllers.videoView.reject(vv|vv==null).id)
+		.addAll(viewControllers.audioPlayer.reject(ap|ap==null).id)
+		.addAll(menu.menuItems.id);

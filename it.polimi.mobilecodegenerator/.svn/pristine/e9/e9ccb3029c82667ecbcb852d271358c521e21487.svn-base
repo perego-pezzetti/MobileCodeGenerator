@@ -1,0 +1,10 @@
+«IMPORT metamodel»
+«EXTENSION app_extensions::Java»
+«EXTENSION android_extensions::Java»
+«DEFINE main FOR Application»
+
+«saveApplicationName(name)»
+«deleteApplicationFolder()»
+«copyDefaultAndroidFiles()»
+
+«ENDDEFINE»

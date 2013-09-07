@@ -1,0 +1,37 @@
+«IMPORT metamodel»
+
+«DEFINE publicImports FOR ViewController»
+#import <UIKit/UIKit.h>
+«IF locationManager!=null-»
+#import <CoreLocation/CoreLocation.h>
+«ENDIF-»
+«IF videoView!=null-»
+#import <MediaPlayer/MediaPlayer.h>
+«ENDIF-»
+«IF fotocameraController!=null || videocameraController!=null-»
+#import <MobileCoreServices/MobileCoreServices.h>
+«ENDIF-»
+«IF audioPlayer!=null || audioRecorder!=null-»
+#import <AVFoundation/AVFoundation.h>
+«ENDIF-»
+«ENDDEFINE»
+
+«DEFINE privateImports FOR ViewController»
+#import "«name»ViewController.h"
+«IF imageViews.sourceType.toString().contains("remoteFile")-»
+#import "ImageDownloadingTask.h"
+«ENDIF-»
+«IF gridViews.size!=0-»
+#import "CustomCollectionViewCell.h"
+«ENDIF-»
+«FOREACH listViews AS lv-»
+«IF lv.clickListener.navigation!=null-»
+#import "«lv.clickListener.navigation.destination»ViewController.h"
+«ENDIF-»
+«ENDFOREACH-»
+«FOREACH gridViews AS gv-»
+«IF gv.clickListener.navigation!=null-»
+#import "«gv.clickListener.navigation.destination»ViewController.h"
+«ENDIF-»
+«ENDFOREACH-»
+«ENDDEFINE»

@@ -1,0 +1,12 @@
+«IMPORT metamodel»
+«EXTENSION app_extensions::Java»
+«EXTENSION ios_extensions::Java»
+«DEFINE main FOR Application»
+
+«saveApplicationName(name)»
+«deleteApplicationFolder()»
+«copyDefaultIOSFiles()»
+«userFilesNamesToLowerCase()»
+«copyUserFiles()»
+
+«ENDDEFINE»

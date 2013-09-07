@@ -1,0 +1,5 @@
+«IMPORT metamodel»
+
+«DEFINE onResume FOR ViewController»
+«EXPAND android_activities_templates::Audio::onResume»
+«ENDDEFINE»

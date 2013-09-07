@@ -1,0 +1,116 @@
+«IMPORT metamodel»
+
+«DEFINE propertiesDeclarations FOR ViewController-»
+«IF videocameraController!=null && !videoView.sourceType.toString().matches("hardwareFile")-»
+@property (strong, nonatomic) NSURL *recordedVideoUrl;
+«ENDIF-»
+«ENDDEFINE-»
+
+«DEFINE viewDidAppear FOR ViewController-»
+	«IF videoView.sourceType.toString().matches("hardwareFile")-»
+	self.moviePlayer = [[MPMoviePlayerController alloc] initWithContentURL: self.recordedVideoUrl];
+	«IF videocameraController!=null && !videocameraController.videoViewId.matches("")-»
+	[self.moviePlayer.view setFrame: self.«videocameraController.videoViewId».bounds];
+	[self.«videocameraController.videoViewId» addSubview:self.moviePlayer.view];
+	[self.moviePlayer prepareToPlay];
+	[self.moviePlayer play];
+	«ENDIF-»
+	«ENDIF-»
+«ENDDEFINE-»
+
+«DEFINE camera FOR ViewController-»
+«IF fotocameraController!=null || videocameraController!=null-»
+- (BOOL)startCameraControllerFromViewController:(UIViewController*)controller
+                                  usingDelegate:(id <UIImagePickerControllerDelegate,UINavigationControllerDelegate>)delegate
+                                  withMediaType:(NSString *)mediaType
+{
+    if(([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]==NO)||(delegate==nil)||(controller==nil)){
+        return NO;
+    }
+    
+    UIImagePickerController *cameraUI = [[UIImagePickerController alloc] init];
+    cameraUI.sourceType = UIImagePickerControllerSourceTypeCamera;
+    cameraUI.allowsEditing = YES;
+    cameraUI.delegate = delegate;
+    
+    if([[UIImagePickerController availableMediaTypesForSourceType:cameraUI.sourceType] containsObject:mediaType]){
+        cameraUI.mediaTypes = [[NSArray alloc] initWithObjects:(NSString *)mediaType,nil];
+    }
+    
+    [controller presentViewController:cameraUI animated:YES completion:^{}];
+    return YES;
+}
+
+#pragma mark - Image Picker Controller Delegate
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
+    
+    «IF fotocameraController!=null-»
+    if([mediaType isEqualToString:@"public.image"]){
+        UIImage *photo = [info objectForKey:UIImagePickerControllerOriginalImage];
+        NSString *localImageFileUri = [self copyImageInImagesFolder: photo];
+        //TODO use the photo
+        «IF !fotocameraController.imageViewId.matches("")-»
+        self.«fotocameraController.imageViewId».image = photo;
+        «ENDIF-»
+    }
+    «ENDIF-»
+    «IF videocameraController!=null-»
+    if([mediaType isEqualToString:@"public.movie"]){
+        NSURL *videoFileUri = info[UIImagePickerControllerMediaURL];
+        self.recordedVideoUrl = [NSURL fileURLWithPath:[self copyVideoInVideosFolder:videoFileUri]];
+        //TODO use the video
+    }
+    «ENDIF-»
+    
+    [self dismissViewControllerAnimated:YES completion:^{}];
+}
+
+- (void)imagePickerControllerDidCancel: (UIImagePickerController *) picker
+{
+    [self dismissViewControllerAnimated:YES completion:^{}];
+    //User cancelled the media capture
+    //TODO implement the action
+}
+«ENDIF-»
+
+«IF fotocameraController!=null-»
+- (IBAction)showFotocameraUI:(UIButton *)sender
+{
+    [self startCameraControllerFromViewController: self usingDelegate: self withMediaType:(NSString *)kUTTypeImage];
+}
+
+- (NSString *)copyImageInImagesFolder:(UIImage *)photo
+{
+    NSData *imageData = UIImagePNGRepresentation(photo);
+    NSString *imagesPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingString:@"/images"];
+    [[NSFileManager defaultManager] createDirectoryAtPath:imagesPath withIntermediateDirectories:YES attributes:nil error:nil];
+    NSDateFormatter *formatter=[[NSDateFormatter alloc]init];
+    [formatter setDateFormat:@"yyyy-MM-dd_HH-mm-ss"] ;
+    NSString *filename = [[formatter stringFromDate:[NSDate date]] stringByAppendingString:@".png"];
+    NSString *localImagePath= [[NSString alloc] initWithString:[NSString stringWithFormat:@"%@/%@",imagesPath,filename]];
+    [imageData writeToFile:localImagePath atomically:YES];
+    return localImagePath;
+}
+«ENDIF-»
+«IF videocameraController!=null-»
+- (IBAction)showVideocameraUI:(UIButton *)sender
+{
+    [self startCameraControllerFromViewController: self usingDelegate: self withMediaType:(NSString *)kUTTypeMovie];
+}
+
+- (NSString *)copyVideoInVideosFolder:(NSURL *)sourceVideoFileUri
+{
+    NSData *videoData = [NSData dataWithContentsOfURL:sourceVideoFileUri];
+    NSString *videosPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingString:@"/videos"];
+    [[NSFileManager defaultManager] createDirectoryAtPath:videosPath withIntermediateDirectories:YES attributes:nil error:nil];
+    NSDateFormatter *formatter=[[NSDateFormatter alloc]init];
+    [formatter setDateFormat:@"yyyy-MM-dd_HH-mm-ss"] ;
+    NSString *filename = [[formatter stringFromDate:[NSDate date]] stringByAppendingString:@".mp4"];
+    NSString *localVideoPath= [[NSString alloc] initWithString:[NSString stringWithFormat:@"%@/%@",videosPath,filename]];
+    [videoData writeToFile:localVideoPath atomically:YES];
+    return localVideoPath;
+}
+«ENDIF-»
+«ENDDEFINE-»

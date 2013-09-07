@@ -1,0 +1,14 @@
+«IMPORT metamodel»
+
+«DEFINE propertiesDeclarations FOR ViewController»
+«EXPAND ios_viewcontrollers_templates::EditTexts::propertiesDeclarations»
+«EXPAND ios_viewcontrollers_templates::WebViews::propertiesDeclarations»
+«EXPAND ios_viewcontrollers_templates::ImageViews::propertiesDeclarations»
+«EXPAND ios_viewcontrollers_templates::VideoView::propertiesDeclarations»
+«EXPAND ios_viewcontrollers_templates::Camera::propertiesDeclarations»
+«EXPAND ios_viewcontrollers_templates::Audio::propertiesDeclarations»
+«EXPAND ios_viewcontrollers_templates::ListViews::propertiesDeclarations»
+«EXPAND ios_viewcontrollers_templates::GridViews::propertiesDeclarations»
+«EXPAND ios_viewcontrollers_templates::LocationManager::propertiesDeclarations»
+«EXPAND ios_viewcontrollers_templates::AlertDialogs::propertiesDeclarations»
+«ENDDEFINE»

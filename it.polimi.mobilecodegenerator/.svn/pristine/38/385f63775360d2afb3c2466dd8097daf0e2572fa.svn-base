@@ -1,0 +1,23 @@
+<html>
+    <head>
+        <link href="style.css" type="text/css" rel="stylesheet" />
+    </head>
+    <body>
+        <h2>Un vino, una terra</h2>
+		<p>Franciacorta: a identificare questo vino, prodotto esclusivamente con il metodo della rifermentazione in bottiglia, è unicamente il nome della regione geografica. Le etichette recano soltanto la denominazione Franciacorta: unico termine che definisce il vino, il metodo di produzione, il territorio.
+		La Franciacorta si trova nel cuore della Lombardia, affacciata sulle sponde del Lago d’Iseo, in un’area che comprende 19 Comuni della Provincia di Brescia, per una superficie totale di 230 chilometri quadrati.<br/>
+		Il vasto patrimonio culturale, storico e naturale di questa terra è disseminato in splendide cornici verdeggianti, lungo i dolci declivi delle antichissime colline di origine morenica, che fanno della Franciacorta un territorio da scoprire, assaporare e respirare.</p>
+        
+		<h2>Il Franciacorta</h2>
+		<p>Nel 1995 è stato il primo vino italiano, prodotto con il metodo della rifermentazione in bottiglia, ad aver ottenuto la Denominazione di Origine Controllata e Garantita (Docg).<br/>
+		È prodotto con uve Chardonnay e/o Pinot Nero. È consentito anche l’uso del Pinot Bianco fino ad un massimo del 50% dell’uvaggio.<br/>
+		È il metodo Franciacorta a garantire la superba qualità di ogni bottiglia: un’antica arte che ai giorni nostri si riunisce magicamente, in perfetto connubio, con le tecnologie più moderne e la maestria dei viticoltori del territorio.</p>
+        
+		<h2>Il Tempo</h2>
+		<p>Il rigido disciplinare di produzione del Franciacorta, il più restrittivo al mondo, stabilisce i tempi minimi di rifermentazione in bottiglia a contatto con i lieviti più lunghi di qualunque altro vino prodotto con questo metodo.</p>
+    </body>
+</html>
+
+
+
+

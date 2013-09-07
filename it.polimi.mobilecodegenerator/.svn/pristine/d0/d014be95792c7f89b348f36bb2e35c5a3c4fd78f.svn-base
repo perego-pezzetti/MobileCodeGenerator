@@ -1,0 +1,13 @@
+import metamodel;
+extension ios_extensions::Java;
+
+//iOS methods
+String getFirstHexadecimalId(String key):JAVA ios_extensions.IOSJavaUtil.getFirstHexadecimalId(java.lang.String);
+String getSecondHexadecimalId(String key):JAVA ios_extensions.IOSJavaUtil.getSecondHexadecimalId(java.lang.String);
+
+Void deleteApplicationFolder():JAVA ios_extensions.IOSJavaUtil.deleteApplicationFolder();
+Void copyDefaultIOSFiles():JAVA ios_extensions.IOSJavaUtil.copyDefaultIOSFiles();
+Void copyUserFiles():JAVA ios_extensions.IOSJavaUtil.copyUserFiles();
+
+Integer getYOnStoryboard(Integer height):JAVA ios_extensions.IOSJavaUtil.getYOnStoryboard(java.lang.Integer);
+Void resetCurrentY():JAVA ios_extensions.IOSJavaUtil.resetCurrentY();

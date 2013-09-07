@@ -1,0 +1,9 @@
+«IMPORT metamodel»
+
+«DEFINE lazyInstantiations FOR ViewController-»
+«EXPAND ios_viewcontrollers_templates::ListViews::lazyInstantiations-»
+
+«EXPAND ios_viewcontrollers_templates::GridViews::lazyInstantiations-»
+
+«EXPAND ios_viewcontrollers_templates::AlertDialogs::lazyInstantiations-»
+«ENDDEFINE-»

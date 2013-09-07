@@ -1,0 +1,16 @@
+«IMPORT metamodel»
+
+«DEFINE viewDidLoad FOR ViewController-»
+	«FOREACH asyncTasks AS at-»
+	[self performSelectorInBackground:@selector(«at.name») withObject:nil];
+	«ENDFOREACH-»
+«ENDDEFINE-»
+
+«DEFINE asyncTasks FOR ViewController-»
+«FOREACH asyncTasks AS at-»
+-(void)«at.name»{
+	//TODO code to be executed in the background task
+	//[self performSelectorOnMainThread:@selector(executeOnMainThread) withObject:nil waitUntilDone:NO];
+}
+«ENDFOREACH-»
+«ENDDEFINE-»

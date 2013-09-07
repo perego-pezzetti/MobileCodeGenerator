@@ -1,0 +1,30 @@
+package net.polimi.senddata;
+
+import android.os.Bundle;
+import android.app.Activity;
+import android.content.Intent;
+import android.view.*;
+import android.widget.*;
+import android.webkit.*;
+
+public class SendTextActivity extends Activity {
+	private Button OkButton;
+	private Button cancelButton;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_sendtext);
+
+		OkButton = (Button) this.findViewById(R.id.OkButton);
+		OkButton.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				Intent intent = new Intent(SendTextActivity.this,
+						ReadTextActivity.class);
+				startActivity(intent);
+			}
+		});
+		cancelButton = (Button) this.findViewById(R.id.cancelButton);
+
+	}
+}

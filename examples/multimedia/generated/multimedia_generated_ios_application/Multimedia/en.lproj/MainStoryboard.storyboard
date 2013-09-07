@@ -1,0 +1,719 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12D78" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none"
+
+	initialViewController="TabBarControllerID">
+	<dependencies>
+		<plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
+	</dependencies>
+	<scenes>
+		<!--VideocameraViewController-->
+		
+		<scene sceneID="VideocameraSceneID">
+			<objects>
+		        <viewController id="VideocameraViewControllerID" storyboardIdentifier="VideocameraViewController" customClass="VideocameraViewController" sceneMemberID="viewController">
+		        	<view key="view" contentMode="scaleToFill" id="VideocameraViewID">
+		        		<rect key="frame" x="0.0" y="64" width="320" height="504"/>
+		                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+		                <subviews>
+		                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="VideocameraVideocameraButton">
+                                <rect key="frame" x="20" y="20" width="118" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Videocamera">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="showVideocameraUI:" destination="VideocameraViewControllerID" eventType="touchUpInside" id="VideocameraVideocameraButtonTouchUpInsideActionID"/>
+                                </connections>
+                            </button>
+		                    <view contentMode="scaleToFill" id="videoView">
+                                <rect key="frame" x="20" y="74" width="120" height="80"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </view>
+		                    
+                            
+		                </subviews>
+		                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+		            </view>
+		      		<navigationItem key="navigationItem" id="VideocameraViewControllerNavigationItemID"/>
+		      		<connections>
+	                    <outlet property="videoView" destination="videoView" id="videoViewOutletID"/>
+		      		</connections>
+		    	</viewController>
+		    	<placeholder placeholderIdentifier="IBFirstResponder" id="VideocameraPlaceholderID" sceneMemberID="firstResponder"/>
+		  	</objects>
+		</scene>
+		<!--PhotocameraViewController-->
+		
+		<scene sceneID="PhotocameraSceneID">
+			<objects>
+		        <viewController id="PhotocameraViewControllerID" storyboardIdentifier="PhotocameraViewController" customClass="PhotocameraViewController" sceneMemberID="viewController">
+		        	<view key="view" contentMode="scaleToFill" id="PhotocameraViewID">
+		        		<rect key="frame" x="0.0" y="64" width="320" height="504"/>
+		                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+		                <subviews>
+		                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="PhotocameraFotocameraButton">
+                                <rect key="frame" x="20" y="20" width="110" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Fotocamera">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="showFotocameraUI:" destination="PhotocameraViewControllerID" eventType="touchUpInside" id="PhotocameraFotocameraButtonTouchUpInsideActionID"/>
+                                </connections>
+                            </button>
+		                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill"  id="imageView">
+                                <rect key="frame" x="20" y="74" width="120" height="80"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+		                    
+                            
+		                </subviews>
+		                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+		            </view>
+		      		<navigationItem key="navigationItem" id="PhotocameraViewControllerNavigationItemID"/>
+		      		<connections>
+	                    <outlet property="imageView" destination="imageView" id="imageViewOutletID"/>
+		      		</connections>
+		    	</viewController>
+		    	<placeholder placeholderIdentifier="IBFirstResponder" id="PhotocameraPlaceholderID" sceneMemberID="firstResponder"/>
+		  	</objects>
+		</scene>
+		<!--AudioRecorderViewController-->
+		
+		<scene sceneID="AudioRecorderSceneID">
+			<objects>
+		        <viewController id="AudioRecorderViewControllerID" storyboardIdentifier="AudioRecorderViewController" customClass="AudioRecorderViewController" sceneMemberID="viewController">
+		        	<view key="view" contentMode="scaleToFill" id="AudioRecorderViewID">
+		        		<rect key="frame" x="0.0" y="64" width="320" height="504"/>
+		                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+		                <subviews>
+							<button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="AudioRecorderAudioRecorderRecordButton">
+                                <rect key="frame" x="20" y="20" width="52" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Rec">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="record:" destination="AudioRecorderViewControllerID" eventType="touchUpInside" id="AudioRecorderAudioRecorderRecordButtonTouchUpInsideActionID"/>
+                                </connections>
+                            </button>
+		                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="AudioRecorderAudioPlayerPlayButton">
+                                <rect key="frame" x="20" y="74" width="55" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Play">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="play:" destination="AudioRecorderViewControllerID" eventType="touchUpInside" id="AudioRecorderAudioPlayerPlayButtonTouchUpInsideActionID"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="AudioRecorderAudioPlayerPauseButton">
+                                <rect key="frame" x="83" y="74" width="69" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Pause">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="pause:" destination="AudioRecorderViewControllerID" eventType="touchUpInside" id="AudioRecorderAudioPlayerPauseButtonTouchUpInsideActionID"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="AudioRecorderAudioPlayerStopButton">
+                                <rect key="frame" x="160" y="74" width="58" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Stop">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="stop:" destination="AudioRecorderViewControllerID" eventType="touchUpInside" id="AudioRecorderAudioPlayerStopButtonTouchUpInsideActionID"/>
+                                </connections>
+                            </button>
+		                    
+                            
+		                </subviews>
+		                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+		            </view>
+		      		<navigationItem key="navigationItem" id="AudioRecorderViewControllerNavigationItemID"/>
+		      		<connections>
+	                    <outlet property="recordButton" destination="AudioRecorderAudioRecorderRecordButton" id="AudioRecorderAudioRecorderRecordButtonOutletID"/>
+		      		</connections>
+		    	</viewController>
+		    	<placeholder placeholderIdentifier="IBFirstResponder" id="AudioRecorderPlaceholderID" sceneMemberID="firstResponder"/>
+		  	</objects>
+		</scene>
+		<!--GalleryViewController-->
+		
+		<scene sceneID="GallerySceneID">
+			<objects>
+		        <viewController id="GalleryViewControllerID" storyboardIdentifier="GalleryViewController" customClass="GalleryViewController" sceneMemberID="viewController">
+		        	<view key="view" contentMode="scaleToFill" id="GalleryViewID">
+		        		<rect key="frame" x="0.0" y="64" width="320" height="504"/>
+		                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+		                <subviews>
+		                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="videosButton">
+		                        <rect key="frame" x="20" y="20" width="73" height="44"/>
+		                    	<autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+		                    	<fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+		                    	<state key="normal" title="Video">
+		                        	<color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+		                        	<color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+		                        </state>
+		                        <state key="highlighted">
+		                        	<color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+		                    	</state>
+		                    	<connections>
+		                    		
+		                    		<segue destination="VideoListViewControllerID" kind="push" id="SegueIDFromvideosButtonToVideoListViewControllerID"/>
+		                    		
+		                        </connections>
+		                    </button>
+		                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="photosButton">
+		                        <rect key="frame" x="20" y="74" width="73" height="44"/>
+		                    	<autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+		                    	<fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+		                    	<state key="normal" title="Foto">
+		                        	<color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+		                        	<color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+		                        </state>
+		                        <state key="highlighted">
+		                        	<color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+		                    	</state>
+		                    	<connections>
+		                    		
+		                    		<segue destination="PhotoGridViewControllerID" kind="push" id="SegueIDFromphotosButtonToPhotoGridViewControllerID"/>
+		                    		
+		                        </connections>
+		                    </button>
+		                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="audioRecordingsButton">
+		                        <rect key="frame" x="20" y="128" width="73" height="44"/>
+		                    	<autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+		                    	<fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+		                    	<state key="normal" title="Audio">
+		                        	<color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+		                        	<color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+		                        </state>
+		                        <state key="highlighted">
+		                        	<color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+		                    	</state>
+		                    	<connections>
+		                    		
+		                    		<segue destination="AudioListViewControllerID" kind="push" id="SegueIDFromaudioRecordingsButtonToAudioListViewControllerID"/>
+		                    		
+		                        </connections>
+		                    </button>
+		                    
+                            
+		                </subviews>
+		                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+		            </view>
+		      		<navigationItem key="navigationItem" id="GalleryViewControllerNavigationItemID"/>
+		      		<connections>
+		      		</connections>
+		    	</viewController>
+		    	<placeholder placeholderIdentifier="IBFirstResponder" id="GalleryPlaceholderID" sceneMemberID="firstResponder"/>
+		  	</objects>
+		</scene>
+		<!--PhotoGridViewController-->
+		
+		<scene sceneID="PhotoGridSceneID">
+			<objects>
+		        <viewController id="PhotoGridViewControllerID" storyboardIdentifier="PhotoGridViewController" customClass="PhotoGridViewController" sceneMemberID="viewController">
+		        	<view key="view" contentMode="scaleToFill" id="PhotoGridViewID">
+		        		<rect key="frame" x="0.0" y="64" width="320" height="504"/>
+		                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+		                <subviews>
+		                    
+		                    <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" id="photosGridView">
+                                <rect key="frame" x="0" y="20" width="320" height="80"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="photosGridViewFlowLayoutID">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CellIdentifier" id="photosGridViewCellID" customClass="CustomCollectionViewCell">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="photosGridViewCellLabelID">
+                                                    <rect key="frame" x="4" y="14" width="42" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <connections>
+                                            <outlet property="label" destination="photosGridViewCellLabelID" id="photosGridViewLabelOutletID"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="PhotoGridViewControllerID" id="photosGridViewDataSourceOutletID"/>
+                                    <outlet property="delegate" destination="PhotoGridViewControllerID" id="photosGridViewDelegateOutletID"/>
+                                </connections>
+                            </collectionView>
+                            
+		                </subviews>
+		                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+		            </view>
+		      		<navigationItem key="navigationItem" id="PhotoGridViewControllerNavigationItemID"/>
+		      		<connections>
+	                    <outlet property="photosGridView" destination="photosGridView" id="photosGridViewOutletID"/>
+		      		</connections>
+		    	</viewController>
+		    	<placeholder placeholderIdentifier="IBFirstResponder" id="PhotoGridPlaceholderID" sceneMemberID="firstResponder"/>
+		  	</objects>
+		</scene>
+		<!--VideoListViewController-->
+		
+		<scene sceneID="VideoListSceneID">
+			<objects>
+		        <viewController id="VideoListViewControllerID" storyboardIdentifier="VideoListViewController" customClass="VideoListViewController" sceneMemberID="viewController">
+		        	<view key="view" contentMode="scaleToFill" id="VideoListViewID">
+		        		<rect key="frame" x="0.0" y="64" width="320" height="504"/>
+		                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+		                <subviews>
+		                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="videosListView">
+                                <rect key="frame" x="0" y="20" width="320" height="80"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CellIdentifier" textLabel="videosListViewCellTextLabelID" style="IBUITableViewCellStyleDefault" id="videosListViewCellID">
+                                        <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="videosListViewCellTextLabelID">
+                                                    <rect key="frame" x="10" y="0.0" width="300" height="43"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="VideoListViewControllerID" id="videosListViewDataSourceOutletID"/>
+                                    <outlet property="delegate" destination="VideoListViewControllerID" id="videosListViewDelegateOutletID"/>
+                                </connections>
+                            </tableView>
+		                    
+                            
+		                </subviews>
+		                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+		            </view>
+		      		<navigationItem key="navigationItem" id="VideoListViewControllerNavigationItemID"/>
+		      		<connections>
+	                    <outlet property="videosListView" destination="videosListView" id="videosListViewOutletID"/>
+		      		</connections>
+		    	</viewController>
+		    	<placeholder placeholderIdentifier="IBFirstResponder" id="VideoListPlaceholderID" sceneMemberID="firstResponder"/>
+		  	</objects>
+		</scene>
+		<!--AudioListViewController-->
+		
+		<scene sceneID="AudioListSceneID">
+			<objects>
+		        <viewController id="AudioListViewControllerID" storyboardIdentifier="AudioListViewController" customClass="AudioListViewController" sceneMemberID="viewController">
+		        	<view key="view" contentMode="scaleToFill" id="AudioListViewID">
+		        		<rect key="frame" x="0.0" y="64" width="320" height="504"/>
+		                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+		                <subviews>
+		                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="audiosListView">
+                                <rect key="frame" x="0" y="20" width="320" height="80"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CellIdentifier" textLabel="audiosListViewCellTextLabelID" style="IBUITableViewCellStyleDefault" id="audiosListViewCellID">
+                                        <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="audiosListViewCellTextLabelID">
+                                                    <rect key="frame" x="10" y="0.0" width="300" height="43"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="AudioListViewControllerID" id="audiosListViewDataSourceOutletID"/>
+                                    <outlet property="delegate" destination="AudioListViewControllerID" id="audiosListViewDelegateOutletID"/>
+                                </connections>
+                            </tableView>
+		                    
+                            
+		                </subviews>
+		                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+		            </view>
+		      		<navigationItem key="navigationItem" id="AudioListViewControllerNavigationItemID"/>
+		      		<connections>
+	                    <outlet property="audiosListView" destination="audiosListView" id="audiosListViewOutletID"/>
+		      		</connections>
+		    	</viewController>
+		    	<placeholder placeholderIdentifier="IBFirstResponder" id="AudioListPlaceholderID" sceneMemberID="firstResponder"/>
+		  	</objects>
+		</scene>
+		<!--PhotoViewerViewController-->
+		
+		<scene sceneID="PhotoViewerSceneID">
+			<objects>
+		        <viewController id="PhotoViewerViewControllerID" storyboardIdentifier="PhotoViewerViewController" customClass="PhotoViewerViewController" sceneMemberID="viewController">
+		        	<view key="view" contentMode="scaleToFill" id="PhotoViewerViewID">
+		        		<rect key="frame" x="0.0" y="64" width="320" height="504"/>
+		                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+		                <subviews>
+		                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="deletePhotoButton">
+		                        <rect key="frame" x="20" y="20" width="73" height="44"/>
+		                    	<autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+		                    	<fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+		                    	<state key="normal" title="Delete">
+		                        	<color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+		                        	<color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+		                        </state>
+		                        <state key="highlighted">
+		                        	<color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+		                    	</state>
+		                    	<connections>
+		                    		
+		                    		<action selector="deletePhotoButtonClickAction:" destination="PhotoViewerViewControllerID" eventType="touchUpInside" id="deletePhotoButtonTouchUpInsideActionID"/>
+		                    		
+		                        </connections>
+		                    </button>
+		                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill"  id="imageViewerImageView">
+                                <rect key="frame" x="20" y="74" width="120" height="80"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+		                    
+                            
+		                </subviews>
+		                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+		            </view>
+		      		<navigationItem key="navigationItem" id="PhotoViewerViewControllerNavigationItemID"/>
+		      		<connections>
+		      		</connections>
+		    	</viewController>
+		    	<placeholder placeholderIdentifier="IBFirstResponder" id="PhotoViewerPlaceholderID" sceneMemberID="firstResponder"/>
+		  	</objects>
+		</scene>
+		<!--VideoViewerViewController-->
+		
+		<scene sceneID="VideoViewerSceneID">
+			<objects>
+		        <viewController id="VideoViewerViewControllerID" storyboardIdentifier="VideoViewerViewController" customClass="VideoViewerViewController" sceneMemberID="viewController">
+		        	<view key="view" contentMode="scaleToFill" id="VideoViewerViewID">
+		        		<rect key="frame" x="0.0" y="64" width="320" height="504"/>
+		                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+		                <subviews>
+		                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="deleteVideoButton">
+		                        <rect key="frame" x="20" y="20" width="73" height="44"/>
+		                    	<autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+		                    	<fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+		                    	<state key="normal" title="Delete">
+		                        	<color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+		                        	<color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+		                        </state>
+		                        <state key="highlighted">
+		                        	<color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+		                    	</state>
+		                    	<connections>
+		                    		
+		                    		<action selector="deleteVideoButtonClickAction:" destination="VideoViewerViewControllerID" eventType="touchUpInside" id="deleteVideoButtonTouchUpInsideActionID"/>
+		                    		
+		                        </connections>
+		                    </button>
+		                    <view contentMode="scaleToFill" id="videoViewerVideoView">
+                                <rect key="frame" x="20" y="74" width="120" height="80"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </view>
+		                    
+                            
+		                </subviews>
+		                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+		            </view>
+		      		<navigationItem key="navigationItem" id="VideoViewerViewControllerNavigationItemID"/>
+		      		<connections>
+	                    <outlet property="videoViewerVideoView" destination="videoViewerVideoView" id="videoViewerVideoViewOutletID"/>
+		      		</connections>
+		    	</viewController>
+		    	<placeholder placeholderIdentifier="IBFirstResponder" id="VideoViewerPlaceholderID" sceneMemberID="firstResponder"/>
+		  	</objects>
+		</scene>
+		<!--AudioPlayerViewController-->
+		
+		<scene sceneID="AudioPlayerSceneID">
+			<objects>
+		        <viewController id="AudioPlayerViewControllerID" storyboardIdentifier="AudioPlayerViewController" customClass="AudioPlayerViewController" sceneMemberID="viewController">
+		        	<view key="view" contentMode="scaleToFill" id="AudioPlayerViewID">
+		        		<rect key="frame" x="0.0" y="64" width="320" height="504"/>
+		                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+		                <subviews>
+		                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="deleteAudioButton">
+		                        <rect key="frame" x="20" y="20" width="73" height="44"/>
+		                    	<autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+		                    	<fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+		                    	<state key="normal" title="Delete">
+		                        	<color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+		                        	<color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+		                        </state>
+		                        <state key="highlighted">
+		                        	<color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+		                    	</state>
+		                    	<connections>
+		                    		
+		                    		<action selector="deleteAudioButtonClickAction:" destination="AudioPlayerViewControllerID" eventType="touchUpInside" id="deleteAudioButtonTouchUpInsideActionID"/>
+		                    		
+		                        </connections>
+		                    </button>
+		                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="AudioPlayerAudioPlayerPlayButton">
+                                <rect key="frame" x="20" y="74" width="55" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Play">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="play:" destination="AudioPlayerViewControllerID" eventType="touchUpInside" id="AudioPlayerAudioPlayerPlayButtonTouchUpInsideActionID"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="AudioPlayerAudioPlayerPauseButton">
+                                <rect key="frame" x="83" y="74" width="69" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Pause">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="pause:" destination="AudioPlayerViewControllerID" eventType="touchUpInside" id="AudioPlayerAudioPlayerPauseButtonTouchUpInsideActionID"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="AudioPlayerAudioPlayerStopButton">
+                                <rect key="frame" x="160" y="74" width="58" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Stop">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="stop:" destination="AudioPlayerViewControllerID" eventType="touchUpInside" id="AudioPlayerAudioPlayerStopButtonTouchUpInsideActionID"/>
+                                </connections>
+                            </button>
+		                    
+                            
+		                </subviews>
+		                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+		            </view>
+		      		<navigationItem key="navigationItem" id="AudioPlayerViewControllerNavigationItemID"/>
+		      		<connections>
+		      		</connections>
+		    	</viewController>
+		    	<placeholder placeholderIdentifier="IBFirstResponder" id="AudioPlayerPlaceholderID" sceneMemberID="firstResponder"/>
+		  	</objects>
+		</scene>
+		
+ 
+		<!--Tab Bar Controller-->
+        <scene sceneID="TabBarControllerSceneID">
+            <objects>
+                <tabBarController id="TabBarControllerID" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="TabBarID">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+ 
+                    	<segue destination="NavigationControllerIDWithRootGalleryViewControllerID" kind="relationship" relationship="viewControllers" id="galleryItemSegueID"/>
+ 
+                    	<segue destination="NavigationControllerIDWithRootVideocameraViewControllerID" kind="relationship" relationship="viewControllers" id="videocameraItemSegueID"/>
+ 
+                    	<segue destination="NavigationControllerIDWithRootPhotocameraViewControllerID" kind="relationship" relationship="viewControllers" id="photocameraItemSegueID"/>
+ 
+                    	<segue destination="NavigationControllerIDWithRootAudioRecorderViewControllerID" kind="relationship" relationship="viewControllers" id="audioRecorderItemSegueID"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="TabBarPlaceholderID" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+        </scene>
+ 
+        <!--Navigation Controller - Gallery-->
+		<scene sceneID="NavigationControllerSceneIDWithRootGalleryViewControllerID">
+            <objects>
+                <navigationController id="NavigationControllerIDWithRootGalleryViewControllerID" sceneMemberID="viewController">
+                	<tabBarItem key="tabBarItem" title="Gallery" id="galleryItem"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="NavigationControllerBarIDWithRootGalleryViewControllerID">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="GalleryViewControllerID" kind="relationship" relationship="rootViewController" id="SegueIDWithRootGalleryViewControllerID"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NavigationPlaceholderIDWithRootGalleryViewControllerID" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+        </scene>
+ 
+        <!--Navigation Controller - Videocamera-->
+		<scene sceneID="NavigationControllerSceneIDWithRootVideocameraViewControllerID">
+            <objects>
+                <navigationController id="NavigationControllerIDWithRootVideocameraViewControllerID" sceneMemberID="viewController">
+                	<tabBarItem key="tabBarItem" title="Videocamera" id="videocameraItem"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="NavigationControllerBarIDWithRootVideocameraViewControllerID">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="VideocameraViewControllerID" kind="relationship" relationship="rootViewController" id="SegueIDWithRootVideocameraViewControllerID"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NavigationPlaceholderIDWithRootVideocameraViewControllerID" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+        </scene>
+ 
+        <!--Navigation Controller - Fotocamera-->
+		<scene sceneID="NavigationControllerSceneIDWithRootPhotocameraViewControllerID">
+            <objects>
+                <navigationController id="NavigationControllerIDWithRootPhotocameraViewControllerID" sceneMemberID="viewController">
+                	<tabBarItem key="tabBarItem" title="Fotocamera" id="photocameraItem"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="NavigationControllerBarIDWithRootPhotocameraViewControllerID">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="PhotocameraViewControllerID" kind="relationship" relationship="rootViewController" id="SegueIDWithRootPhotocameraViewControllerID"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NavigationPlaceholderIDWithRootPhotocameraViewControllerID" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+        </scene>
+ 
+        <!--Navigation Controller - Registratore-->
+		<scene sceneID="NavigationControllerSceneIDWithRootAudioRecorderViewControllerID">
+            <objects>
+                <navigationController id="NavigationControllerIDWithRootAudioRecorderViewControllerID" sceneMemberID="viewController">
+                	<tabBarItem key="tabBarItem" title="Registratore" id="audioRecorderItem"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="NavigationControllerBarIDWithRootAudioRecorderViewControllerID">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="AudioRecorderViewControllerID" kind="relationship" relationship="rootViewController" id="SegueIDWithRootAudioRecorderViewControllerID"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NavigationPlaceholderIDWithRootAudioRecorderViewControllerID" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+        </scene>
+		
+	</scenes>
+	<resources>
+    </resources>
+	<classes>
+	 	<class className="VideocameraViewController" superclassName="UIViewController">
+	        <source key="sourceIdentifier" type="project" relativePath="./Classes/VideocameraViewController.h"/>
+	    </class>
+	 	<class className="PhotocameraViewController" superclassName="UIViewController">
+	        <source key="sourceIdentifier" type="project" relativePath="./Classes/PhotocameraViewController.h"/>
+	    </class>
+	 	<class className="AudioRecorderViewController" superclassName="UIViewController">
+	        <source key="sourceIdentifier" type="project" relativePath="./Classes/AudioRecorderViewController.h"/>
+	    </class>
+	 	<class className="GalleryViewController" superclassName="UIViewController">
+	        <source key="sourceIdentifier" type="project" relativePath="./Classes/GalleryViewController.h"/>
+	    </class>
+	 	<class className="PhotoGridViewController" superclassName="UIViewController">
+	        <source key="sourceIdentifier" type="project" relativePath="./Classes/PhotoGridViewController.h"/>
+	    </class>
+	 	<class className="VideoListViewController" superclassName="UIViewController">
+	        <source key="sourceIdentifier" type="project" relativePath="./Classes/VideoListViewController.h"/>
+	    </class>
+	 	<class className="AudioListViewController" superclassName="UIViewController">
+	        <source key="sourceIdentifier" type="project" relativePath="./Classes/AudioListViewController.h"/>
+	    </class>
+	 	<class className="PhotoViewerViewController" superclassName="UIViewController">
+	        <source key="sourceIdentifier" type="project" relativePath="./Classes/PhotoViewerViewController.h"/>
+	    </class>
+	 	<class className="VideoViewerViewController" superclassName="UIViewController">
+	        <source key="sourceIdentifier" type="project" relativePath="./Classes/VideoViewerViewController.h"/>
+	    </class>
+	 	<class className="AudioPlayerViewController" superclassName="UIViewController">
+	        <source key="sourceIdentifier" type="project" relativePath="./Classes/AudioPlayerViewController.h"/>
+	    </class>
+	</classes>
+	<simulatedMetricsContainer key="defaultSimulatedMetrics">
+	    <simulatedStatusBarMetrics key="statusBar"/>
+	    <simulatedOrientationMetrics key="orientation"/>
+	    <simulatedScreenMetrics key="destination" type="retina4"/>
+	</simulatedMetricsContainer>
+</document>

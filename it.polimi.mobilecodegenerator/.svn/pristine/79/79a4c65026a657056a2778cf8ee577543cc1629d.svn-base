@@ -1,0 +1,395 @@
+«IMPORT metamodel»
+«EXTENSION ios_extensions::Java»
+«DEFINE main FOR Application-»
+
+«FILE name+"/"+name+"/en.lproj/MainStoryboard.storyboard"-»
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12D78" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none"
+«REM»initialViewController exists only in case viewController.size>0 and is the TabBarController if menu exists and menu.menuItems>0 (HP: one of the items references the launcher VC), otherwise is the NavigatorController of the launcher VC.«ENDREM»
+«IF viewControllers.size==0-»
+	>
+«ELSEIF menu!=null && menu.menuItems.size>0-»
+	initialViewController="TabBarControllerID">
+«ELSE-» «REM»No menu or menu.menuItems.size==0«ENDREM»
+	«FOREACH viewControllers AS vc-»
+    «IF vc.launcher-»
+	initialViewController="NavigationControllerIDWithRoot«vc.name»ViewControllerID">
+	«ENDIF-»
+	«ENDFOREACH-»
+«ENDIF-»
+	<dependencies>
+		<plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
+	</dependencies>
+	<scenes>
+	«IF viewControllers.size==0-»
+	«ENDIF-»
+		«FOREACH viewControllers AS vc-»
+		<!--«vc.name»ViewController-->
+		«resetCurrentY()»
+		<scene sceneID="«vc.name»SceneID">
+			<objects>
+		        <viewController id="«vc.name»ViewControllerID" storyboardIdentifier="«vc.name»ViewController" customClass="«vc.name»ViewController" sceneMemberID="viewController">
+		        	<view key="view" contentMode="scaleToFill" id="«vc.name»ViewID">
+		        		<rect key="frame" x="0.0" y="64" width="320" height="504"/>
+		                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+		                <subviews>
+		                	«FOREACH vc.buttons AS b-»
+		                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="«b.id»">
+		                        <rect key="frame" x="20" y="«getYOnStoryboard(44)»" width="73" height="44"/>
+		                    	<autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+		                    	<fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+		                    	<state key="normal" title="«b.title»">
+		                        	<color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+		                        	<color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+		                        </state>
+		                        <state key="highlighted">
+		                        	<color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+		                    	</state>
+		                    	«IF b.clickListener!=null-»
+		                    	<connections>
+		                    		«IF b.clickListener.navigation!=null»
+		                    		<segue destination="«b.clickListener.navigation.destination»ViewControllerID" kind="push" id="SegueIDFrom«b.id»To«b.clickListener.navigation.destination»ViewControllerID"/>
+		                    		«ELSE»
+		                    		<action selector="«b.id»ClickAction:" destination="«vc.name»ViewControllerID" eventType="touchUpInside" id="«b.id»TouchUpInsideActionID"/>
+		                    		«ENDIF»
+		                        </connections>
+		                    	«ENDIF-»
+		                    </button>
+		                    «ENDFOREACH-»
+		                    «IF vc.fotocameraController!=null-»
+		                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="«vc.name»FotocameraButton">
+                                <rect key="frame" x="20" y="«getYOnStoryboard(44)»" width="110" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Fotocamera">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="showFotocameraUI:" destination="«vc.name»ViewControllerID" eventType="touchUpInside" id="«vc.name»FotocameraButtonTouchUpInsideActionID"/>
+                                </connections>
+                            </button>
+		                    «ENDIF-»
+		                    «IF vc.videocameraController!=null-»
+		                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="«vc.name»VideocameraButton">
+                                <rect key="frame" x="20" y="«getYOnStoryboard(44)»" width="118" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Videocamera">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="showVideocameraUI:" destination="«vc.name»ViewControllerID" eventType="touchUpInside" id="«vc.name»VideocameraButtonTouchUpInsideActionID"/>
+                                </connections>
+                            </button>
+		                    «ENDIF-»
+		                    «IF vc.audioRecorder!=null-»
+							<button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="«vc.name»AudioRecorderRecordButton">
+                                <rect key="frame" x="20" y="«getYOnStoryboard(44)»" width="52" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Rec">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="record:" destination="«vc.name»ViewControllerID" eventType="touchUpInside" id="«vc.name»AudioRecorderRecordButtonTouchUpInsideActionID"/>
+                                </connections>
+                            </button>
+							«ENDIF-»
+		                    «IF vc.audioPlayer!=null-»
+		                    «LET getYOnStoryboard(44) AS y-»
+		                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="«vc.name»AudioPlayerPlayButton">
+                                <rect key="frame" x="20" y="«y»" width="55" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Play">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="play:" destination="«vc.name»ViewControllerID" eventType="touchUpInside" id="«vc.name»AudioPlayerPlayButtonTouchUpInsideActionID"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="«vc.name»AudioPlayerPauseButton">
+                                <rect key="frame" x="83" y="«y»" width="69" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Pause">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="pause:" destination="«vc.name»ViewControllerID" eventType="touchUpInside" id="«vc.name»AudioPlayerPauseButtonTouchUpInsideActionID"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="«vc.name»AudioPlayerStopButton">
+                                <rect key="frame" x="160" y="«y»" width="58" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Stop">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="stop:" destination="«vc.name»ViewControllerID" eventType="touchUpInside" id="«vc.name»AudioPlayerStopButtonTouchUpInsideActionID"/>
+                                </connections>
+                            </button>
+                            «ENDLET-»
+		                    «ENDIF-»
+		                    «FOREACH vc.textViews AS tv-»
+		                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="«tv.content»" id="«tv.id»">
+		                        <rect key="frame" x="0" y="«getYOnStoryboard(44)»" width="320" height="44"/>
+		                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+		                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+		                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+		                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+		                    </textView>
+		                    «ENDFOREACH-»
+		                    «FOREACH vc.editTexts AS et-»
+		                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="«et.initialContent»" id="«et.id»">
+                                <rect key="frame" x="0" y="«getYOnStoryboard(44)»" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+		                    «ENDFOREACH-»
+		                    «FOREACH vc.imageViews AS iv-»
+		                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" «IF iv.sourceType.toString().matches("localFile") && !iv.fileUri.matches("")-»image="«iv.fileUri»"«ENDIF-» id="«iv.id»">
+                                <rect key="frame" x="20" y="«getYOnStoryboard(80)»" width="120" height="80"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+		                    «ENDFOREACH-»
+		                    «IF vc.videoView!=null-»
+		                    <view contentMode="scaleToFill" id="«vc.videoView.id»">
+                                <rect key="frame" x="20" y="«getYOnStoryboard(80)»" width="120" height="80"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </view>
+		                    «ENDIF-»
+		                    «FOREACH vc.webViews AS wv-»
+		                    <webView contentMode="scaleToFill" id="«wv.id»">
+		                    	<rect key="frame" x="0" y="«getYOnStoryboard(80)»" width="320" height="80"/>
+		                    	<autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+		                    	<color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </webView>
+		                    «ENDFOREACH-»
+		                    «FOREACH vc.listViews AS lv-»
+		                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="«lv.id»">
+                                <rect key="frame" x="0" y="«getYOnStoryboard(80)»" width="320" height="80"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CellIdentifier" textLabel="«lv.id»CellTextLabelID" style="IBUITableViewCellStyleDefault" id="«lv.id»CellID">
+                                        <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="«lv.id»CellTextLabelID">
+                                                    <rect key="frame" x="10" y="0.0" width="300" height="43"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="«vc.name»ViewControllerID" id="«lv.id»DataSourceOutletID"/>
+                                    <outlet property="delegate" destination="«vc.name»ViewControllerID" id="«lv.id»DelegateOutletID"/>
+                                </connections>
+                            </tableView>
+		                    «ENDFOREACH-»
+		                    
+		                    «FOREACH vc.gridViews AS gv-»
+		                    <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" id="«gv.id»">
+                                <rect key="frame" x="0" y="«getYOnStoryboard(80)»" width="320" height="80"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="«gv.id»FlowLayoutID">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CellIdentifier" id="«gv.id»CellID" customClass="CustomCollectionViewCell">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="«gv.id»CellLabelID">
+                                                    <rect key="frame" x="4" y="14" width="42" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <connections>
+                                            <outlet property="label" destination="«gv.id»CellLabelID" id="«gv.id»LabelOutletID"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="«vc.name»ViewControllerID" id="«gv.id»DataSourceOutletID"/>
+                                    <outlet property="delegate" destination="«vc.name»ViewControllerID" id="«gv.id»DelegateOutletID"/>
+                                </connections>
+                            </collectionView>
+                            «ENDFOREACH-»
+                            
+		                </subviews>
+		                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+		            </view>
+		      		<navigationItem key="navigationItem" id="«vc.name»ViewControllerNavigationItemID"/>
+		      		<connections>
+		      			«FOREACH vc.editTexts AS et-»
+	                    <outlet property="«et.id»" destination="«et.id»" id="«et.id»OutletID"/>
+	                    «ENDFOREACH-»
+		      			«FOREACH vc.webViews AS wv-»
+	                    <outlet property="«wv.id»" destination="«wv.id»" id="«wv.id»OutletID"/>
+	                    «ENDFOREACH-»
+	                    «FOREACH vc.imageViews AS iv-»
+	                    «IF !iv.sourceType.toString().matches("localFile")-»
+	                    <outlet property="«iv.id»" destination="«iv.id»" id="«iv.id»OutletID"/>
+	                    «ENDIF-»
+	                    «ENDFOREACH-»
+	                    «IF vc.videoView!=null-»
+	                    <outlet property="«vc.videoView.id»" destination="«vc.videoView.id»" id="«vc.videoView.id»OutletID"/>
+	                    «ENDIF-»
+	                    «IF vc.audioRecorder!=null-»
+	                    <outlet property="recordButton" destination="«vc.name»AudioRecorderRecordButton" id="«vc.name»AudioRecorderRecordButtonOutletID"/>
+	                    «ENDIF-»
+	                    «FOREACH vc.listViews AS lv-»
+	                    <outlet property="«lv.id»" destination="«lv.id»" id="«lv.id»OutletID"/>
+	                    «ENDFOREACH-»
+	                    «FOREACH vc.gridViews AS gv-»
+	                    <outlet property="«gv.id»" destination="«gv.id»" id="«gv.id»OutletID"/>
+	                    «ENDFOREACH-»
+		      		</connections>
+		    	</viewController>
+		    	<placeholder placeholderIdentifier="IBFirstResponder" id="«vc.name»PlaceholderID" sceneMemberID="firstResponder"/>
+		  	</objects>
+		</scene>
+		«ENDFOREACH-»
+		
+		«IF menu!=null-» «REM»If Menu exists we generate the TabBarController«ENDREM»
+		<!--Tab Bar Controller-->
+        <scene sceneID="TabBarControllerSceneID">
+            <objects>
+                <tabBarController id="TabBarControllerID" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="TabBarID">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                    	«FOREACH menu.menuItems AS i-» «REM»For each menuItem we create a segue to the NavigationController of the corresponding referenced ViewController (If menu.menuItems.size==0 the Menu remains isolated on the StoryBoard (no segues))«ENDREM»
+                    	<segue destination="NavigationControllerIDWithRoot«i.navigation.destination»ViewControllerID" kind="relationship" relationship="viewControllers" id="«i.id»SegueID"/>
+                    	«ENDFOREACH-»
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="TabBarPlaceholderID" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+        </scene>
+        «FOREACH menu.menuItems AS i-» «REM»For each menuItem we create a NavigationController (which is the destination of the segue) for the referenced ViewController«ENDREM»
+        <!--Navigation Controller - «i.title»-->
+		<scene sceneID="NavigationControllerSceneIDWithRoot«i.navigation.destination»ViewControllerID">
+            <objects>
+                <navigationController id="NavigationControllerIDWithRoot«i.navigation.destination»ViewControllerID" sceneMemberID="viewController">
+                	<tabBarItem key="tabBarItem" title="«i.title»" id="«i.id»"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="NavigationControllerBarIDWithRoot«i.navigation.destination»ViewControllerID">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="«i.navigation.destination»ViewControllerID" kind="relationship" relationship="rootViewController" id="SegueIDWithRoot«i.navigation.destination»ViewControllerID"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NavigationPlaceholderIDWithRoot«i.navigation.destination»ViewControllerID" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+        </scene>
+        «ENDFOREACH-»
+		«ENDIF-»
+		«REM»In case of absence of the Menu or presence with menuItems.size==0 (Empty Menu) we create a NavigationController for the launcher ViewController«ENDREM»
+		«FOREACH viewControllers AS vc-»
+		«IF vc.launcher-»
+		«IF menu==null || menu.menuItems.size==0-»
+		<!--Navigation Controller-->
+		<scene sceneID="NavigationControllerSceneIDWithRoot«vc.name»ViewControllerID">
+            <objects>
+                <navigationController id="NavigationControllerIDWithRoot«vc.name»ViewControllerID" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="NavigationControllerBarIDWithRoot«vc.name»ViewControllerID">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="«vc.name»ViewControllerID" kind="relationship" relationship="rootViewController" id="SegueIDWithRoot«vc.name»ViewControllerID"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NavigationPlaceholderIDWithRoot«vc.name»ViewControllerID" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+        </scene>
+		«ENDIF-»
+		«ENDIF-»
+		«ENDFOREACH-»
+	</scenes>
+	<resources>
+		«FOREACH viewControllers AS vc-»
+		«FOREACH vc.imageViews AS iv-»
+        «IF iv.sourceType.toString().matches("localFile") && !iv.fileUri.matches("")-»
+        <image name="«iv.fileUri»" width="100" height="100"/> «REM»Seems that we need to set the width and height, even if they'll be automatically setted at compile time.«ENDREM»
+        «ENDIF-»
+        «ENDFOREACH-»
+        «ENDFOREACH-»
+    </resources>
+	<classes>
+	 	«FOREACH viewControllers AS vc-»
+	 	<class className="«vc.name»ViewController" superclassName="UIViewController">
+	        <source key="sourceIdentifier" type="project" relativePath="./Classes/«vc.name»ViewController.h"/>
+	    </class>
+	 	«ENDFOREACH-»
+	</classes>
+	<simulatedMetricsContainer key="defaultSimulatedMetrics">
+	    <simulatedStatusBarMetrics key="statusBar"/>
+	    <simulatedOrientationMetrics key="orientation"/>
+	    <simulatedScreenMetrics key="destination" type="retina4"/>
+	</simulatedMetricsContainer>
+</document>
+«ENDFILE-»
+
+«ENDDEFINE-»

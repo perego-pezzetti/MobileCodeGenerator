@@ -1,0 +1,8 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/descriptionItem"
+        android:title="La Valtellina"/>
+    <item
+        android:id="@+id/turismLocationItem"
+        android:title="Localita' Turistiche"/>
+</menu>
