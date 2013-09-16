@@ -5,7 +5,7 @@ You have to import the it.polimi.mobilecodegenerator project in Eclipse:
   
 2) Install the following 2 plugins in Eclipse (Help --> Install new software):
     > Xpand/Xtend:  http://download.eclipse.org/modeling/m2t/xpand/updates/nightly/
-    > EMFT MWE:  http://download.eclipse.org/modeling/emft/mwe/updates/nightly/
+    > EMFT MWE:     http://download.eclipse.org/modeling/emft/mwe/updates/nightly/
   
 3) Download and unzip the MobileCodeGenerator-master.zip
 
