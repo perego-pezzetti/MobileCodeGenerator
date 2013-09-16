@@ -9,7 +9,7 @@ You have to import the it.polimi.mobilecodegenerator project in Eclipse:
   
 3) Download and unzip the MobileCodeGenerator-master.zip
 
-4) Import the it.polimi.mobilegenerator project in Eclipse:
+4) Import the it.polimi.mobilecodegenerator project in Eclipse:
     File --> Import --> General --> Existing Projects into Workspace
 
 
