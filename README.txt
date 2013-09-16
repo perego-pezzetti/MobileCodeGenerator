@@ -23,15 +23,15 @@ To produce source code of your application you need to:
 
 3) Enter the application name and save the .xmi file in src/model folder
 
-4) Open the .xmi created file and define the application model through the graphical editor
+4) Open the .xmi file and define the application model through the graphical editor
 
 5) Create a folder named "user_files" in utils directory and put in all files referenced by the model
 
 4) Open the iOSAndAndroidGenerator.mwe file in src/workflow folder and change the value of the "model" property by setting the path of your .xmi file
 
-5) Right click on the iOSAndAndroidGenerator.mwe file and select "Run As" --> "MWE Workflow"
+5) Right click on the iOSAndAndroidGenerator.mwe file and select "Run As MWE Workflow"
 
-6) You will find the generated Android and iOS source code of your application in src-gen folder
+6) You will find the generated Android and iOS application source code in src-gen folder
 
 
 //////////////////////////
